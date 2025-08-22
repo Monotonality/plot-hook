@@ -1,24 +1,20 @@
 import React from 'react';
-import Sidebar from '../../components/Navigation/Sidebar';
 import './StoryBookPage.css';
 
 const StoryBookPage = ({ user }) => {
-  const [currentBook, setCurrentBook] = React.useState('story');
-
-  const handleBookChange = (bookId) => {
-    setCurrentBook(bookId);
-  };
-
   return (
     <div className="story-book-page">
-      <Sidebar user={user} onBookChange={handleBookChange} currentBook={currentBook} />
       <div className="main-content">
         <div className="page-header">
           <h1 className="page-title">Story Book</h1>
           <p className="page-description">Campaign sessions and story progression</p>
         </div>
-        <div className="content-placeholder">
-          <p>Story Book content coming soon...</p>
+        <div className="content-grid">
+          <div className="placeholder-content">
+            <h2>Welcome to the Story Book!</h2>
+            <p>This is where you'll manage campaign sessions, track story progression, and maintain the living campaign log.</p>
+            <p>Coming soon: Session management, campaign tracking, and story organization.</p>
+          </div>
         </div>
       </div>
     </div>

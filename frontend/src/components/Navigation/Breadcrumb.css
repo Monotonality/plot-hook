@@ -9,13 +9,12 @@
   padding: 0;
   margin: 0;
   flex-wrap: wrap;
-  gap: 0.5rem;
 }
 
 .breadcrumb-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  font-size: 0.875rem;
 }
 
 .breadcrumb-link {
@@ -37,8 +36,8 @@
 
 .breadcrumb-separator {
   color: var(--color-text-secondary);
-  opacity: 0.5;
-  font-size: 0.875rem;
+  margin: 0 0.5rem;
+  opacity: 0.6;
 }
 
 /* Responsive Design */
@@ -46,8 +45,12 @@
   .breadcrumb {
     margin-bottom: 1rem;
   }
-
+  
   .breadcrumb-list {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+  }
+  
+  .breadcrumb-separator {
+    margin: 0 0.25rem;
   }
 }

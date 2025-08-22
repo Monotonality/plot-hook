@@ -185,36 +185,60 @@ const WorldBookPage = ({ user }) => {
           {!categoryId && (
             <div className="categories-section">
               <h2 className="section-title">Categories</h2>
-              <div className="tiles-grid">
-                {categories.map((category) => (
-                  <CategoryTile
-                    key={category.id}
-                    category={category}
-                    onEdit={handleEditCategory}
-                    onDelete={handleDeleteCategory}
-                    isEditMode={isEditMode}
-                    user={user}
-                  />
-                ))}
-              </div>
+              {categories.length > 0 ? (
+                <div className="tiles-grid">
+                  {categories.map((category) => (
+                    <CategoryTile
+                      key={category.id}
+                      category={category}
+                      onEdit={handleEditCategory}
+                      onDelete={handleDeleteCategory}
+                      isEditMode={isEditMode}
+                      user={user}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="placeholder-content">
+                  <h3>No categories yet</h3>
+                  <p>Create your first category to start organizing your world.</p>
+                  {user?.is_dm && (
+                    <button className="action-btn primary" onClick={handleCreateCategory}>
+                      Create First Category
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           )}
 
           {categoryId && (
             <div className="entries-section">
               <h2 className="section-title">Entries</h2>
-              <div className="tiles-grid">
-                {entries.map((entry) => (
-                  <EntryTile
-                    key={entry.id}
-                    entry={entry}
-                    onEdit={handleEditEntry}
-                    onDelete={handleDeleteEntry}
-                    isEditMode={isEditMode}
-                    user={user}
-                  />
-                ))}
-              </div>
+              {entries.length > 0 ? (
+                <div className="tiles-grid">
+                  {entries.map((entry) => (
+                    <EntryTile
+                      key={entry.id}
+                      entry={entry}
+                      onEdit={handleEditEntry}
+                      onDelete={handleDeleteEntry}
+                      isEditMode={isEditMode}
+                      user={user}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="placeholder-content">
+                  <h3>No entries yet</h3>
+                  <p>Create your first entry to start documenting your world.</p>
+                  {user?.is_dm && (
+                    <button className="action-btn primary" onClick={handleCreateEntry}>
+                      Create First Entry
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>

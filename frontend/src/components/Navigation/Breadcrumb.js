@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import './Breadcrumb.css';
 
 const Breadcrumb = ({ items }) => {
-  if (!items || items.length === 0) {
-    return null;
-  }
-
   return (
     <nav className="breadcrumb" aria-label="Breadcrumb">
       <ol className="breadcrumb-list">

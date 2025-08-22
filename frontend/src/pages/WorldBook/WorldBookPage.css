@@ -112,6 +112,26 @@
   color: #dc2626;
 }
 
+.placeholder-content {
+  text-align: center;
+  padding: 3rem;
+  background: var(--color-surface);
+  border-radius: 8px;
+  border: 2px dashed var(--color-border);
+}
+
+.placeholder-content h3 {
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.placeholder-content p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .main-content {
@@ -180,7 +200,6 @@
     transform: translateY(0);
   }
 }
-
 /* Stagger animation for multiple tiles */
 .tiles-grid > *:nth-child(1) { animation-delay: 0.1s; }
 .tiles-grid > *:nth-child(2) { animation-delay: 0.2s; }
@@ -188,3 +207,4 @@
 .tiles-grid > *:nth-child(4) { animation-delay: 0.4s; }
 .tiles-grid > *:nth-child(5) { animation-delay: 0.5s; }
 .tiles-grid > *:nth-child(6) { animation-delay: 0.6s; }
+
