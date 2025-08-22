@@ -1,57 +1,246 @@
-.App {
+/* CSS Variables for Design System */
+:root {
+  /* Colors */
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #3b82f6;
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  
+  /* Typography */
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 2rem;
+  --font-size-h3: 1.5rem;
+  --font-size-h4: 1.25rem;
+  --font-size-body: 1rem;
+  --font-size-small: 0.875rem;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-s: 0.5rem;
+  --spacing-m: 1rem;
+  --spacing-l: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  
+  /* Border Radius */
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 12px;
+}
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* App Layout */
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--color-background);
+}
+
+.loading-spinner {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Utility Classes */
+.text-center {
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  padding: 20px;
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-s); }
+.mb-2 { margin-bottom: var(--spacing-m); }
+.mb-3 { margin-bottom: var(--spacing-l); }
+.mb-4 { margin-bottom: var(--spacing-xl); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-s); }
+.mt-2 { margin-top: var(--spacing-m); }
+.mt-3 { margin-top: var(--spacing-l); }
+.mt-4 { margin-top: var(--spacing-xl); }
+
+.p-0 { padding: 0; }
+.p-1 { padding: var(--spacing-s); }
+.p-2 { padding: var(--spacing-m); }
+.p-3 { padding: var(--spacing-l); }
+.p-4 { padding: var(--spacing-xl); }
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-m);
+  font-weight: 500;
+  font-size: var(--font-size-small);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--color-primary);
   color: white;
 }
 
-.App-header h1 {
-  margin: 0;
-  font-size: 2.5rem;
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
 }
 
-.App-header p {
-  margin: 10px 0 0 0;
-  font-size: 1.2rem;
-  opacity: 0.8;
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
 }
 
-main {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+.btn-secondary:hover {
+  background: var(--color-border);
 }
 
-/* Basic styling for the three-book system */
-.book-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+.btn-danger {
+  background: #dc2626;
+  color: white;
 }
 
-.book-card {
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  transition: transform 0.2s;
+.btn-danger:hover {
+  background: #b91c1c;
 }
 
-.book-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+/* Form Styles */
+.form-group {
+  margin-bottom: var(--spacing-l);
 }
 
-.book-card h3 {
-  margin: 0 0 10px 0;
-  color: #333;
+.form-label {
+  display: block;
+  margin-bottom: var(--spacing-s);
+  font-weight: 500;
+  color: var(--color-text-primary);
 }
 
-.book-card p {
-  margin: 0;
-  color: #666;
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  font-size: var(--font-size-body);
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Card Styles */
+.card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  padding: var(--spacing-l);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root {
+    --font-size-h1: 2rem;
+    --font-size-h2: 1.75rem;
+    --font-size-h3: 1.25rem;
+  }
+  
+  .app {
+    flex-direction: column;
+  }
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus styles for keyboard navigation */
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-primary);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: var(--radius-s);
+  z-index: 1001;
+}
+
+.skip-link:focus {
+  top: 6px;
 } 
