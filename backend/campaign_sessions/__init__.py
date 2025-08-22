@@ -1,1 +1,0 @@
-# Sessions App - Handles campaign sessions and story progression 

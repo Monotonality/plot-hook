@@ -1,1 +1,0 @@
-# Plot Hook API - Main Django Project 

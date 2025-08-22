@@ -1,1 +1,0 @@
-# Books App - Handles Categories and Entries for all three books 
