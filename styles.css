@@ -1,0 +1,459 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #e8e6e3;
+    background: #202020;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: 280px;
+    background: #202020;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    border-right: 1px solid #404040;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #404040;
+}
+
+.sidebar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e8e6e3;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.sidebar-logo-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.user-info {
+    margin-bottom: 20px;
+}
+
+.user-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin-bottom: 5px;
+}
+
+.org-name {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+}
+
+.search-section {
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.add-button {
+    width: 40px;
+    height: 40px;
+    background: #404040;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.add-button:hover {
+    background: #505050;
+}
+
+.search-input {
+    flex: 1;
+    height: 40px;
+    background: #404040;
+    border: none;
+    border-radius: 4px;
+    color: #e8e6e3;
+    padding: 0 15px;
+    font-size: 0.9rem;
+}
+
+.search-input::placeholder {
+    color: #a0a0a0;
+}
+
+.sidebar-nav {
+    padding: 0;
+}
+
+.nav-section {
+    margin-bottom: 10px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #e8e6e3;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    gap: 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: #8b7355;
+}
+
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-left-color: #8b7355;
+}
+
+.nav-item-icon {
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.nav-item-text {
+    flex: 1;
+}
+
+.nav-item-arrow {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    transition: transform 0.3s ease;
+}
+
+.nav-item.expanded .nav-item-arrow {
+    transform: rotate(90deg);
+}
+
+.sub-nav {
+    margin-left: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.sub-nav.expanded {
+    max-height: 500px;
+}
+
+.sub-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    color: #a0a0a0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.sub-nav-item:hover {
+    color: #e8e6e3;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.sub-nav-item.active {
+    color: #e8e6e3;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sub-sub-nav {
+    margin-left: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.sub-sub-nav.expanded {
+    max-height: 200px;
+}
+
+.sub-sub-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 20px;
+    color: #808080;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.sub-sub-nav-item:hover {
+    color: #a0a0a0;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    background: #282828;
+    min-height: 100vh;
+    position: relative;
+}
+
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.main-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #404040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    background: #282828;
+}
+
+.main-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #e8e6e3;
+}
+
+.user-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e8e6e3;
+    font-size: 0.9rem;
+}
+
+.user-avatar {
+    width: 20px;
+    height: 20px;
+    background: #8b7355;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: white;
+}
+
+.content-section {
+    padding: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin-bottom: 25px;
+}
+
+.campaigns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.campaign-card {
+    background: #202020;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.campaign-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.campaign-pattern {
+    height: 120px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pattern-red {
+    background: linear-gradient(45deg, #dc2626 25%, transparent 25%), 
+                linear-gradient(-45deg, #dc2626 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #dc2626 75%), 
+                linear-gradient(-45deg, transparent 75%, #dc2626 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.pattern-teal {
+    background: linear-gradient(45deg, #0d9488 25%, transparent 25%), 
+                linear-gradient(-45deg, #0d9488 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #0d9488 75%), 
+                linear-gradient(-45deg, transparent 75%, #0d9488 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.campaign-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+}
+
+.badge-red {
+    background: #dc2626;
+}
+
+.badge-teal {
+    background: #0d9488;
+}
+
+.campaign-info {
+    padding: 15px;
+}
+
+.campaign-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin-bottom: 5px;
+}
+
+.campaign-stats {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    margin-bottom: 10px;
+}
+
+.campaign-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.campaign-menu {
+    background: none;
+    border: none;
+    color: #a0a0a0;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2rem;
+}
+
+.campaign-menu:hover {
+    color: #e8e6e3;
+}
+
+.create-card {
+    background: #303030;
+    border: 2px dashed #505050;
+    border-radius: 8px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.create-card:hover {
+    border-color: #8b7355;
+    background: #383838;
+}
+
+.create-icon {
+    font-size: 2rem;
+    color: #a0a0a0;
+    margin-bottom: 10px;
+}
+
+.create-text {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+.main-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 30px;
+    border-top: 1px solid #404040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    background: #282828;
+    z-index: 1;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #a0a0a0;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #e8e6e3;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}

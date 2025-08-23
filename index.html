@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plot Hook - D&D World-Building Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-logo">
+                <img src="hook.png" alt="Plot Hook Logo" class="sidebar-logo-icon" style="width: 24px; height: 24px; object-fit: contain;">
+                <span>Plot Hook</span>
+            </a>
+            
+            <div class="user-info">
+                <div class="user-name">Esvarein</div>
+                <div class="org-name">SudoName Org</div>
+            </div>
+            
+            <div class="search-section">
+                <div class="search-container">
+                    <button class="add-button">+</button>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-nav">
+            <div class="nav-section">
+                <a href="#players" class="nav-item">
+                    <span class="nav-item-icon">👥</span>
+                    <span class="nav-item-text">Players</span>
+                    <span class="nav-item-arrow">▶</span>
+                </a>
+                <a href="#locations" class="nav-item">
+                    <span class="nav-item-icon">🗺️</span>
+                    <span class="nav-item-text">Locations</span>
+                    <span class="nav-item-arrow">▶</span>
+                </a>
+                <a href="#npcs" class="nav-item">
+                    <span class="nav-item-icon">👤</span>
+                    <span class="nav-item-text">Npcs</span>
+                    <span class="nav-item-arrow">▶</span>
+                </a>
+                <a href="#creations" class="nav-item">
+                    <span class="nav-item-icon">⚔️</span>
+                    <span class="nav-item-text">Creations</span>
+                    <span class="nav-item-arrow">▶</span>
+                </a>
+                <a href="#history" class="nav-item">
+                    <span class="nav-item-icon">📚</span>
+                    <span class="nav-item-text">History</span>
+                    <span class="nav-item-arrow">▶</span>
+                </a>
+                
+                <div class="sub-nav">
+                    <a href="#demon-king" class="sub-nav-item">
+                        <span class="nav-item-icon">👑</span>
+                        <span class="nav-item-text">Demon King's Reign</span>
+                    </a>
+                    <a href="#majirsia" class="sub-nav-item">
+                        <span class="nav-item-icon">⚔️</span>
+                        <span class="nav-item-text">Majirsia Succession Crisis</span>
+                        <span class="nav-item-arrow">▶</span>
+                    </a>
+                    
+                    <div class="sub-sub-nav">
+                        <a href="#loyalist" class="sub-sub-nav-item">
+                            <span class="nav-item-icon">🛡️</span>
+                            <span class="nav-item-text">Loyalist Faction</span>
+                        </a>
+                        <a href="#reformist" class="sub-sub-nav-item">
+                            <span class="nav-item-icon">⚖️</span>
+                            <span class="nav-item-text">Reformist Faction</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-header">
+            <div class="main-title">Esvarein</div>
+            <div class="user-display">
+                <div class="user-avatar">S</div>
+                <span>SudoName</span>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2 class="section-title">Campaigns</h2>
+            
+            <div class="campaigns-grid">
+                <div class="campaign-card">
+                    <div class="campaign-pattern pattern-red">
+                        <div class="campaign-badge badge-red">AOD</div>
+                    </div>
+                    <div class="campaign-info">
+                        <div class="campaign-title">Age of Decline</div>
+                        <div class="campaign-stats">2 Sessions • 3h 39m Played</div>
+                        <div class="campaign-actions">
+                            <button class="campaign-menu">⋮</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="campaign-card">
+                    <div class="campaign-pattern pattern-teal">
+                        <div class="campaign-badge badge-teal">BBC</div>
+                    </div>
+                    <div class="campaign-info">
+                        <div class="campaign-title">Branded By Chaos</div>
+                        <div class="campaign-stats">5 Sessions • 12h 11m Played</div>
+                        <div class="campaign-actions">
+                            <button class="campaign-menu">⋮</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="create-card">
+                    <div class="create-icon">+</div>
+                    <div class="create-text">Create New</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
