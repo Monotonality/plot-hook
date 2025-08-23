@@ -81,7 +81,7 @@ function initializeSearch() {
         
         // Add placeholder animation
         searchInput.addEventListener('focus', function() {
-            this.style.borderColor = '#8b7355';
+            this.style.borderColor = '#84A98C';
         });
         
         searchInput.addEventListener('blur', function() {
@@ -127,7 +127,7 @@ function highlightText(element, searchTerm) {
     if (textElement) {
         const text = textElement.textContent;
         const regex = new RegExp(`(${searchTerm})`, 'gi');
-        textElement.innerHTML = text.replace(regex, '<mark style="background-color: #8b7355; color: white; padding: 1px 2px; border-radius: 2px;">$1</mark>');
+        textElement.innerHTML = text.replace(regex, '<mark style="background-color: #84A98C; color: #CAD2C5; padding: 1px 2px; border-radius: 2px;">$1</mark>');
     }
 }
 
@@ -277,7 +277,7 @@ function initializeAnimatedBackground() {
         draw() {
             ctx.save();
             ctx.globalAlpha = this.opacity;
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = '#E8E6E3';
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
@@ -343,8 +343,8 @@ function initializeAnimatedBackground() {
     
     // Animation loop
     function animate() {
-        // Clear canvas with darker background
-        ctx.fillStyle = '#1a1a1a'; // Darker background for better particle visibility
+        // Clear canvas with darker earthly background
+        ctx.fillStyle = '#1A2A32'; // Darker blue-gray background for earthly theme
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         // Update and draw particles

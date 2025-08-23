@@ -7,8 +7,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #e8e6e3;
-    background: #202020;
+    color: #CAD2C5;
+    background: #2F3E46;
     min-height: 100vh;
     margin: 0;
     display: flex;
@@ -16,25 +16,25 @@ body {
 
 .sidebar {
     width: 280px;
-    background: #202020;
+    background: #2A3D45;
     height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
     overflow-y: auto;
-    border-right: 1px solid #404040;
+    border-right: 1px solid #2F3E46;
     z-index: 1000;
 }
 
 .sidebar-header {
     padding: 20px;
-    border-bottom: 1px solid #404040;
+    border-bottom: 1px solid #2F3E46;
 }
 
 .sidebar-logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #e8e6e3;
+    color: #CAD2C5;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -55,13 +55,13 @@ body {
 .user-name {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #e8e6e3;
+    color: #CAD2C5;
     margin-bottom: 5px;
 }
 
 .org-name {
     font-size: 0.9rem;
-    color: #a0a0a0;
+    color: #84A98C;
 }
 
 .search-section {
@@ -77,10 +77,10 @@ body {
 .add-button {
     width: 40px;
     height: 40px;
-    background: #404040;
+    background: #2F3E46;
     border: none;
     border-radius: 4px;
-    color: white;
+    color: #CAD2C5;
     font-size: 1.2rem;
     cursor: pointer;
     display: flex;
@@ -90,22 +90,22 @@ body {
 }
 
 .add-button:hover {
-    background: #505050;
+    background: #52796F;
 }
 
 .search-input {
     flex: 1;
     height: 40px;
-    background: #404040;
+    background: #2F3E46;
     border: none;
     border-radius: 4px;
-    color: #e8e6e3;
+    color: #CAD2C5;
     padding: 0 15px;
     font-size: 0.9rem;
 }
 
 .search-input::placeholder {
-    color: #a0a0a0;
+    color: #84A98C;
 }
 
 .sidebar-nav {
@@ -120,7 +120,7 @@ body {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    color: #e8e6e3;
+    color: #CAD2C5;
     text-decoration: none;
     transition: all 0.3s ease;
     border-left: 3px solid transparent;
@@ -130,13 +130,13 @@ body {
 }
 
 .nav-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-left-color: #8b7355;
+    background: rgba(132, 169, 140, 0.2);
+    border-left-color: #84A98C;
 }
 
 .nav-item.active {
-    background: rgba(255, 255, 255, 0.1);
-    border-left-color: #8b7355;
+    background: rgba(132, 169, 140, 0.3);
+    border-left-color: #84A98C;
 }
 
 .nav-item-icon {
@@ -174,7 +174,7 @@ body {
     display: flex;
     align-items: center;
     padding: 8px 20px;
-    color: #a0a0a0;
+    color: #84A98C;
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 0.85rem;
@@ -183,13 +183,13 @@ body {
 }
 
 .sub-nav-item:hover {
-    color: #e8e6e3;
-    background: rgba(255, 255, 255, 0.03);
+    color: #CAD2C5;
+    background: rgba(132, 169, 140, 0.15);
 }
 
 .sub-nav-item.active {
-    color: #e8e6e3;
-    background: rgba(255, 255, 255, 0.05);
+    color: #CAD2C5;
+    background: rgba(132, 169, 140, 0.25);
 }
 
 .sub-sub-nav {
@@ -207,7 +207,7 @@ body {
     display: flex;
     align-items: center;
     padding: 6px 20px;
-    color: #808080;
+    color: #52796F;
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 0.8rem;
@@ -216,13 +216,13 @@ body {
 }
 
 .sub-sub-nav-item:hover {
-    color: #a0a0a0;
+    color: #84A98C;
 }
 
 .main-content {
     flex: 1;
     margin-left: 280px;
-    background: #282828;
+    background: #2F3E46;
     min-height: 100vh;
     position: relative;
 }
@@ -239,39 +239,39 @@ body {
 
 .main-header {
     padding: 20px 30px;
-    border-bottom: 1px solid #404040;
+    border-bottom: 1px solid #1A2A32;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     z-index: 1;
-    background: #282828;
+    background: #354F52;
 }
 
 .main-title {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #e8e6e3;
+    color: #CAD2C5;
 }
 
 .user-display {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #e8e6e3;
+    color: #CAD2C5;
     font-size: 0.9rem;
 }
 
 .user-avatar {
     width: 20px;
     height: 20px;
-    background: #8b7355;
+    background: #52796F;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.7rem;
-    color: white;
+    color: #CAD2C5;
 }
 
 .content-section {
@@ -283,7 +283,7 @@ body {
 .section-title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #e8e6e3;
+    color: #CAD2C5;
     margin-bottom: 25px;
 }
 
@@ -294,7 +294,7 @@ body {
 }
 
 .campaign-card {
-    background: #202020;
+    background: #2A3D45;
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -360,13 +360,13 @@ body {
 .campaign-title {
     font-size: 1rem;
     font-weight: 600;
-    color: #e8e6e3;
+    color: #CAD2C5;
     margin-bottom: 5px;
 }
 
 .campaign-stats {
     font-size: 0.8rem;
-    color: #a0a0a0;
+    color: #84A98C;
     margin-bottom: 10px;
 }
 
@@ -378,19 +378,19 @@ body {
 .campaign-menu {
     background: none;
     border: none;
-    color: #a0a0a0;
+    color: #84A98C;
     cursor: pointer;
     padding: 5px;
     font-size: 1.2rem;
 }
 
 .campaign-menu:hover {
-    color: #e8e6e3;
+    color: #CAD2C5;
 }
 
 .create-card {
-    background: #303030;
-    border: 2px dashed #505050;
+    background: #2F3E46;
+    border: 2px dashed #354F52;
     border-radius: 8px;
     height: 200px;
     display: flex;
@@ -402,18 +402,18 @@ body {
 }
 
 .create-card:hover {
-    border-color: #8b7355;
-    background: #383838;
+    border-color: #84A98C;
+    background: #2A3D45;
 }
 
 .create-icon {
     font-size: 2rem;
-    color: #a0a0a0;
+    color: #84A98C;
     margin-bottom: 10px;
 }
 
 .create-text {
-    color: #a0a0a0;
+    color: #84A98C;
     font-size: 0.9rem;
 }
 
