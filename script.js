@@ -202,8 +202,39 @@ function initializeAnimatedBackground() {
         canvas.height = mainContent.offsetHeight;
     }
     
+    // Function to create a new particle
+    function createParticle() {
+        const size = Math.random() * 1.0 + 0.15; // 0.15 to 1.15 pixels
+        const opacity = Math.random() * 0.15 + 0.025; // 0.025 to 0.175
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        
+        return new Particle(x, y, size, opacity);
+    }
+    
+    // Function to add particles if needed after resize
+    function addParticlesIfNeeded() {
+        const currentArea = canvas.width * canvas.height;
+        const targetParticleDensity = 0.0001; // particles per pixel
+        const targetParticleCount = Math.floor(currentArea * targetParticleDensity);
+        
+        // Reposition existing particles to fill the new canvas area
+        particles.forEach(particle => {
+            particle.x = Math.random() * canvas.width;
+            particle.y = Math.random() * canvas.height;
+        });
+        
+        // Add particles if we have fewer than the target
+        while (particles.length < targetParticleCount) {
+            particles.push(createParticle());
+        }
+    }
+    
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        addParticlesIfNeeded();
+    });
     
     // Particle class
     class Particle {
@@ -304,15 +335,10 @@ function initializeAnimatedBackground() {
     
     // Create particles with varying sizes and opacities
     const particles = [];
-    const particleCount = 500; // Increased from 350 for maximum density
     
-    for (let i = 0; i < particleCount; i++) {
-        const size = Math.random() * 1.0 + 0.15; // Even smaller: 0.15 to 1.15 pixels
-        const opacity = Math.random() * 0.15 + 0.025; // Higher: 0.025 to 0.175 for better visibility
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        
-        particles.push(new Particle(x, y, size, opacity));
+    // Initial particle creation
+    for (let i = 0; i < 500; i++) {
+        particles.push(createParticle());
     }
     
     // Animation loop
