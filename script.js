@@ -138,7 +138,7 @@ function initializeCampaignCards() {
     campaignCards.forEach(card => {
         card.addEventListener('click', function() {
             const title = this.querySelector('.campaign-title').textContent;
-            console.log(`Campaign clicked: ${title}`);
+            console.log(`World clicked: ${title}`);
             // Add navigation logic here
         });
         
@@ -156,8 +156,8 @@ function initializeCampaignCards() {
     
     if (createCard) {
         createCard.addEventListener('click', function() {
-            console.log('Create new campaign clicked');
-            // Add create campaign logic here
+            console.log('Create new world clicked');
+            // Add create world logic here
         });
     }
 }

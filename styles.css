@@ -159,6 +159,10 @@ body {
     transform: rotate(90deg);
 }
 
+.sub-nav-item.expanded .nav-item-arrow {
+    transform: rotate(90deg);
+}
+
 .sub-nav {
     margin-left: 20px;
     max-height: 0;
