@@ -1,12 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@login_required
 def home(request):
     """Home page view that displays the campaign/world cards"""
     return render(request, 'home.html')
 
+@login_required
 def search(request):
     """API endpoint for search functionality"""
     if request.method == 'GET':
