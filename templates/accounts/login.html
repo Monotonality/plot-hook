@@ -1,0 +1,61 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block auth_title %}Login{% endblock %}
+
+{% block auth_content %}
+<div class="auth-card">
+    <div class="auth-card-header">
+        <h1>Welcome Back</h1>
+        <p>Sign in to your Plot Hook account</p>
+    </div>
+    
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+            <div class="alert alert-error">
+                <p>Please correct the errors below:</p>
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username or Email</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="field-error">{{ form.username.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+                <div class="field-error">{{ form.password.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+                {{ form.remember_me }}
+                <span class="checkmark"></span>
+                Remember me
+            </label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-full">
+            Sign In
+        </button>
+    </form>
+    
+    <div class="auth-divider">
+        <span>or</span>
+    </div>
+    
+    <div class="auth-links">
+        <p>Don't have an account? <a href="{% url 'accounts:signup' %}">Sign up</a></p>
+        <p><a href="#" class="text-muted">Forgot your password?</a></p>
+    </div>
+</div>
+{% endblock %}
