@@ -6,6 +6,10 @@ from django.utils import timezone
 class User(AbstractUser):
     """Custom user model for Plot Hook"""
     
+    # Override AbstractUser fields to remove first_name and last_name
+    first_name = None
+    last_name = None
+    
     # Additional fields
     bio = models.TextField(max_length=500, blank=True, help_text="Tell us about yourself")
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, help_text="Profile picture")

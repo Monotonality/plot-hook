@@ -41,7 +41,7 @@ class UserAdmin(BaseUserAdmin):
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'favorite_dnd_edition', 'dm_experience_years', 'player_experience_years', 'profile_public', 'show_email')
     list_filter = ('favorite_dnd_edition', 'profile_public', 'show_email', 'created_at', 'updated_at')
-    search_fields = ('user__username', 'user__email', 'user__first_name', 'user__last_name', 'discord_username', 'twitter_handle')
+    search_fields = ('user__username', 'user__email', 'discord_username', 'twitter_handle')
     ordering = ('-created_at',)
     
     fieldsets = (
