@@ -121,20 +121,29 @@ function initializeFormInteractions() {
     
     // Password strength indicator and show/hide functionality (only on signup page)
     const isSignupPage = window.location.pathname.includes('/signup/');
+    console.log('Is signup page:', isSignupPage);
+    
     if (isSignupPage) {
         const passwordInputs = document.querySelectorAll('input[type="password"]');
+        console.log('Found password inputs:', passwordInputs.length);
         
         passwordInputs.forEach((input, index) => {
+            console.log('Processing password input', index);
+            
+            // Add show/hide password button FIRST (before strength indicator)
+            addShowHidePasswordButton(input);
+            
             // Only show strength indicator for the first password field (not confirm password)
             if (index === 0) {
+                console.log('Creating strength indicator for first password field');
+                // Create the strength indicator immediately (always visible)
+                createPasswordStrengthIndicator(input);
+                
                 input.addEventListener('input', function() {
                     const strength = calculatePasswordStrength(this.value);
                     updatePasswordStrengthIndicator(this, strength);
                 });
             }
-            
-            // Add show/hide password button
-            addShowHidePasswordButton(input);
             
             // Prevent pasting in confirm password field
             if (index === 1) { // Confirm password field
@@ -172,33 +181,49 @@ function calculatePasswordStrength(password) {
     return Math.min(strength, 5);
 }
 
-function updatePasswordStrengthIndicator(input, strength) {
-    // Remove existing indicator
-    const existingIndicator = input.parentElement.querySelector('.password-strength');
-    if (existingIndicator) {
-        existingIndicator.remove();
-    }
-    
-    if (input.value.length === 0) return;
-    
-    // Create strength indicator
+function createPasswordStrengthIndicator(input) {
+    console.log('Creating password strength indicator');
+    // Create the initial strength indicator (always visible)
     const indicator = document.createElement('div');
     indicator.className = 'password-strength';
+    
+    indicator.innerHTML = `
+        <div class="strength-bar">
+            <div class="strength-fill" style="width: 0%; background-color: #a0a0a0;"></div>
+        </div>
+        <span class="strength-text" style="color: #a0a0a0;">Enter password</span>
+    `;
+    
+    const formGroup = input.parentElement;
+    console.log('Appending to form group:', formGroup);
+    formGroup.appendChild(indicator);
+    console.log('Strength indicator created and appended');
+}
+
+function updatePasswordStrengthIndicator(input, strength) {
+    const existingIndicator = input.parentElement.querySelector('.password-strength');
+    if (!existingIndicator) return;
     
     const strengthText = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
     const strengthColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#16a34a'];
     
-    indicator.innerHTML = `
-        <div class="strength-bar">
-            <div class="strength-fill" style="width: ${(strength / 5) * 100}%; background-color: ${strengthColors[strength - 1]};"></div>
-        </div>
-        <span class="strength-text" style="color: ${strengthColors[strength - 1]};">${strengthText[strength - 1]}</span>
-    `;
-    
-    input.parentElement.appendChild(indicator);
+    if (input.value.length === 0) {
+        // Reset to initial state
+        existingIndicator.querySelector('.strength-fill').style.width = '0%';
+        existingIndicator.querySelector('.strength-fill').style.backgroundColor = '#a0a0a0';
+        existingIndicator.querySelector('.strength-text').textContent = 'Enter password';
+        existingIndicator.querySelector('.strength-text').style.color = '#a0a0a0';
+    } else {
+        // Update with actual strength
+        existingIndicator.querySelector('.strength-fill').style.width = `${(strength / 5) * 100}%`;
+        existingIndicator.querySelector('.strength-fill').style.backgroundColor = strengthColors[strength - 1];
+        existingIndicator.querySelector('.strength-text').textContent = strengthText[strength - 1];
+        existingIndicator.querySelector('.strength-text').style.color = strengthColors[strength - 1];
+    }
 }
 
 function addShowHidePasswordButton(input) {
+    console.log('Adding show/hide password button');
     // Create button container
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'password-toggle-container';
@@ -210,9 +235,15 @@ function addShowHidePasswordButton(input) {
     toggleButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>';
     toggleButton.title = 'Show password';
     
-    // Position the button
+    // Ensure the form group has relative positioning
+    const formGroup = input.parentElement;
+    console.log('Form group:', formGroup);
+    if (!formGroup.style.position) {
+        formGroup.style.position = 'relative';
+    }
+    
+    // Set input padding to make room for the button
     input.style.paddingRight = '40px';
-    input.parentElement.style.position = 'relative';
     
     // Add click event
     toggleButton.addEventListener('click', function() {
@@ -227,74 +258,15 @@ function addShowHidePasswordButton(input) {
         }
     });
     
-    // Append button to container and container to input parent
+    // Append button to container and container to form group
     buttonContainer.appendChild(toggleButton);
-    input.parentElement.appendChild(buttonContainer);
+    formGroup.appendChild(buttonContainer);
+    console.log('Show/hide button added');
 }
 
-// Add CSS for password strength indicator and show/hide button
+// Add loading spinner CSS
 const style = document.createElement('style');
 style.textContent = `
-    .password-strength {
-        margin-top: 8px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    
-    .strength-bar {
-        flex: 1;
-        height: 4px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 2px;
-        overflow: hidden;
-    }
-    
-    .strength-fill {
-        height: 100%;
-        transition: width 0.3s ease, background-color 0.3s ease;
-    }
-    
-    .strength-text {
-        font-size: 0.8rem;
-        font-weight: 500;
-        min-width: 80px;
-    }
-    
-    .password-toggle-container {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 10;
-        pointer-events: auto;
-    }
-    
-    .password-toggle-btn {
-        background: none;
-        border: none;
-        color: #a0a0a0;
-        cursor: pointer;
-        padding: 4px;
-        border-radius: 4px;
-        transition: color 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px;
-        height: 24px;
-    }
-    
-    .password-toggle-btn:hover {
-        color: #e8e6e3;
-        background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .password-toggle-btn svg {
-        width: 16px;
-        height: 16px;
-    }
-    
     .loading-spinner {
         display: inline-block;
         width: 16px;
@@ -307,10 +279,6 @@ style.textContent = `
     
     @keyframes spin {
         to { transform: rotate(360deg); }
-    }
-    
-    .form-group {
-        position: relative;
     }
     
     .form-group.focused .form-control {
