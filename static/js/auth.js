@@ -119,16 +119,29 @@ function initializeFormInteractions() {
         });
     });
     
-    // Password strength indicator (only on signup page)
+    // Password strength indicator and show/hide functionality (only on signup page)
     const isSignupPage = window.location.pathname.includes('/signup/');
     if (isSignupPage) {
         const passwordInputs = document.querySelectorAll('input[type="password"]');
         
-        passwordInputs.forEach(input => {
-            input.addEventListener('input', function() {
-                const strength = calculatePasswordStrength(this.value);
-                updatePasswordStrengthIndicator(this, strength);
-            });
+        passwordInputs.forEach((input, index) => {
+            // Only show strength indicator for the first password field (not confirm password)
+            if (index === 0) {
+                input.addEventListener('input', function() {
+                    const strength = calculatePasswordStrength(this.value);
+                    updatePasswordStrengthIndicator(this, strength);
+                });
+            }
+            
+            // Add show/hide password button
+            addShowHidePasswordButton(input);
+            
+            // Prevent pasting in confirm password field
+            if (index === 1) { // Confirm password field
+                input.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                });
+            }
         });
     }
     
@@ -176,22 +189,100 @@ function updatePasswordStrengthIndicator(input, strength) {
     const strengthColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#16a34a'];
     
     indicator.innerHTML = `
+        <div class="strength-bar">
+            <div class="strength-fill" style="width: ${(strength / 5) * 100}%; background-color: ${strengthColors[strength - 1]};"></div>
+        </div>
         <span class="strength-text" style="color: ${strengthColors[strength - 1]};">${strengthText[strength - 1]}</span>
     `;
     
     input.parentElement.appendChild(indicator);
 }
 
-// Add CSS for password strength indicator
+function addShowHidePasswordButton(input) {
+    // Create button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'password-toggle-container';
+    
+    // Create show/hide button
+    const toggleButton = document.createElement('button');
+    toggleButton.type = 'button';
+    toggleButton.className = 'password-toggle-btn';
+    toggleButton.innerHTML = '👁️';
+    toggleButton.title = 'Show password';
+    
+    // Position the button
+    input.style.paddingRight = '40px';
+    input.parentElement.style.position = 'relative';
+    
+    // Add click event
+    toggleButton.addEventListener('click', function() {
+        if (input.type === 'password') {
+            input.type = 'text';
+            toggleButton.innerHTML = '🙈';
+            toggleButton.title = 'Hide password';
+        } else {
+            input.type = 'password';
+            toggleButton.innerHTML = '👁️';
+            toggleButton.title = 'Show password';
+        }
+    });
+    
+    // Append button to container and container to input parent
+    buttonContainer.appendChild(toggleButton);
+    input.parentElement.appendChild(buttonContainer);
+}
+
+// Add CSS for password strength indicator and show/hide button
 const style = document.createElement('style');
 style.textContent = `
     .password-strength {
         margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .strength-bar {
+        flex: 1;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+    }
+    
+    .strength-fill {
+        height: 100%;
+        transition: width 0.3s ease, background-color 0.3s ease;
     }
     
     .strength-text {
         font-size: 0.8rem;
         font-weight: 500;
+        min-width: 80px;
+    }
+    
+    .password-toggle-container {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+    
+    .password-toggle-btn {
+        background: none;
+        border: none;
+        color: #a0a0a0;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 4px;
+        border-radius: 4px;
+        transition: color 0.3s ease;
+    }
+    
+    .password-toggle-btn:hover {
+        color: #e8e6e3;
+        background: rgba(255, 255, 255, 0.1);
     }
     
     .loading-spinner {
