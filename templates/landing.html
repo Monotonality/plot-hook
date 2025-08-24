@@ -1,0 +1,106 @@
+{% extends 'landing_base.html' %}
+{% load static %}
+
+{% block title %}Plot Hook - D&D World-Building Tool{% endblock %}
+
+{% block content %}
+<div class="landing-hero">
+    <div class="hero-particles" id="hero-particles"></div>
+    <div class="hero-content">
+        <div class="hero-logo">
+            <img src="{% static 'images/hook.png' %}" alt="Plot Hook Logo" class="hero-logo-image">
+        </div>
+        <h1 class="hero-title">Welcome to Plot Hook</h1>
+        <p class="hero-subtitle">The ultimate D&D world-building tool for Dungeon Masters</p>
+        <div class="hero-description">
+            <p>Create immersive worlds, manage campaigns, and bring your stories to life with our comprehensive world-building platform.</p>
+        </div>
+        <div class="hero-actions">
+            <a href="{% url 'core:home' %}" class="btn btn-primary">Get Started</a>
+            <a href="#features" class="btn btn-secondary">Learn More</a>
+        </div>
+    </div>
+</div>
+
+<div class="landing-features" id="features">
+    <h2 class="section-title">Why Choose Plot Hook?</h2>
+    
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🗺️</div>
+            <h3 class="feature-title">World Management</h3>
+            <p class="feature-description">Create and organize detailed worlds with locations, NPCs, and lore all in one place.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3 class="feature-title">Player Tracking</h3>
+            <p class="feature-description">Keep track of your players, their characters, and their progress through your campaigns.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">Campaign History</h3>
+            <p class="feature-description">Document your campaign sessions and maintain a rich history of your adventures.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">⚔️</div>
+            <h3 class="feature-title">Creation Tools</h3>
+            <p class="feature-description">Build custom items, spells, and encounters with our intuitive creation tools.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3 class="feature-title">World Search</h3>
+            <p class="feature-description">Powerful tagging and search functionality to quickly find any content across your entire world.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h3 class="feature-title">Relational Entries</h3>
+            <p class="feature-description">Embed links and references between entries to create a connected web of your world's lore.</p>
+        </div>
+    </div>
+</div>
+
+<div class="landing-demo" id="demo">
+    <div class="demo-particles" id="demo-particles"></div>
+    <h2 class="section-title">See Plot Hook in Action</h2>
+    <div class="demo-content">
+        <div class="demo-screenshot">
+            <div class="demo-placeholder">
+                <div class="demo-pattern pattern-teal">
+                    <div class="demo-badge">DEMO</div>
+                </div>
+                <div class="demo-info">
+                    <div class="demo-title">Sample Campaign</div>
+                    <div class="demo-stats">3 Sessions • 8h 45m Played</div>
+                </div>
+            </div>
+        </div>
+        <div class="demo-text">
+            <h3>Experience the Power</h3>
+            <p>Plot Hook provides everything you need to create and manage your D&D campaigns. From world-building to session tracking, we've got you covered.</p>
+            <ul class="demo-features-list">
+                <li>✓ Intuitive navigation and organization</li>
+                <li>✓ Real-time search across all content</li>
+                <li>✓ Beautiful, responsive design</li>
+                <li>✓ Cross-platform compatibility</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="landing-cta">
+    <div class="cta-content">
+        <h2 class="cta-title">Ready to Start Your Adventure?</h2>
+        <p class="cta-description">Join thousands of Dungeon Masters who trust Plot Hook for their world-building needs.</p>
+        <div class="cta-actions">
+            <a href="{% url 'core:home' %}" class="btn btn-primary btn-large">Create Account</a>
+            <a href="{% url 'core:home' %}" class="btn btn-outline btn-large">Sign In</a>
+        </div>
+        <p class="cta-note">Free to start • No credit card required</p>
+    </div>
+</div>
+{% endblock %}

@@ -18,3 +18,7 @@ def search(request):
             'search_term': search_term
         })
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+def landing(request):
+    """Landing page for non-authenticated users"""
+    return render(request, 'landing.html')

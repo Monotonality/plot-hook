@@ -18,12 +18,16 @@ plot-hook-1/
 ├── core/                  # Main Django app
 ├── templates/             # Django templates
 │   ├── base.html         # Base template with sidebar and layout
-│   └── home.html         # Home page with campaign cards
+│   ├── landing_base.html # Landing page base template (no sidebar)
+│   ├── landing.html      # Landing page for non-authenticated users
+│   └── home.html         # Dashboard page with campaign cards
 ├── static/               # Static files (CSS, JS, images)
 │   ├── css/
-│   │   └── styles.css    # Preserved original styles
+│   │   ├── styles.css    # Preserved original styles
+│   │   └── landing.css   # Landing page styles
 │   ├── js/
-│   │   └── script.js     # Preserved original JavaScript
+│   │   ├── script.js     # Preserved original JavaScript
+│   │   └── landing.js    # Landing page JavaScript
 │   └── images/
 │       └── hook.png      # Logo image
 ├── manage.py             # Django management script
@@ -60,11 +64,13 @@ plot-hook-1/
 ### URLs
 - Main project URLs: `plot_hook_backend/urls.py`
 - Core app URLs: `core/urls.py`
-- Home page: `/` (root URL)
+- Landing page: `/` (root URL)
+- Dashboard: `/dashboard/`
 - Search API: `/search/`
 
 ### Views (`core/views.py`)
-- `home()`: Renders the main page with campaign cards
+- `landing()`: Renders the landing page for non-authenticated users
+- `home()`: Renders the dashboard page with campaign cards
 - `search()`: API endpoint for search functionality (ready for future expansion)
 
 ## Static Files
@@ -82,7 +88,12 @@ All original static files have been preserved and moved to Django's static file 
 - Uses Django template tags for static files and URLs
 - Preserves all CSS classes and JavaScript functionality
 
-### Home Template (`templates/home.html`)
+### Landing Template (`templates/landing.html`)
+- Extends the landing base template (no sidebar)
+- Contains hero section, features, demo, and call-to-action
+- Includes particle background effect and smooth scrolling
+
+### Dashboard Template (`templates/home.html`)
 - Extends the base template
 - Contains the campaign cards section
 - Preserves all original styling and functionality

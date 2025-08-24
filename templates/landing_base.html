@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Plot Hook - D&D World-Building Tool{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="landing-body">
+    <header class="landing-header">
+        <div class="header-content">
+            <div class="header-logo">
+                <img src="{% static 'images/hook.png' %}" alt="Plot Hook Logo" class="logo-icon">
+                <span class="logo-text">Plot Hook</span>
+            </div>
+            <nav class="header-nav">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#demo" class="nav-link">Demo</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="{% url 'core:home' %}" class="btn btn-outline btn-small">Sign In</a>
+                <a href="{% url 'core:home' %}" class="btn btn-primary btn-small">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="landing-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="landing-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Plot Hook</h4>
+                <p>The ultimate D&D world-building tool for Dungeon Masters.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#docs">Documentation</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Plot Hook. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/landing.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
