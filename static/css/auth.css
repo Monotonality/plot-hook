@@ -218,6 +218,9 @@
     padding: 0 16px;
     color: #a0a0a0;
     font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+    display: inline-block;
 }
 
 .auth-links {

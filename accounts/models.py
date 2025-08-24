@@ -38,13 +38,11 @@ class User(AbstractUser):
     
     def get_full_name(self):
         """Return the user's full name"""
-        if self.first_name and self.last_name:
-            return f"{self.first_name} {self.last_name}"
         return self.username
     
     def get_short_name(self):
         """Return the user's short name"""
-        return self.first_name or self.username
+        return self.username
 
 
 class UserProfile(models.Model):

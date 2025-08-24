@@ -119,15 +119,18 @@ function initializeFormInteractions() {
         });
     });
     
-    // Password strength indicator
-    const passwordInputs = document.querySelectorAll('input[type="password"]');
-    
-    passwordInputs.forEach(input => {
-        input.addEventListener('input', function() {
-            const strength = calculatePasswordStrength(this.value);
-            updatePasswordStrengthIndicator(this, strength);
+    // Password strength indicator (only on signup page)
+    const isSignupPage = window.location.pathname.includes('/signup/');
+    if (isSignupPage) {
+        const passwordInputs = document.querySelectorAll('input[type="password"]');
+        
+        passwordInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const strength = calculatePasswordStrength(this.value);
+                updatePasswordStrengthIndicator(this, strength);
+            });
         });
-    });
+    }
     
     // Form validation feedback
     const forms = document.querySelectorAll('.auth-form');
@@ -173,9 +176,6 @@ function updatePasswordStrengthIndicator(input, strength) {
     const strengthColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#16a34a'];
     
     indicator.innerHTML = `
-        <div class="strength-bar">
-            <div class="strength-fill" style="width: ${(strength / 5) * 100}%; background-color: ${strengthColors[strength - 1]};"></div>
-        </div>
         <span class="strength-text" style="color: ${strengthColors[strength - 1]};">${strengthText[strength - 1]}</span>
     `;
     
@@ -187,28 +187,11 @@ const style = document.createElement('style');
 style.textContent = `
     .password-strength {
         margin-top: 8px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    
-    .strength-bar {
-        flex: 1;
-        height: 4px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 2px;
-        overflow: hidden;
-    }
-    
-    .strength-fill {
-        height: 100%;
-        transition: width 0.3s ease, background-color 0.3s ease;
     }
     
     .strength-text {
         font-size: 0.8rem;
         font-weight: 500;
-        min-width: 80px;
     }
     
     .loading-spinner {

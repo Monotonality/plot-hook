@@ -51,7 +51,7 @@ class CustomLoginView(LoginView):
         return super().form_valid(form)
     
     def get_success_url(self):
-        return reverse_lazy('core:dashboard')
+        return reverse_lazy('core:home')
 
 
 class CustomLogoutView(LogoutView):
@@ -177,4 +177,4 @@ def toggle_theme(request):
 @login_required
 def dashboard_redirect(request):
     """Redirect to dashboard after login"""
-    return redirect('core:dashboard')
+    return redirect('core:home')
