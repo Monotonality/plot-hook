@@ -17,8 +17,8 @@
             </a>
             
             <div class="user-info">
-                <div class="user-name">Esvarein</div>
-                <div class="org-name">SudoName Org</div>
+                <div class="user-name">Dashboard</div>
+                <div class="org-name">{{ user.username }}'s Workspace</div>
             </div>
             
             <div class="search-section">
@@ -85,10 +85,10 @@
 
     <div class="main-content">
         <div class="main-header">
-            <div class="main-title">Esvarein</div>
+            <div class="main-title">Dashboard</div>
             <div class="user-display">
-                <div class="user-avatar">S</div>
-                <span>SudoName</span>
+                <div class="user-avatar">{{ user.username|first|upper }}</div>
+                <span>{{ user.username }}</span>
             </div>
         </div>
         
