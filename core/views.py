@@ -7,7 +7,10 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def home(request):
     """Home page view that displays the campaign/world cards"""
-    return render(request, 'home.html')
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'home.html', context)
 
 @login_required
 def search(request):
