@@ -102,6 +102,12 @@ body {
     color: #e8e6e3;
     padding: 0 15px;
     font-size: 0.9rem;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border: 1px solid #8b7355;
 }
 
 .search-input::placeholder {
@@ -167,11 +173,15 @@ body {
     margin-left: 20px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .sub-nav.expanded {
-    max-height: 500px;
+    max-height: 1000px;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .sub-nav-item {
@@ -200,11 +210,15 @@ body {
     margin-left: 20px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .sub-sub-nav.expanded {
     max-height: 200px;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .sub-sub-nav-item {
@@ -461,4 +475,59 @@ body {
     .main-content {
         margin-left: 0;
     }
+}
+
+/* Join Code Form Styles */
+.join-form-section {
+    padding: 8px 20px;
+}
+
+.join-container {
+    display: flex;
+    gap: 8px;
+}
+
+.join-input {
+    flex: 1;
+    height: 32px;
+    background: #404040 !important;
+    border: none !important;
+    border-radius: 4px;
+    color: #e8e6e3 !important;
+    padding: 0 12px;
+    font-size: 0.85rem;
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.join-input:focus {
+    outline: none !important;
+    border: 1px solid #8b7355 !important;
+    background: #404040 !important;
+}
+
+.join-input::placeholder {
+    color: #a0a0a0 !important;
+}
+
+.join-button {
+    width: 120px;
+    height: 32px;
+    background: #8b7355;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.join-button:hover {
+    background: #9b8365;
 }

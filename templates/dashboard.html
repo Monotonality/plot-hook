@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block sidebar_content %}
+<div class="nav-section">
+    <a href="#join-world" class="nav-item">
+        <span class="nav-item-icon">🌍</span>
+        <span class="nav-item-text">Join World</span>
+        <span class="nav-item-arrow">▶</span>
+    </a>
+    
+    <div class="sub-nav">
+        <div class="join-form-section">
+            <div class="join-container">
+                <input type="text" class="join-input" placeholder="Enter join code..." maxlength="8">
+                <button class="join-button">Join</button>
+            </div>
+        </div>
+    </div>
+    
+    <a href="#settings" class="nav-item">
+        <span class="nav-item-icon">⚙️</span>
+        <span class="nav-item-text">Settings</span>
+        <span class="nav-item-arrow">▶</span>
+    </a>
+    
+    <div class="sub-nav">
+        <a href="{% url 'accounts:profile_settings' %}" class="sub-nav-item">
+            <span class="nav-item-icon">👤</span>
+            <span class="nav-item-text">Profile Settings</span>
+        </a>
+        <a href="#app-preferences" class="sub-nav-item">
+            <span class="nav-item-icon">🎨</span>
+            <span class="nav-item-text">App Preferences</span>
+        </a>
+    </div>
+    
+    <a href="#help" class="nav-item">
+        <span class="nav-item-icon">❓</span>
+        <span class="nav-item-text">Help</span>
+        <span class="nav-item-arrow">▶</span>
+    </a>
+    
+    <div class="sub-nav">
+        <a href="{% url 'core:landing' %}" class="sub-nav-item">
+            <span class="nav-item-icon">🏠</span>
+            <span class="nav-item-text">Home</span>
+        </a>
+        <a href="#learn-more" class="sub-nav-item">
+            <span class="nav-item-icon">📚</span>
+            <span class="nav-item-text">Learn More</span>
+        </a>
+        <a href="#support" class="sub-nav-item">
+            <span class="nav-item-icon">💬</span>
+            <span class="nav-item-text">Support</span>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<h2 class="section-title">Worlds</h2>
+
+<div class="campaigns-grid">
+    <div class="campaign-card">
+        <div class="campaign-pattern pattern-red">
+            <div class="campaign-badge badge-red">AOD</div>
+        </div>
+        <div class="campaign-info">
+            <div class="campaign-title">Age of Decline</div>
+            <div class="campaign-stats">2 Sessions • 3h 39m Played</div>
+            <div class="campaign-actions">
+                <button class="campaign-menu">⋮</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="campaign-card">
+        <div class="campaign-pattern pattern-teal">
+            <div class="campaign-badge badge-teal">BBC</div>
+        </div>
+        <div class="campaign-info">
+            <div class="campaign-title">Branded By Chaos</div>
+            <div class="campaign-stats">5 Sessions • 12h 11m Played</div>
+            <div class="campaign-actions">
+                <button class="campaign-menu">⋮</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="create-card">
+        <div class="create-icon">+</div>
+        <div class="create-text">Create New</div>
+    </div>
+</div>
+{% endblock %}

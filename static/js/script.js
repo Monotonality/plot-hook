@@ -16,15 +16,32 @@ function initializeDropdowns() {
     // Get all nav items that have dropdowns
     const navItems = document.querySelectorAll('.nav-item');
     
+    console.log('Found nav items:', navItems.length);
+    
     navItems.forEach(item => {
         const arrow = item.querySelector('.nav-item-arrow');
-        const subNav = item.nextElementSibling;
+        const text = item.querySelector('.nav-item-text').textContent;
         
-        // Only add click handlers to items that have dropdowns
-        if (arrow && subNav && (subNav.classList.contains('sub-nav') || subNav.classList.contains('sub-sub-nav'))) {
+        console.log('Checking nav item:', text, 'Arrow:', !!arrow);
+        
+        // Only add click handlers to items that have arrows (indicating dropdowns)
+        if (arrow) {
+            console.log('Adding click handler to:', text);
             item.addEventListener('click', function(e) {
                 e.preventDefault();
-                toggleDropdown(item, subNav);
+                e.stopPropagation();
+                
+                console.log('Clicked on:', text);
+                
+                // Find the next sibling that is a sub-nav
+                let nextSibling = item.nextElementSibling;
+                while (nextSibling && !nextSibling.classList.contains('sub-nav')) {
+                    nextSibling = nextSibling.nextElementSibling;
+                }
+                
+                if (nextSibling && nextSibling.classList.contains('sub-nav')) {
+                    toggleDropdown(item, nextSibling);
+                }
             });
         }
     });
@@ -38,6 +55,7 @@ function initializeDropdowns() {
         if (arrow && subSubNav && subSubNav.classList.contains('sub-sub-nav')) {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
                 toggleDropdown(item, subSubNav);
             });
         }
@@ -47,19 +65,9 @@ function initializeDropdowns() {
 function toggleDropdown(parentItem, dropdownElement) {
     const isExpanded = dropdownElement.classList.contains('expanded');
     
-    // Close all other dropdowns at the same level
-    const siblings = dropdownElement.parentElement.children;
-    Array.from(siblings).forEach(sibling => {
-        if (sibling !== dropdownElement && sibling.classList.contains(dropdownElement.className)) {
-            sibling.classList.remove('expanded');
-            const siblingParent = sibling.previousElementSibling;
-            if (siblingParent && siblingParent.classList.contains('nav-item')) {
-                siblingParent.classList.remove('expanded');
-            }
-        }
-    });
+    console.log('Toggling dropdown:', parentItem.querySelector('.nav-item-text').textContent, 'Current state:', isExpanded);
     
-    // Toggle current dropdown
+    // Toggle current dropdown (allow multiple to be open)
     if (isExpanded) {
         dropdownElement.classList.remove('expanded');
         parentItem.classList.remove('expanded');
@@ -67,11 +75,15 @@ function toggleDropdown(parentItem, dropdownElement) {
         dropdownElement.classList.add('expanded');
         parentItem.classList.add('expanded');
     }
+    
+    console.log('New state:', dropdownElement.classList.contains('expanded'));
 }
 
 function initializeSearch() {
     const searchInput = document.querySelector('.search-input');
     const addButton = document.querySelector('.add-button');
+    const joinInput = document.querySelector('.join-input');
+    const joinButton = document.querySelector('.join-button');
     
     if (searchInput) {
         searchInput.addEventListener('input', function(e) {
@@ -95,6 +107,43 @@ function initializeSearch() {
             console.log('Add button clicked');
             // You can add modal or form logic here
         });
+    }
+    
+    if (joinInput) {
+        joinInput.addEventListener('focus', function() {
+            this.style.borderColor = '#8b7355';
+        });
+        
+        joinInput.addEventListener('blur', function() {
+            this.style.borderColor = 'transparent';
+        });
+        
+        // Handle Enter key press
+        joinInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleJoinCode();
+            }
+        });
+    }
+    
+    if (joinButton) {
+        joinButton.addEventListener('click', function() {
+            handleJoinCode();
+        });
+    }
+}
+
+function handleJoinCode() {
+    const joinInput = document.querySelector('.join-input');
+    if (joinInput) {
+        const joinCode = joinInput.value.trim();
+        if (joinCode) {
+            console.log('Joining world with code:', joinCode);
+            // Add join world logic here
+            // For now, just clear the input
+            joinInput.value = '';
+        }
     }
 }
 

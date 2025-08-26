@@ -5,12 +5,12 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 @login_required
-def home(request):
-    """Home page view that displays the campaign/world cards"""
+def dashboard(request):
+    """Dashboard page view that displays the campaign/world cards"""
     context = {
         'user': request.user,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'dashboard.html', context)
 
 @login_required
 def search(request):
@@ -26,5 +26,8 @@ def search(request):
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 def landing(request):
-    """Landing page for non-authenticated users"""
-    return render(request, 'landing.html')
+    """Landing page for all users"""
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'landing.html', context)

@@ -11,7 +11,7 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <a href="{% url 'core:home' %}" class="sidebar-logo">
+            <a href="{% url 'core:dashboard' %}" class="sidebar-logo">
                 <img src="{% static 'images/hook.png' %}" alt="Plot Hook Logo" class="sidebar-logo-icon" style="width: 24px; height: 24px; object-fit: contain;">
                 <span>Plot Hook</span>
             </a>
@@ -30,56 +30,7 @@
         </div>
         
         <div class="sidebar-nav">
-            <div class="nav-section">
-                <a href="#players" class="nav-item">
-                    <span class="nav-item-icon">👥</span>
-                    <span class="nav-item-text">Players</span>
-                    <span class="nav-item-arrow">▶</span>
-                </a>
-                <a href="#locations" class="nav-item">
-                    <span class="nav-item-icon">🗺️</span>
-                    <span class="nav-item-text">Locations</span>
-                    <span class="nav-item-arrow">▶</span>
-                </a>
-                <a href="#npcs" class="nav-item">
-                    <span class="nav-item-icon">👤</span>
-                    <span class="nav-item-text">Npcs</span>
-                    <span class="nav-item-arrow">▶</span>
-                </a>
-                <a href="#creations" class="nav-item">
-                    <span class="nav-item-icon">⚔️</span>
-                    <span class="nav-item-text">Creations</span>
-                    <span class="nav-item-arrow">▶</span>
-                </a>
-                <a href="#history" class="nav-item">
-                    <span class="nav-item-icon">📚</span>
-                    <span class="nav-item-text">History</span>
-                    <span class="nav-item-arrow">▶</span>
-                </a>
-                
-                <div class="sub-nav">
-                    <a href="#demon-king" class="sub-nav-item">
-                        <span class="nav-item-icon">👑</span>
-                        <span class="nav-item-text">Demon King's Reign</span>
-                    </a>
-                    <a href="#majirsia" class="sub-nav-item">
-                        <span class="nav-item-icon">⚔️</span>
-                        <span class="nav-item-text">Majirsia Succession Crisis</span>
-                        <span class="nav-item-arrow">▶</span>
-                    </a>
-                    
-                    <div class="sub-sub-nav">
-                        <a href="#loyalist" class="sub-sub-nav-item">
-                            <span class="nav-item-icon">🛡️</span>
-                            <span class="nav-item-text">Loyalist Faction</span>
-                        </a>
-                        <a href="#reformist" class="sub-sub-nav-item">
-                            <span class="nav-item-icon">⚖️</span>
-                            <span class="nav-item-text">Reformist Faction</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            {% block sidebar_content %}{% endblock %}
         </div>
     </div>
 

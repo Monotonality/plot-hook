@@ -17,11 +17,19 @@
                 <span class="logo-text">Plot Hook</span>
             </div>
             <nav class="header-nav">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#demo" class="nav-link">Demo</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="{% url 'accounts:login' %}" class="btn btn-outline btn-small">Sign In</a>
-                <a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-small">Get Started</a>
+                {% if user.is_authenticated %}
+                    <div class="user-display">
+                        <div class="user-avatar">{{ user.username|first|upper }}</div>
+                        <span>{{ user.username }}</span>
+                    </div>
+                    <a href="{% url 'accounts:logout' %}" class="btn btn-outline btn-small">Log Out</a>
+                {% else %}
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#demo" class="nav-link">Demo</a>
+                    <a href="#pricing" class="nav-link">Pricing</a>
+                    <a href="{% url 'accounts:login' %}" class="btn btn-outline btn-small">Sign In</a>
+                    <a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-small">Get Started</a>
+                {% endif %}
             </nav>
         </div>
     </header>

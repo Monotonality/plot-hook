@@ -51,7 +51,7 @@ class CustomLoginView(LoginView):
         return super().form_valid(form)
     
     def get_success_url(self):
-        return reverse_lazy('core:home')
+        return reverse_lazy('core:dashboard')
 
 
 class CustomLogoutView(LogoutView):
@@ -81,28 +81,41 @@ def profile_view(request):
 def profile_edit(request):
     """Edit user profile"""
     user = request.user
-    profile = user.profile
     
     if request.method == 'POST':
-        user_form = UserProfileForm(request.POST, request.FILES, instance=user)
-        profile_form = ExtendedProfileForm(request.POST, instance=profile)
+        # Handle simple form from profile settings page
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
         
-        if user_form.is_valid() and profile_form.is_valid():
-            with transaction.atomic():
-                user_form.save()
-                profile_form.save()
+        # Basic validation
+        if username and email:
+            # Check if username is already taken by another user
+            if User.objects.filter(username=username).exclude(id=user.id).exists():
+                messages.error(request, 'Username is already taken.')
+                return redirect('accounts:profile_settings')
+            
+            # Check if email is already taken by another user
+            if User.objects.filter(email=email).exclude(id=user.id).exists():
+                messages.error(request, 'Email is already taken.')
+                return redirect('accounts:profile_settings')
+            
+            # Update user information
+            user.username = username
+            user.email = email
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
             
             messages.success(request, 'Profile updated successfully!')
-            return redirect('accounts:profile')
-    else:
-        user_form = UserProfileForm(instance=user)
-        profile_form = ExtendedProfileForm(instance=profile)
+            return redirect('accounts:profile_settings')
+        else:
+            messages.error(request, 'Username and email are required.')
+            return redirect('accounts:profile_settings')
     
-    context = {
-        'user_form': user_form,
-        'profile_form': profile_form,
-    }
-    return render(request, 'accounts/profile_edit.html', context)
+    # If GET request, redirect to profile settings page
+    return redirect('accounts:profile_settings')
 
 
 @login_required
@@ -113,27 +126,36 @@ def password_change(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Password changed successfully!')
-            return redirect('accounts:profile')
-    else:
-        form = PasswordChangeForm(request.user)
+            return redirect('accounts:profile_settings')
+        else:
+            # If form is invalid, redirect back with error message
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+            return redirect('accounts:profile_settings')
     
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/password_change.html', context)
+    # If GET request, redirect to profile settings page
+    return redirect('accounts:profile_settings')
 
 
 @login_required
 def delete_account(request):
     """Delete user account"""
     if request.method == 'POST':
-        user = request.user
-        logout(request)
-        user.delete()
-        messages.success(request, 'Your account has been deleted.')
-        return redirect('core:landing')
+        confirm_delete = request.POST.get('confirm_delete')
+        
+        if confirm_delete == 'DELETE':
+            user = request.user
+            logout(request)
+            user.delete()
+            messages.success(request, 'Your account has been deleted.')
+            return redirect('core:landing')
+        else:
+            messages.error(request, 'Please type "DELETE" to confirm account deletion.')
+            return redirect('accounts:profile_settings')
     
-    return render(request, 'accounts/delete_account.html')
+    # If GET request, redirect to profile settings page
+    return redirect('accounts:profile_settings')
 
 
 def public_profile(request, username):
@@ -177,4 +199,13 @@ def toggle_theme(request):
 @login_required
 def dashboard_redirect(request):
     """Redirect to dashboard after login"""
-    return redirect('core:home')
+    return redirect('core:dashboard')
+
+
+@login_required
+def profile_settings(request):
+    """Profile settings page"""
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'accounts/profile_settings.html', context)
