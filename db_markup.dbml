@@ -1,0 +1,228 @@
+Table users {
+  id integer [primary key, increment]
+  username varchar [unique, not null]
+  email varchar [unique, not null]
+  password_hash varchar [not null]
+  created_at timestamp [default: `now()`]
+}
+
+Table worlds {
+  id integer [primary key, increment]
+  name varchar [not null]
+  description text [note: 'Brief description of the world/universe']
+  owner_id integer [not null, ref: > users.id, note: 'World creator/DM']
+  join_code varchar [unique, note: 'Unique code for sharing world access']
+  is_active boolean [default: true, note: 'Whether world is currently active']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table world_users {
+  id integer [primary key, increment]
+  world_id integer [not null, ref: > worlds.id]
+  user_id integer [not null, ref: > users.id]
+  role varchar [not null, note: 'creator, co-creator, player']
+  joined_at timestamp [default: `now()`]
+  
+  indexes {
+    (world_id, user_id) [unique]
+  }
+}
+
+Table categories {
+  id integer [primary key, increment]
+  name varchar [not null]
+  description text [note: 'Brief description of the category']
+  world_id integer [not null, ref: > worlds.id, note: 'World this category belongs to']
+  parent_id integer [ref: > categories.id, note: 'Self-referencing for hierarchy']
+  parent_entry_id integer [ref: > entries.id, note: 'If category belongs to an entry']
+  sort_order integer [default: 0, note: 'Order within parent category']
+  is_hidden boolean [default: false, note: 'Hide category from non-authors']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table entries {
+  id integer [primary key, increment]
+  title varchar [not null]
+  content json [not null, note: 'Prosemirror document structure']
+  entry_type varchar [note: 'npc, location, item, quest, etc.']
+  metadata json [note: 'Type-specific structured data']
+  world_id integer [not null, ref: > worlds.id, note: 'World this entry belongs to']
+  category_id integer [ref: > categories.id, note: 'Organizational category']
+  parent_entry_id integer [ref: > entries.id, note: 'If entry belongs to another entry']
+  author_id integer [not null, ref: > users.id]
+  is_hidden boolean [default: false]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table player_categories {
+  id integer [primary key, increment]
+  name varchar [not null]
+  description text [note: 'Brief description of the category']
+  world_id integer [not null, ref: > worlds.id, note: 'World this category belongs to']
+  parent_id integer [ref: > player_categories.id, note: 'Self-referencing for hierarchy']
+  parent_entry_id integer [ref: > player_entries.id, note: 'If category belongs to a player entry']
+  sort_order integer [default: 0, note: 'Order within parent category']
+  is_hidden boolean [default: false, note: 'Hide category from other players']
+  created_by integer [not null, ref: > users.id, note: 'Player who created this category']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table player_entries {
+  id integer [primary key, increment]
+  title varchar [not null]
+  content json [not null, note: 'Prosemirror document structure']
+  entry_type varchar [note: 'npc, location, item, quest, etc.']
+  metadata json [note: 'Type-specific structured data']
+  world_id integer [not null, ref: > worlds.id, note: 'World this entry belongs to']
+  category_id integer [ref: > player_categories.id, note: 'Organizational category']
+  parent_entry_id integer [ref: > player_entries.id, note: 'If entry belongs to another player entry']
+  author_id integer [not null, ref: > users.id, note: 'Player who created this entry']
+  is_hidden boolean [default: false, note: 'Hide entry from other players']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table world_book_references {
+  id integer [primary key, increment]
+  player_entry_id integer [not null, ref: > player_entries.id, note: 'Player entry that references world book']
+  world_entry_id integer [ref: > entries.id, note: 'Referenced world book entry']
+  world_category_id integer [ref: > categories.id, note: 'Referenced world book category']
+  reference_type varchar [note: 'entry, category, both, personal_note']
+  context text [note: 'How the player entry relates to world book content']
+  is_personal_note boolean [default: false, note: 'True if this is a personal note on a world book entry']
+  created_at timestamp [default: `now()`]
+}
+
+Table sessions {
+  id integer [primary key, increment]
+  world_id integer [not null, ref: > worlds.id]
+  title varchar [not null, note: 'Session title']
+  session_number integer [note: 'Session number in campaign']
+  date_played date [note: 'When session was/will be played']
+  status varchar [default: 'planned', note: 'planned, active, completed']
+  created_by integer [not null, ref: > users.id, note: 'DM who created session']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table session_content {
+  id integer [primary key, increment]
+  session_id integer [not null, ref: > sessions.id]
+  content_type varchar [not null, note: 'dm_notes, player_notes, shared_content']
+  content json [not null, note: 'Prosemirror document structure']
+  author_id integer [not null, ref: > users.id, note: 'Who created this content']
+  sort_order integer [default: 0, note: 'Order within session']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table session_references {
+  id integer [primary key, increment]
+  session_id integer [not null, ref: > sessions.id]
+  content_id integer [not null, ref: > session_content.id, note: 'Session content that made reference']
+  reference_type varchar [not null, note: 'world_entry, world_category, player_entry, player_category']
+  referenced_id integer [not null, note: 'ID of referenced content']
+  reference_context text [note: 'Context of the reference']
+  created_at timestamp [default: `now()`]
+}
+
+Table tags {
+  id integer [primary key, increment]
+  name varchar [not null]
+  color varchar [note: 'hex color for UI display']
+  world_id integer [not null, ref: > worlds.id, note: 'Tags are world-specific']
+  created_by integer [not null, ref: > users.id]
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    (world_id, name) [unique]
+  }
+}
+
+Table entry_tags {
+  id integer [primary key, increment]
+  entry_id integer [not null, ref: > entries.id]
+  tag_id integer [not null, ref: > tags.id]
+  
+  indexes {
+    (entry_id, tag_id) [unique]
+  }
+}
+
+Table player_entry_tags {
+  id integer [primary key, increment]
+  player_entry_id integer [not null, ref: > player_entries.id]
+  tag_id integer [not null, ref: > tags.id]
+  
+  indexes {
+    (player_entry_id, tag_id) [unique]
+  }
+}
+
+Table cross_references {
+  id integer [primary key, increment]
+  source_entry_id integer [not null, ref: > entries.id]
+  target_entry_id integer [not null, ref: > entries.id]
+  reference_type varchar [note: 'mentions, related, parent-child, location']
+  context text [note: 'How they are related or context of reference']
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    (source_entry_id, target_entry_id) [unique]
+  }
+}
+
+Table player_cross_references {
+  id integer [primary key, increment]
+  source_entry_id integer [not null, ref: > player_entries.id]
+  target_entry_id integer [not null, ref: > player_entries.id]
+  reference_type varchar [note: 'mentions, related, parent-child, location']
+  context text [note: 'How they are related or context of reference']
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    (source_entry_id, target_entry_id) [unique]
+  }
+}
+
+
+
+Table favorites {
+  id integer [primary key, increment]
+  user_id integer [not null, ref: > users.id]
+  entry_id integer [not null, ref: > entries.id]
+  notes text [note: 'Personal notes about this favorite']
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    (user_id, entry_id) [unique]
+  }
+}
+
+Table hidden_content {
+  id integer [primary key, increment]
+  entry_id integer [not null, ref: > entries.id]
+  content_hash varchar [not null, note: 'Hash of hidden content for identification']
+  content_type varchar [note: 'text, image, section']
+  is_revealed boolean [default: false, note: 'Whether content is currently visible']
+  revealed_by integer [ref: > users.id, note: 'Who revealed this content']
+  revealed_at timestamp [note: 'When content was revealed']
+  created_at timestamp [default: `now()`]
+}
+
+Table media {
+  id integer [primary key, increment]
+  filename varchar [not null]
+  original_filename varchar [not null]
+  file_path varchar [not null]
+  file_size integer
+  mime_type varchar
+  world_id integer [not null, ref: > worlds.id, note: 'World this media belongs to']
+  entry_id integer [ref: > entries.id, note: 'If directly attached to entry']
+  uploaded_by integer [not null, ref: > users.id]
+  created_at timestamp [default: `now()`]
+}
