@@ -24,6 +24,39 @@ body {
     overflow-y: auto;
     border-right: 1px solid #404040;
     z-index: 1000;
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-240px);
+    width: 40px;
+}
+
+.sidebar.collapsed .sidebar-logo-text,
+.sidebar.collapsed .user-info,
+.sidebar.collapsed .search-section,
+.sidebar.collapsed .nav-item-text,
+.sidebar.collapsed .sub-nav-item-text,
+.sidebar.collapsed .nav-item-arrow {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar.collapsed .sidebar-logo-icon {
+    margin: 0 auto;
+}
+
+.sidebar.collapsed .nav-item {
+    justify-content: center;
+    padding: 10px;
+}
+
+.sidebar.collapsed .nav-item-icon {
+    margin: 0;
+}
+
+.sidebar.collapsed .sub-nav {
+    display: none;
 }
 
 .sidebar-header {
@@ -243,6 +276,11 @@ body {
     background: #282828;
     min-height: 100vh;
     position: relative;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.sidebar-collapsed {
+    margin-left: 40px;
 }
 
 .main-content::before {
@@ -264,6 +302,38 @@ body {
     position: relative;
     z-index: 1;
     background: #282828;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: #e8e6e3;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.main-content.sidebar-collapsed .toggle-icon {
+    transform: rotate(180deg);
 }
 
 .main-title {
@@ -596,13 +666,39 @@ body {
 
 @media (max-width: 768px) {
     .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
+        transform: translateX(-100%);
+        width: 280px;
+        position: fixed;
+        height: 100vh;
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
     }
 
     .main-content {
         margin-left: 0;
+    }
+    
+    .main-content.sidebar-collapsed {
+        margin-left: 0;
+    }
+    
+    .sidebar-toggle {
+        display: flex;
+    }
+    
+    .world-header-content {
+        padding: 20px;
+    }
+    
+    .world-title {
+        font-size: 1.8rem;
+    }
+    
+    .world-info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
 }
 

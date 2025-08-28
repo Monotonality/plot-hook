@@ -5,54 +5,33 @@
 {% block main_title %}{{ world.name }}{% endblock %}
 
 {% block content %}
-<div class="content-section">
-    <div class="world-header">
-        <h1 class="section-title">{{ world.name }}</h1>
-        {% if world.description %}
-            <p class="world-description">{{ world.description }}</p>
-        {% endif %}
-        <div class="world-meta">
-            <div class="meta-item">
-                <span class="meta-label">Owner:</span>
-                <span class="meta-value">{{ world.owner.username }}</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Join Code:</span>
-                <span class="meta-value">{{ world.join_code }}</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Status:</span>
-                <span class="meta-value {% if world.is_active %}status-active{% else %}status-inactive{% endif %}">
-                    {% if world.is_active %}Active{% else %}Inactive{% endif %}
-                </span>
-            </div>
-        </div>
-    </div>
-    
+<h2 class="section-title">Categories</h2>
+
+<div class="campaigns-grid">
     {% if root_categories %}
-        <h2 class="section-title">Categories</h2>
-        <div class="campaigns-grid">
-            {% for category in root_categories %}
-                <div class="campaign-card category-card">
-                    <div class="campaign-pattern pattern-purple">
-                        <div class="campaign-badge badge-purple">{{ category.name|slice:":3"|upper }}</div>
-                    </div>
-                    <div class="campaign-info">
-                        <div class="campaign-title">{{ category.name }}</div>
-                        <div class="campaign-stats">{{ category.description|truncatewords:15 }}</div>
-                        <div class="campaign-actions">
-                            <a href="{% url 'core:category_detail' world.id category.id %}" class="campaign-link">View</a>
-                            <button class="campaign-menu">⋮</button>
-                        </div>
+        {% for category in root_categories %}
+            <div class="campaign-card">
+                <div class="campaign-pattern pattern-purple">
+                    <div class="campaign-badge badge-purple">{{ category.name|slice:":3"|upper }}</div>
+                </div>
+                <div class="campaign-info">
+                    <div class="campaign-title">{{ category.name }}</div>
+                    <div class="campaign-stats">{{ category.description|truncatewords:15 }}</div>
+                    <div class="campaign-actions">
+                        <button class="campaign-menu" data-category-id="{{ category.id }}" data-category-name="{{ category.name }}">⋮</button>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     {% else %}
-        <div class="empty-state">
-            <div class="empty-icon">📚</div>
-            <div class="empty-title">No Categories Yet</div>
-            <div class="empty-text">Start building your world by creating categories to organize your content!</div>
+        <div class="campaign-card empty-worlds-card">
+            <div class="campaign-pattern pattern-blue">
+                <div class="campaign-badge badge-blue">📚</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">No Categories Yet</div>
+                <div class="campaign-stats">Start building your world by creating categories to organize your content!</div>
+            </div>
         </div>
     {% endif %}
     
@@ -63,132 +42,78 @@
 </div>
 
 <style>
-.world-header {
-    margin-bottom: 30px;
-    padding: 25px;
-    background: #202020;
-    border-radius: 8px;
-    border: 1px solid #404040;
-}
-
-.world-description {
-    font-size: 1.1em;
-    color: #a0a0a0;
-    margin: 15px 0;
-    line-height: 1.6;
-}
-
-.world-meta {
+.world-header-info {
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 20px;
+    align-items: center;
+    gap: 30px;
+    margin-left: 20px;
 }
 
-.meta-item {
+.world-info-item {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: flex-start;
+    gap: 4px;
 }
 
-.meta-label {
-    font-size: 0.8rem;
+.info-label {
+    font-size: 0.7rem;
     color: #808080;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.meta-value {
+.info-value {
     font-size: 0.9rem;
     color: #e8e6e3;
     font-weight: 600;
+}
+
+.code-value {
+    font-family: 'Courier New', monospace;
+    background: rgba(139, 115, 85, 0.2);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid rgba(139, 115, 85, 0.3);
+    font-size: 0.8rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .status-active {
-    color: #22c55e !important;
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .status-inactive {
-    color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-.category-card {
-    cursor: pointer;
-}
-
-.category-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.pattern-purple {
-    background: linear-gradient(45deg, #8b5cf6 25%, transparent 25%), 
-                linear-gradient(-45deg, #8b5cf6 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, #8b5cf6 75%), 
-                linear-gradient(-45deg, transparent 75%, #8b5cf6 75%);
-    background-size: 20px 20px;
-    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-}
-
-.badge-purple {
-    background: #8b5cf6;
-}
-
-.empty-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px 20px;
-    background: #202020;
-    border-radius: 8px;
-    border: 2px dashed #404040;
-    margin-bottom: 20px;
-}
-
-.empty-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-}
-
-.empty-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #e8e6e3;
-    margin-bottom: 8px;
-}
-
-.empty-text {
-    color: #a0a0a0;
-    font-size: 0.9rem;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.create-card {
-    background: #303030;
-    border: 2px dashed #505050;
-    border-radius: 8px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.create-card:hover {
-    border-color: #8b7355;
-    background: #383838;
-}
-
-.create-icon {
-    font-size: 2rem;
-    color: #a0a0a0;
-    margin-bottom: 10px;
-}
-
-.create-text {
-    color: #a0a0a0;
-    font-size: 0.9rem;
+@media (max-width: 768px) {
+    .world-header-info {
+        flex-direction: column;
+        gap: 15px;
+        margin-left: 0;
+        margin-top: 15px;
+    }
+    
+    .world-info-item {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
 }
 </style>
 
@@ -199,22 +124,65 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize category card interactions
     initializeCategoryCards();
+    
+    // Add world info to header
+    addWorldInfoToHeader();
 });
 
+function addWorldInfoToHeader() {
+    const headerLeft = document.querySelector('.header-left');
+    if (!headerLeft) return;
+    
+    // Create world info container
+    const worldInfo = document.createElement('div');
+    worldInfo.className = 'world-header-info';
+    worldInfo.innerHTML = `
+        <div class="world-info-item">
+            <div class="info-label">Owner</div>
+            <div class="info-value">{{ world.owner.username }}</div>
+        </div>
+        <div class="world-info-item">
+            <div class="info-label">Join Code</div>
+            <div class="info-value code-value">{{ world.join_code }}</div>
+        </div>
+        <div class="world-info-item">
+            <div class="info-label">Status</div>
+            <div class="info-value">
+                <span class="status-badge {% if world.is_active %}status-active{% else %}status-inactive{% endif %}">
+                    {% if world.is_active %}Active{% else %}Inactive{% endif %}
+                </span>
+            </div>
+        </div>
+        <div class="world-info-item">
+            <div class="info-label">Created</div>
+            <div class="info-value">{{ world.created_at|date:"M d, Y" }}</div>
+        </div>
+    `;
+    
+    // Insert after the main title
+    headerLeft.appendChild(worldInfo);
+}
+
 function initializeCategoryCards() {
-    const categoryCards = document.querySelectorAll('.category-card');
+    const categoryCards = document.querySelectorAll('.campaign-card');
     const createCard = document.querySelector('.create-card');
     
     categoryCards.forEach(card => {
+        // Skip the empty state card
+        if (card.classList.contains('empty-worlds-card')) {
+            return;
+        }
+        
         card.addEventListener('click', function(e) {
             // Don't navigate if clicking on menu button
             if (e.target.closest('.campaign-menu')) {
                 return;
             }
             
-            const link = this.querySelector('.campaign-link');
-            if (link) {
-                window.location.href = link.href;
+            // Navigate to category detail
+            const categoryId = this.querySelector('.campaign-menu').dataset.categoryId;
+            if (categoryId) {
+                window.location.href = `/worlds/{{ world.id }}/categories/${categoryId}/`;
             }
         });
         
@@ -223,7 +191,7 @@ function initializeCategoryCards() {
         if (menuButton) {
             menuButton.addEventListener('click', function(e) {
                 e.stopPropagation(); // Prevent card click
-                console.log('Category menu clicked');
+                console.log('Category menu clicked for:', this.dataset.categoryName);
                 // Add category menu functionality here
             });
         }

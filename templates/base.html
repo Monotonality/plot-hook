@@ -9,11 +9,11 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <a href="{% url 'core:dashboard' %}" class="sidebar-logo">
                 <img src="{% static 'images/hook.png' %}" alt="Plot Hook Logo" class="sidebar-logo-icon" style="width: 24px; height: 24px; object-fit: contain;">
-                <span>Plot Hook</span>
+                <span class="sidebar-logo-text">Plot Hook</span>
             </a>
             
             <div class="user-info">
@@ -33,9 +33,14 @@
         </div>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" id="mainContent">
         <div class="main-header">
-            <div class="main-title">{% block main_title %}Dashboard{% endblock %}</div>
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <span class="toggle-icon">☰</span>
+                </button>
+                <div class="main-title">{% block main_title %}Dashboard{% endblock %}</div>
+            </div>
             <div class="user-display">
                 <div class="user-dropdown">
                     <div class="user-avatar" id="userDropdownTrigger">{{ user.username|first|upper }}</div>

@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize user dropdown functionality
     initializeUserDropdown();
+    
+    // Initialize sidebar toggle functionality
+    initializeSidebarToggle();
 });
 
 function initializeDropdowns() {
@@ -252,6 +255,12 @@ function highlightText(element, searchTerm) {
 function initializeCampaignCards() {
     const campaignCards = document.querySelectorAll('.campaign-card');
     const createCard = document.querySelector('.create-card');
+    
+    // Check if we're on a page with campaign cards (dashboard)
+    if (campaignCards.length === 0 && !createCard) {
+        console.log('Campaign cards not found, skipping initialization');
+        return;
+    }
     
     campaignCards.forEach(card => {
         // Handle card click (navigate to world)
@@ -563,6 +572,12 @@ function initializeConfirmationModal() {
     const cancelBtn = document.getElementById('confirmationCancel');
     const confirmBtn = document.getElementById('confirmationConfirm');
     
+    // Check if all required elements exist (only on dashboard page)
+    if (!modal || !overlay || !closeBtn || !cancelBtn || !confirmBtn) {
+        console.log('Confirmation modal elements not found, skipping initialization');
+        return;
+    }
+    
     // Close modal events
     closeBtn.addEventListener('click', hideConfirmationModal);
     cancelBtn.addEventListener('click', hideConfirmationModal);
@@ -666,6 +681,12 @@ function initializeWorldMenu() {
     const viewButton = document.getElementById('worldMenuView');
     const deleteButton = document.getElementById('worldMenuDelete');
     const leaveButton = document.getElementById('worldMenuLeave');
+    
+    // Check if all required elements exist (only on dashboard page)
+    if (!dropdown || !overlay || !closeButton || !viewButton || !deleteButton || !leaveButton) {
+        console.log('World menu elements not found, skipping initialization');
+        return;
+    }
     
     // Close menu when clicking overlay or close button
     overlay.addEventListener('click', hideWorldMenu);
@@ -853,6 +874,12 @@ function initializeCreateWorld() {
     const regenerateBtn = document.getElementById('regenerateColors');
     const form = document.getElementById('createWorldForm');
     
+    // Check if all required elements exist (only on dashboard page)
+    if (!modal || !overlay || !closeBtn || !cancelBtn || !regenerateBtn || !form) {
+        console.log('Create world modal elements not found, skipping initialization');
+        return;
+    }
+    
     // Close modal when clicking overlay, close button, or cancel button
     overlay.addEventListener('click', hideCreateWorldModal);
     closeBtn.addEventListener('click', hideCreateWorldModal);
@@ -984,10 +1011,120 @@ function hideUserDropdown() {
     menu.classList.remove('active');
 }
 
+// Sidebar Toggle Functions
+function initializeSidebarToggle() {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    
+    console.log('Sidebar init: Elements found:', {
+        sidebarToggle: !!sidebarToggle,
+        sidebar: !!sidebar,
+        mainContent: !!mainContent
+    });
+    
+    if (!sidebarToggle || !sidebar || !mainContent) {
+        console.log('Sidebar init: Missing elements, returning');
+        return;
+    }
+    
+    // Check if we're on dashboard page
+    const isDashboard = window.location.pathname === '/dashboard/' || window.location.pathname === '/';
+    console.log('Sidebar init: Current pathname:', window.location.pathname);
+    console.log('Sidebar init: isDashboard:', isDashboard);
+    
+    // Load saved state from localStorage
+    const savedState = localStorage.getItem('sidebarCollapsed');
+    console.log('Sidebar init: Saved state from localStorage:', savedState);
+    
+    if (isDashboard) {
+        // On dashboard, use saved state or default to expanded
+        if (savedState === 'true') {
+            sidebar.classList.add('collapsed');
+            mainContent.classList.add('sidebar-collapsed');
+            console.log('Sidebar init: Dashboard - collapsed (from saved state)');
+        } else {
+            sidebar.classList.remove('collapsed');
+            mainContent.classList.remove('sidebar-collapsed');
+            console.log('Sidebar init: Dashboard - expanded (default or from saved state)');
+        }
+    } else {
+        // Not on dashboard, auto-collapse unless user explicitly expanded it
+        if (savedState === 'false') {
+            // User explicitly expanded the sidebar on a non-dashboard page
+            sidebar.classList.remove('collapsed');
+            mainContent.classList.remove('sidebar-collapsed');
+            console.log('Sidebar init: Non-dashboard - expanded (user preference)');
+        } else {
+            // Default to collapsed on non-dashboard pages
+            sidebar.classList.add('collapsed');
+            mainContent.classList.add('sidebar-collapsed');
+            console.log('Sidebar init: Non-dashboard - collapsed (default)');
+        }
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth < 768) {
+            // On mobile, use mobile-open class instead of collapsed
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.remove('mobile-open');
+            mainContent.classList.remove('sidebar-collapsed');
+        }
+    });
+    
+    // Handle mobile sidebar toggle
+    if (window.innerWidth < 768) {
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('mobile-open');
+        });
+        
+        // Close mobile sidebar when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
+    } else {
+        // Desktop behavior
+        sidebarToggle.addEventListener('click', toggleSidebar);
+    }
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    
+    if (!sidebar || !mainContent) {
+        console.log('Sidebar toggle: Missing elements');
+        return;
+    }
+    
+    const isCollapsed = sidebar.classList.contains('collapsed');
+    console.log('Sidebar toggle: Current state isCollapsed =', isCollapsed);
+    
+    if (isCollapsed) {
+        // Expand sidebar
+        sidebar.classList.remove('collapsed');
+        mainContent.classList.remove('sidebar-collapsed');
+        console.log('Sidebar toggle: Expanding sidebar');
+    } else {
+        // Collapse sidebar
+        sidebar.classList.add('collapsed');
+        mainContent.classList.add('sidebar-collapsed');
+        console.log('Sidebar toggle: Collapsing sidebar');
+    }
+    
+    // Save state to localStorage
+    localStorage.setItem('sidebarCollapsed', !isCollapsed);
+    console.log('Sidebar toggle: Saved state to localStorage:', !isCollapsed);
+}
+
 // Export functions for potential use in other scripts
 window.PlotHook = {
     setActiveNavItem,
     performSearch,
     toggleDropdown,
-    initializeAnimatedBackground
+    initializeAnimatedBackground,
+    toggleSidebar
 };
