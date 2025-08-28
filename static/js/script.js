@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize animated background
     initializeAnimatedBackground();
+    
+    // Initialize user dropdown functionality
+    initializeUserDropdown();
 });
 
 function initializeDropdowns() {
@@ -128,21 +131,87 @@ function initializeSearch() {
     }
     
     if (joinButton) {
-        joinButton.addEventListener('click', function() {
+        joinButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            handleJoinCode();
+        });
+    }
+    
+    // Handle form submission
+    const joinForm = document.getElementById('joinWorldForm');
+    if (joinForm) {
+        joinForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             handleJoinCode();
         });
     }
 }
 
 function handleJoinCode() {
+    const joinForm = document.getElementById('joinWorldForm');
     const joinInput = document.querySelector('.join-input');
-    if (joinInput) {
+    const joinMessage = document.getElementById('joinMessage');
+    
+    if (joinForm && joinInput) {
         const joinCode = joinInput.value.trim();
         if (joinCode) {
             console.log('Joining world with code:', joinCode);
-            // Add join world logic here
-            // For now, just clear the input
-            joinInput.value = '';
+            
+            // Show loading state
+            const joinButton = joinForm.querySelector('.join-button');
+            const originalText = joinButton.textContent;
+            joinButton.textContent = 'Joining...';
+            joinButton.disabled = true;
+            
+            // Clear previous messages
+            joinMessage.className = 'join-message';
+            joinMessage.style.display = 'none';
+            
+            // Get CSRF token
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            // Make AJAX request
+            fetch('/api/join-world/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: `join_code=${encodeURIComponent(joinCode)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    joinMessage.textContent = data.message;
+                    joinMessage.className = 'join-message success';
+                    joinMessage.style.display = 'block';
+                    
+                    // Clear input
+                    joinInput.value = '';
+                    
+                    // Reload page after a short delay to show the new world
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    // Show error message
+                    joinMessage.textContent = data.error;
+                    joinMessage.className = 'join-message error';
+                    joinMessage.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error joining world:', error);
+                joinMessage.textContent = 'An error occurred while joining the world.';
+                joinMessage.className = 'join-message error';
+                joinMessage.style.display = 'block';
+            })
+            .finally(() => {
+                // Reset button state
+                joinButton.textContent = originalText;
+                joinButton.disabled = false;
+            });
         }
     }
 }
@@ -185,10 +254,20 @@ function initializeCampaignCards() {
     const createCard = document.querySelector('.create-card');
     
     campaignCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const title = this.querySelector('.campaign-title').textContent;
-            console.log(`World clicked: ${title}`);
-            // Add navigation logic here
+        // Handle card click (navigate to world)
+        card.addEventListener('click', function(e) {
+            // Don't navigate if clicking on menu button
+            if (e.target.closest('.campaign-menu')) {
+                return;
+            }
+            
+            const menuButton = this.querySelector('.campaign-menu');
+            if (menuButton) {
+                const worldId = menuButton.getAttribute('data-world-id');
+                if (worldId) {
+                    window.location.href = `/worlds/${worldId}/`;
+                }
+            }
         });
         
         // Handle menu button clicks
@@ -196,19 +275,25 @@ function initializeCampaignCards() {
         if (menuButton) {
             menuButton.addEventListener('click', function(e) {
                 e.stopPropagation(); // Prevent card click
-                const title = card.querySelector('.campaign-title').textContent;
-                console.log(`Menu clicked for: ${title}`);
-                // Add dropdown menu logic here
+                showWorldMenu(this);
             });
         }
     });
     
     if (createCard) {
         createCard.addEventListener('click', function() {
-            console.log('Create new world clicked');
-            // Add create world logic here
+            showCreateWorldModal();
         });
     }
+    
+    // Initialize world menu functionality
+    initializeWorldMenu();
+    
+    // Initialize create world functionality
+    initializeCreateWorld();
+    
+    // Initialize confirmation modal functionality
+    initializeConfirmationModal();
 }
 
 // Utility function to handle navigation state
@@ -414,6 +499,489 @@ function initializeAnimatedBackground() {
     
     // Start animation
     animate();
+}
+
+// Confirmation Modal Functions
+function showDeleteConfirmation(worldId, csrfToken) {
+    const modal = document.getElementById('confirmationModal');
+    const overlay = document.getElementById('confirmationOverlay');
+    const message = document.getElementById('confirmationMessage');
+    const confirmBtn = document.getElementById('confirmationConfirm');
+    
+    // Get world name from the menu title
+    const worldName = document.getElementById('worldMenuTitle').textContent;
+    
+    message.textContent = `Are you sure you want to delete "${worldName}"? This action cannot be undone.`;
+    confirmBtn.textContent = 'Delete World';
+    confirmBtn.className = 'btn-danger';
+    
+    // Show modal
+    modal.classList.add('active');
+    overlay.classList.add('active');
+    
+    // Store data for confirmation
+    modal.dataset.worldId = worldId;
+    modal.dataset.csrfToken = csrfToken;
+    modal.dataset.action = 'delete';
+}
+
+function showLeaveConfirmation(worldId, csrfToken) {
+    const modal = document.getElementById('confirmationModal');
+    const overlay = document.getElementById('confirmationOverlay');
+    const message = document.getElementById('confirmationMessage');
+    const confirmBtn = document.getElementById('confirmationConfirm');
+    
+    // Get world name from the menu title
+    const worldName = document.getElementById('worldMenuTitle').textContent;
+    
+    message.textContent = `Are you sure you want to leave "${worldName}"?`;
+    confirmBtn.textContent = 'Leave World';
+    confirmBtn.className = 'btn-danger';
+    
+    // Show modal
+    modal.classList.add('active');
+    overlay.classList.add('active');
+    
+    // Store data for confirmation
+    modal.dataset.worldId = worldId;
+    modal.dataset.csrfToken = csrfToken;
+    modal.dataset.action = 'leave';
+}
+
+function hideConfirmationModal() {
+    const modal = document.getElementById('confirmationModal');
+    const overlay = document.getElementById('confirmationOverlay');
+    
+    modal.classList.remove('active');
+    overlay.classList.remove('active');
+}
+
+function initializeConfirmationModal() {
+    const modal = document.getElementById('confirmationModal');
+    const overlay = document.getElementById('confirmationOverlay');
+    const closeBtn = document.getElementById('confirmationClose');
+    const cancelBtn = document.getElementById('confirmationCancel');
+    const confirmBtn = document.getElementById('confirmationConfirm');
+    
+    // Close modal events
+    closeBtn.addEventListener('click', hideConfirmationModal);
+    cancelBtn.addEventListener('click', hideConfirmationModal);
+    overlay.addEventListener('click', hideConfirmationModal);
+    
+    // Confirm button event
+    confirmBtn.addEventListener('click', function() {
+        const worldId = modal.dataset.worldId;
+        const csrfToken = modal.dataset.csrfToken;
+        const action = modal.dataset.action;
+        
+        // Hide modal first
+        hideConfirmationModal();
+        
+        if (action === 'delete') {
+            // Perform delete action
+            fetch(`/api/worlds/${worldId}/delete/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Reload page to reflect changes
+                    window.location.reload();
+                                 } else {
+                     // Show error message in console for debugging
+                     console.error('Error deleting world:', data.error);
+                 }
+             })
+             .catch(error => {
+                 console.error('Error deleting world:', error);
+             });
+        } else if (action === 'leave') {
+            // Perform leave action
+            fetch(`/api/worlds/${worldId}/leave/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Reload page to reflect changes
+                    window.location.reload();
+                } else {
+                    console.error('Error leaving world:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error leaving world:', error);
+            });
+        }
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            hideConfirmationModal();
+        }
+    });
+}
+
+// World Menu Functions
+function showWorldMenu(menuButton) {
+    const worldId = menuButton.getAttribute('data-world-id');
+    const worldName = menuButton.getAttribute('data-world-name');
+    const userRole = menuButton.getAttribute('data-user-role');
+    
+    const dropdown = document.getElementById('worldMenuDropdown');
+    const overlay = document.getElementById('worldMenuOverlay');
+    const title = document.getElementById('worldMenuTitle');
+    
+    // Set world info
+    title.textContent = worldName;
+    dropdown.setAttribute('data-world-id', worldId);
+    dropdown.setAttribute('data-user-role', userRole);
+    
+    // Show menu and overlay
+    dropdown.classList.add('active');
+    overlay.classList.add('active');
+}
+
+function hideWorldMenu() {
+    const dropdown = document.getElementById('worldMenuDropdown');
+    const overlay = document.getElementById('worldMenuOverlay');
+    
+    dropdown.classList.remove('active');
+    overlay.classList.remove('active');
+}
+
+function initializeWorldMenu() {
+    const dropdown = document.getElementById('worldMenuDropdown');
+    const overlay = document.getElementById('worldMenuOverlay');
+    const closeButton = document.getElementById('worldMenuClose');
+    const viewButton = document.getElementById('worldMenuView');
+    const deleteButton = document.getElementById('worldMenuDelete');
+    const leaveButton = document.getElementById('worldMenuLeave');
+    
+    // Close menu when clicking overlay or close button
+    overlay.addEventListener('click', hideWorldMenu);
+    closeButton.addEventListener('click', hideWorldMenu);
+    
+    // Handle view action
+    viewButton.addEventListener('click', function() {
+        const worldId = dropdown.getAttribute('data-world-id');
+        if (worldId) {
+            window.location.href = `/worlds/${worldId}/`;
+        }
+        hideWorldMenu();
+    });
+    
+    // Handle delete action (owner only)
+    deleteButton.addEventListener('click', function() {
+        const worldId = dropdown.getAttribute('data-world-id');
+        const worldName = document.getElementById('worldMenuTitle').textContent;
+        
+        // Show custom confirmation modal
+        showDeleteConfirmation(worldId, document.querySelector('[name=csrfmiddlewaretoken]').value);
+        hideWorldMenu();
+    });
+    
+    // Handle leave action (player only)
+    leaveButton.addEventListener('click', function() {
+        const worldId = dropdown.getAttribute('data-world-id');
+        const worldName = document.getElementById('worldMenuTitle').textContent;
+        
+        // Show custom confirmation modal for leaving
+        showLeaveConfirmation(worldId, document.querySelector('[name=csrfmiddlewaretoken]').value);
+        hideWorldMenu();
+    });
+    
+    // Close menu with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && dropdown.classList.contains('active')) {
+            hideWorldMenu();
+        }
+    });
+}
+
+function deleteWorld(worldId) {
+    // Get CSRF token
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    // Show custom confirmation modal
+    showDeleteConfirmation(worldId, csrfToken);
+}
+
+function leaveWorld(worldId) {
+    // Get CSRF token
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    fetch(`/api/worlds/${worldId}/leave/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': csrfToken,
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Reload page to reflect changes
+            window.location.reload();
+        } else {
+            console.error('Error leaving world:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error leaving world:', error);
+    });
+}
+
+// Create World Functions
+function showCreateWorldModal() {
+    const modal = document.getElementById('createWorldModal');
+    const overlay = document.getElementById('createWorldOverlay');
+    
+    // Generate initial color palette
+    generateColorPalette();
+    
+    // Show modal and overlay
+    modal.classList.add('active');
+    overlay.classList.add('active');
+    
+    // Focus on the world name input
+    document.getElementById('worldName').focus();
+}
+
+function hideCreateWorldModal() {
+    const modal = document.getElementById('createWorldModal');
+    const overlay = document.getElementById('createWorldOverlay');
+    
+    modal.classList.remove('active');
+    overlay.classList.remove('active');
+    
+    // Reset form
+    document.getElementById('createWorldForm').reset();
+    document.getElementById('selectedColor').value = '';
+    
+    // Clear color selection
+    const colorOptions = document.querySelectorAll('.color-option');
+    colorOptions.forEach(option => option.classList.remove('selected'));
+}
+
+function generateColorPalette() {
+    const palette = document.getElementById('colorPalette');
+    palette.innerHTML = '';
+    
+    // Generate 8 random colors
+    const colors = [];
+    for (let i = 0; i < 8; i++) {
+        colors.push(generateRandomColor());
+    }
+    
+    // Create color options
+    colors.forEach(color => {
+        const colorOption = document.createElement('div');
+        colorOption.className = 'color-option';
+        colorOption.style.backgroundColor = color;
+        colorOption.setAttribute('data-color', color);
+        
+        colorOption.addEventListener('click', function() {
+            // Remove selection from other colors
+            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Select this color
+            this.classList.add('selected');
+            document.getElementById('selectedColor').value = color;
+        });
+        
+        palette.appendChild(colorOption);
+    });
+}
+
+function generateRandomColor() {
+    // Generate vibrant colors (avoiding too light or too dark)
+    const hue = Math.floor(Math.random() * 360);
+    const saturation = Math.floor(Math.random() * 40) + 60; // 60-100%
+    const lightness = Math.floor(Math.random() * 30) + 35; // 35-65%
+    
+    // Convert HSL to hex for better compatibility
+    return hslToHex(hue, saturation, lightness);
+}
+
+function hslToHex(h, s, l) {
+    // Convert HSL to RGB first
+    s /= 100;
+    l /= 100;
+    
+    const c = (1 - Math.abs(2 * l - 1)) * s;
+    const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    const m = l - c / 2;
+    let r = 0, g = 0, b = 0;
+    
+    if (0 <= h && h < 60) {
+        r = c; g = x; b = 0;
+    } else if (60 <= h && h < 120) {
+        r = x; g = c; b = 0;
+    } else if (120 <= h && h < 180) {
+        r = 0; g = c; b = x;
+    } else if (180 <= h && h < 240) {
+        r = 0; g = x; b = c;
+    } else if (240 <= h && h < 300) {
+        r = x; g = 0; b = c;
+    } else if (300 <= h && h < 360) {
+        r = c; g = 0; b = x;
+    }
+    
+    // Convert RGB to hex
+    const rHex = Math.round((r + m) * 255).toString(16).padStart(2, '0');
+    const gHex = Math.round((g + m) * 255).toString(16).padStart(2, '0');
+    const bHex = Math.round((b + m) * 255).toString(16).padStart(2, '0');
+    
+    return `#${rHex}${gHex}${bHex}`;
+}
+
+function initializeCreateWorld() {
+    const modal = document.getElementById('createWorldModal');
+    const overlay = document.getElementById('createWorldOverlay');
+    const closeBtn = document.getElementById('createWorldClose');
+    const cancelBtn = document.getElementById('cancelCreate');
+    const regenerateBtn = document.getElementById('regenerateColors');
+    const form = document.getElementById('createWorldForm');
+    
+    // Close modal when clicking overlay, close button, or cancel button
+    overlay.addEventListener('click', hideCreateWorldModal);
+    closeBtn.addEventListener('click', hideCreateWorldModal);
+    cancelBtn.addEventListener('click', hideCreateWorldModal);
+    
+    // Regenerate colors
+    regenerateBtn.addEventListener('click', function() {
+        generateColorPalette();
+        document.getElementById('selectedColor').value = '';
+    });
+    
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        createWorld();
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            hideCreateWorldModal();
+        }
+    });
+}
+
+function createWorld() {
+    const form = document.getElementById('createWorldForm');
+    const worldName = document.getElementById('worldName').value.trim();
+    const themeColor = document.getElementById('selectedColor').value;
+    
+    if (!worldName) {
+        console.error('World name is required');
+        return;
+    }
+    
+    if (!themeColor) {
+        console.error('Theme color is required');
+        return;
+    }
+    
+    // Get CSRF token
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    // Show loading state
+    const submitBtn = form.querySelector('.btn-primary');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Creating...';
+    submitBtn.disabled = true;
+    
+    // Prepare form data
+    const formData = new FormData();
+    formData.append('world_name', worldName);
+    formData.append('theme_color', themeColor);
+    
+    fetch('/api/create-world/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken,
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Hide modal
+            hideCreateWorldModal();
+            
+            // Reload page to show the new world
+            window.location.reload();
+        } else {
+            console.error('Error creating world:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error creating world:', error);
+    })
+    .finally(() => {
+        // Reset button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    });
+}
+
+// User Dropdown Functions
+function initializeUserDropdown() {
+    const trigger = document.getElementById('userDropdownTrigger');
+    const menu = document.getElementById('userDropdownMenu');
+    const userDropdown = trigger ? trigger.closest('.user-dropdown') : null;
+    
+    if (!trigger || !menu || !userDropdown) return;
+    
+    // Toggle dropdown when clicking on avatar or username area
+    userDropdown.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleUserDropdown();
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!menu.contains(e.target) && !userDropdown.contains(e.target)) {
+            hideUserDropdown();
+        }
+    });
+    
+    // Close dropdown with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && menu.classList.contains('active')) {
+            hideUserDropdown();
+        }
+    });
+}
+
+function toggleUserDropdown() {
+    const menu = document.getElementById('userDropdownMenu');
+    if (menu.classList.contains('active')) {
+        hideUserDropdown();
+    } else {
+        showUserDropdown();
+    }
+}
+
+function showUserDropdown() {
+    const menu = document.getElementById('userDropdownMenu');
+    menu.classList.add('active');
+}
+
+function hideUserDropdown() {
+    const menu = document.getElementById('userDropdownMenu');
+    menu.classList.remove('active');
 }
 
 // Export functions for potential use in other scripts

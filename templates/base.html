@@ -17,8 +17,7 @@
             </a>
             
             <div class="user-info">
-                <div class="user-name">Dashboard</div>
-                <div class="org-name">{{ user.username }}'s Workspace</div>
+                <div class="user-name">{% block page_title %}Dashboard{% endblock %}</div>
             </div>
             
             <div class="search-section">
@@ -36,10 +35,22 @@
 
     <div class="main-content">
         <div class="main-header">
-            <div class="main-title">Dashboard</div>
+            <div class="main-title">{% block main_title %}Dashboard{% endblock %}</div>
             <div class="user-display">
-                <div class="user-avatar">{{ user.username|first|upper }}</div>
-                <span>{{ user.username }}</span>
+                <div class="user-dropdown">
+                    <div class="user-avatar" id="userDropdownTrigger">{{ user.username|first|upper }}</div>
+                    <span class="user-username">{{ user.username }}</span>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <div class="user-dropdown-actions">
+                            <form method="post" action="{% url 'accounts:logout' %}" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="user-dropdown-action sign-out-btn" style="width: 100%; border: none; cursor: pointer;">
+                                    Sign Out
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
