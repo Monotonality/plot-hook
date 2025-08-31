@@ -387,6 +387,32 @@ body {
     color: #ffffff;
 }
 
+/* Breadcrumb Bar Styles */
+.breadcrumb-bar {
+    padding: 12px 30px;
+    background: #202020;
+    border-bottom: 1px solid #404040;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+.breadcrumb-bar a {
+    color: #8b7355;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-bar a:hover {
+    color: #e8e6e3;
+    text-decoration: underline;
+}
+
+.breadcrumb-bar .breadcrumb-separator {
+    color: #606060;
+    margin: 0 8px;
+}
+
 .user-dropdown-menu {
     position: absolute;
     top: 100%;

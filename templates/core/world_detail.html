@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ world.name }} - Plot Hook{% endblock %}
-{% block page_title %}{{ world.name }}{% endblock %}
-{% block main_title %}{{ world.name }}{% endblock %}
+{% block sidebar_title %}{{ world.name }}{% endblock %}
+{% block main_title %}Categories{% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb-bar">
+    <a href="{% url 'core:dashboard' %}">Dashboard</a>
+    <span class="breadcrumb-separator">›</span>
+    <span>{{ world.name }}</span>
+</div>
+{% endblock %}
 
 {% block content %}
-<h2 class="section-title">Categories</h2>
-
 <div class="campaigns-grid">
     {% if root_categories %}
         {% for category in root_categories %}

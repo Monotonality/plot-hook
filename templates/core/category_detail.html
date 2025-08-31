@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ category.name }} - {{ world.name }}{% endblock %}
-{% block page_title %}{{ category.name }}{% endblock %}
-{% block main_title %}{{ category.name }}{% endblock %}
+{% block sidebar_title %}{{ world.name }}{% endblock %}
+{% block main_title %}{% if subcategories %}Subcategories{% else %}Entries{% endif %}{% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb-bar">
+    <a href="{% url 'core:dashboard' %}">Dashboard</a>
+    <span class="breadcrumb-separator">›</span>
+    <a href="{% url 'core:world_detail' world.id %}">{{ world.name }}</a>
+    {% for ancestor in ancestors %}
+        <span class="breadcrumb-separator">›</span>
+        <a href="{% url 'core:category_detail' world.id ancestor.id %}">{{ ancestor.name }}</a>
+    {% endfor %}
+    <span class="breadcrumb-separator">›</span>
+    <span>{{ category.name }}</span>
+</div>
+{% endblock %}
 
 {% block content %}
 <div class="content-section">
-    <!-- Breadcrumb navigation -->
-    <nav class="breadcrumb-nav">
-        <a href="{% url 'core:world_list' %}">Worlds</a> &gt;
-        <a href="{% url 'core:world_detail' world.id %}">{{ world.name }}</a>
-        {% for ancestor in ancestors %}
-            &gt; <a href="{% url 'core:category_detail' world.id ancestor.id %}">{{ ancestor.name }}</a>
-        {% endfor %}
-        &gt; {{ category.name }}
-    </nav>
     
     <div class="category-header">
         <h1 class="section-title">{{ category.name }}</h1>
@@ -24,10 +29,9 @@
     </div>
     
     {% if subcategories %}
-        <h2 class="section-title">Subcategories</h2>
         <div class="campaigns-grid">
             {% for subcategory in subcategories %}
-                <div class="campaign-card category-card">
+                <div class="campaign-card">
                     <div class="campaign-pattern pattern-indigo">
                         <div class="campaign-badge badge-indigo">{{ subcategory.name|slice:":3"|upper }}</div>
                     </div>
@@ -35,8 +39,7 @@
                         <div class="campaign-title">{{ subcategory.name }}</div>
                         <div class="campaign-stats">{{ subcategory.description|truncatewords:15 }}</div>
                         <div class="campaign-actions">
-                            <a href="{% url 'core:category_detail' world.id subcategory.id %}" class="campaign-link">View</a>
-                            <button class="campaign-menu">⋮</button>
+                            <button class="campaign-menu" data-category-id="{{ subcategory.id }}" data-category-name="{{ subcategory.name }}">⋮</button>
                         </div>
                     </div>
                 </div>
@@ -45,7 +48,6 @@
     {% endif %}
     
     <div class="content-section">
-        <h2 class="section-title">Entries</h2>
         <div class="empty-state">
             <div class="empty-icon">📝</div>
             <div class="empty-title">No Entries Yet</div>
@@ -60,23 +62,7 @@
 </div>
 
 <style>
-.breadcrumb-nav {
-    margin-bottom: 20px;
-    padding: 15px 0;
-    border-bottom: 1px solid #404040;
-    font-size: 0.9rem;
-}
 
-.breadcrumb-nav a {
-    color: #8b7355;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.breadcrumb-nav a:hover {
-    color: #e8e6e3;
-    text-decoration: underline;
-}
 
 .category-header {
     margin-bottom: 30px;
@@ -93,14 +79,7 @@
     line-height: 1.6;
 }
 
-.category-card {
-    cursor: pointer;
-}
 
-.category-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
 
 .pattern-indigo {
     background: linear-gradient(45deg, #6366f1 25%, transparent 25%), 
@@ -115,63 +94,9 @@
     background: #6366f1;
 }
 
-.empty-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px 20px;
-    background: #202020;
-    border-radius: 8px;
-    border: 2px dashed #404040;
-    margin-bottom: 20px;
-}
 
-.empty-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-}
 
-.empty-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #e8e6e3;
-    margin-bottom: 8px;
-}
 
-.empty-text {
-    color: #a0a0a0;
-    font-size: 0.9rem;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.create-card {
-    background: #303030;
-    border: 2px dashed #505050;
-    border-radius: 8px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.create-card:hover {
-    border-color: #8b7355;
-    background: #383838;
-}
-
-.create-icon {
-    font-size: 2rem;
-    color: #a0a0a0;
-    margin-bottom: 10px;
-}
-
-.create-text {
-    color: #a0a0a0;
-    font-size: 0.9rem;
-}
 </style>
 
 <script>
@@ -184,19 +109,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeCategoryCards() {
-    const categoryCards = document.querySelectorAll('.category-card');
+    const categoryCards = document.querySelectorAll('.campaign-card');
     const createCard = document.querySelector('.create-card');
     
     categoryCards.forEach(card => {
+        // Handle card click (navigate to subcategory)
         card.addEventListener('click', function(e) {
             // Don't navigate if clicking on menu button
             if (e.target.closest('.campaign-menu')) {
                 return;
             }
             
-            const link = this.querySelector('.campaign-link');
-            if (link) {
-                window.location.href = link.href;
+            const menuButton = this.querySelector('.campaign-menu');
+            if (menuButton) {
+                const categoryId = menuButton.getAttribute('data-category-id');
+                if (categoryId) {
+                    window.location.href = `/worlds/{{ world.id }}/categories/${categoryId}/`;
+                }
             }
         });
         
@@ -205,7 +134,7 @@ function initializeCategoryCards() {
         if (menuButton) {
             menuButton.addEventListener('click', function(e) {
                 e.stopPropagation(); // Prevent card click
-                console.log('Category menu clicked');
+                console.log('Category menu clicked for:', this.dataset.categoryName);
                 // Add category menu functionality here
             });
         }

@@ -17,7 +17,7 @@
             </a>
             
             <div class="user-info">
-                <div class="user-name">{% block page_title %}Dashboard{% endblock %}</div>
+                <div class="user-name">{% block sidebar_title %}{% block page_title %}Dashboard{% endblock %}{% endblock %}</div>
             </div>
             
             <div class="search-section">
@@ -58,6 +58,8 @@
                 </div>
             </div>
         </div>
+        
+        {% block breadcrumb %}{% endblock %}
         
         <div class="content-section">
             {% block content %}{% endblock %}
