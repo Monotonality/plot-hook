@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block page_title %}{% if world %}{{ world.name }}{% else %}Categories{% endif %}{% endblock %}
+{% block main_title %}{% if world %}{{ world.name }}{% else %}Categories{% endif %}{% endblock %}
+
+{% block sidebar_content %}
+<!-- Gutted sidebar - minimal content -->
+<div class="nav-section">
+    <a href="{% url 'core:dashboard' %}" class="nav-item">
+        <span class="nav-item-icon">🏠</span>
+        <span class="nav-item-text">Back to Dashboard</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{% block campaigns_grid %}
+{% if categories %}
+    {% for category in categories %}
+        <div class="campaign-card">
+            <div class="campaign-pattern pattern-red">
+                <div class="campaign-badge badge-red">{{ category.name|slice:":3"|upper }}</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">{{ category.name }}</div>
+                <div class="campaign-stats">{{ category.description|default:"No description" }}</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="campaign-card empty-worlds-card">
+        <div class="campaign-pattern pattern-blue">
+            <div class="campaign-badge badge-blue">📁</div>
+        </div>
+        <div class="campaign-info">
+            <div class="campaign-title">No Categories Yet</div>
+            <div class="campaign-stats">Create your first category to organize your world content!</div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="create-card">
+    <div class="create-icon">+</div>
+    <div class="create-text">Create New Category</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize animated background for category page
+    initializeAnimatedBackground();
+});
+</script>
+{% endblock %}

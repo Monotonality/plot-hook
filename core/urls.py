@@ -11,8 +11,9 @@ urlpatterns = [
     
     # World Book URLs
     path('worlds/', views.world_list, name='world_list'),
-    path('worlds/<int:world_id>/', views.world_detail, name='world_detail'),
+    path('worlds/<int:world_id>/categories/', views.world_categories, name='world_categories'),
     path('worlds/<int:world_id>/categories/<int:category_id>/', views.category_detail, name='category_detail'),
+    path('worlds/<int:world_id>/', views.world_detail, name='world_detail'),
     
     # API URLs
     path('api/worlds/', views.api_worlds, name='api_worlds'),
@@ -20,4 +21,8 @@ urlpatterns = [
     path('api/create-world/', views.create_world, name='create_world'),
     path('api/worlds/<int:world_id>/delete/', views.delete_world, name='delete_world'),
     path('api/worlds/<int:world_id>/leave/', views.leave_world, name='leave_world'),
+    
+    # Development URLs
+    path('dev/', views.dev_page, name='dev_page'),
+    path('category/', views.category_template, name='category_template'),
 ]

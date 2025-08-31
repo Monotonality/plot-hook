@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}Development - Plot Hook{% endblock %}
+
+{% block sidebar_content %}
+<!-- Simple dev navigation -->
+<div class="nav-section">
+    <a href="{% url 'core:dashboard' %}" class="nav-item">
+        <span class="nav-item-icon">🏠</span>
+        <span class="nav-item-text">Dashboard</span>
+    </a>
+    <a href="{% url 'core:landing' %}" class="nav-item">
+        <span class="nav-item-icon">🌐</span>
+        <span class="nav-item-text">Landing Page</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="dev-container">
+    <h1 class="dev-title">Development Testing Page</h1>
+    <p class="dev-description">Quick access to different page versions for testing and development.</p>
+    
+    <div class="dev-links-grid">
+        <div class="dev-link-card">
+            <h3>Main Pages</h3>
+            <ul class="dev-link-list">
+                <li><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'core:landing' %}">Landing Page</a></li>
+                <li><a href="{% url 'accounts:profile_settings' %}">Profile Settings</a></li>
+            </ul>
+        </div>
+        
+        <div class="dev-link-card">
+            <h3>Template Testing</h3>
+            <ul class="dev-link-list">
+                <li><a href="/category/">Category Template</a></li>
+            </ul>
+        </div>
+        
+        <div class="dev-link-card">
+            <h3>Authentication</h3>
+            <ul class="dev-link-list">
+                <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                <li><a href="{% url 'accounts:signup' %}">Sign Up</a></li>
+                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+            </ul>
+        </div>
+        
+        <div class="dev-link-card">
+            <h3>Development Info</h3>
+            <div class="dev-info">
+                <p><strong>Current Branch:</strong> profile-settings-branch</p>
+                <p><strong>Base Commit:</strong> fed0ca0</p>
+                <p><strong>Status:</strong> Development Mode</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.dev-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.dev-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #e8e6e3;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.dev-description {
+    font-size: 1.1rem;
+    color: #a0a0a0;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dev-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.dev-link-card {
+    background: #202020;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.dev-link-card:hover {
+    border-color: #8b7355;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.dev-link-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #404040;
+    padding-bottom: 10px;
+}
+
+.dev-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dev-link-list li {
+    margin-bottom: 8px;
+}
+
+.dev-link-list a {
+    color: #8b7355;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 8px 0;
+}
+
+.dev-link-list a:hover {
+    color: #e8e6e3;
+    text-decoration: underline;
+}
+
+.dev-info {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+.dev-info p {
+    margin-bottom: 8px;
+}
+
+.dev-info strong {
+    color: #e8e6e3;
+}
+</style>
+{% endblock %}

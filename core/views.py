@@ -54,12 +54,13 @@ def world_list(request):
         'owned_worlds': owned_worlds,
         'member_worlds': member_worlds,
     }
-    return render(request, 'core/world_list.html', context)
+    return render(request, 'dashboard.html', context)
 
 
 @login_required
 def world_detail(request, world_id):
     """Show world details and categories"""
+    print(f"DEBUG: world_detail view called with world_id={world_id}")  # Debug line
     world = get_object_or_404(World, id=world_id)
     
     # Check if user has access to this world
@@ -74,7 +75,7 @@ def world_detail(request, world_id):
         'world': world,
         'root_categories': root_categories,
     }
-    return render(request, 'core/world_detail.html', context)
+    return render(request, 'category.html', context)
 
 
 @login_required
@@ -102,7 +103,7 @@ def category_detail(request, world_id, category_id):
         'subcategories': subcategories,
         'ancestors': category.get_ancestors(),
     }
-    return render(request, 'core/category_detail.html', context)
+    return render(request, 'category.html', context)
 
 
 # API views for AJAX requests
@@ -316,3 +317,39 @@ def create_world(request):
             }, status=500)
     
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+def dev_page(request):
+    """Development page for testing and navigation"""
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'dev.html', context)
+
+
+def category_template(request):
+    """Direct template view for category.html"""
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'category.html', context)
+
+
+def world_categories(request, world_id):
+    """Show world categories page"""
+    print(f"DEBUG: world_categories view called with world_id={world_id}")  # Debug line
+    world = get_object_or_404(World, id=world_id)
+    
+    # Check if user has access to this world
+    if not world.world_users.filter(user=request.user).exists() and world.owner != request.user:
+        messages.error(request, "You don't have access to this world.")
+        return redirect('core:dashboard')
+    
+    # Get root categories (no parent)
+    root_categories = world.categories.filter(parent=None, is_hidden=False)
+    
+    context = {
+        'world': world,
+        'categories': root_categories,
+    }
+    return render(request, 'category.html', context)
