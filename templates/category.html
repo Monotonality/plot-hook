@@ -1,189 +1,277 @@
-{% extends 'base.html' %}
+{% extends 'item.html' %}
 
-{% block page_title %}{% if world %}{{ world.name }}{% else %}Categories{% endif %}{% endblock %}
-{% block main_title %}{% if world %}{{ world.name }}{% else %}Categories{% endif %}{% endblock %}
+{% block title %}Category - Plot Hook{% endblock %}
 
-{% block sidebar_content %}
-<!-- Gutted sidebar - minimal content -->
-<div class="nav-section">
-    <a href="{% url 'core:dashboard' %}" class="nav-item">
-        <span class="nav-item-icon">🏠</span>
-        <span class="nav-item-text">Back to Dashboard</span>
-    </a>
+{% block main_title %}Category{% endblock %}
+
+{% block page_title %}Category Name{% endblock %}
+
+{% block subheader %}
+<div class="subheader">
+    <div class="breadcrumb-container">
+        <nav class="breadcrumb">
+            <span class="breadcrumb-item current">Category Name</span>
+        </nav>
+    </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block sidebar_content %}
+<!-- Category-specific sidebar content -->
 {% endblock %}
 
-{% block campaigns_grid %}
-{% if categories %}
-    {% for category in categories %}
+{% block content %}
+<div class="category-content">
+    <div class="campaigns-grid">
+        <!-- Sample Item Card 1 -->
         <div class="campaign-card">
             <div class="campaign-pattern pattern-red">
-                <div class="campaign-badge badge-red">{{ category.name|slice:":3"|upper }}</div>
+                <div class="campaign-badge badge-red">CAT</div>
             </div>
             <div class="campaign-info">
-                <div class="campaign-title">{{ category.name }}</div>
-                <div class="campaign-stats">{{ category.description|default:"No description" }}</div>
+                <div class="campaign-title">Sample Item</div>
+                <div class="campaign-stats">Creator • super</div>
                 <div class="campaign-actions">
                     <button class="campaign-menu">⋮</button>
                 </div>
             </div>
         </div>
-    {% endfor %}
-{% else %}
-    <div class="campaign-card empty-worlds-card">
-        <div class="campaign-pattern pattern-blue">
-            <div class="campaign-badge badge-blue">📁</div>
+        
+        <!-- Sample Item Card 2 -->
+        <div class="campaign-card">
+            <div class="campaign-pattern pattern-blue">
+                <div class="campaign-badge badge-blue">ITM</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Another Item</div>
+                <div class="campaign-stats">Editor • admin</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
         </div>
-        <div class="campaign-info">
-            <div class="campaign-title">No Categories or Entries Yet</div>
-            <div class="campaign-stats">Create your first category or entry to organize your world content!</div>
+        
+        <!-- Sample Item Card 3 -->
+        <div class="campaign-card">
+            <div class="campaign-pattern pattern-red">
+                <div class="campaign-badge badge-red">DOC</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Document Item</div>
+                <div class="campaign-stats">Viewer • user</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sample Item Card 4 -->
+        <div class="campaign-card">
+            <div class="campaign-pattern pattern-blue">
+                <div class="campaign-badge badge-blue">IMG</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Image Item</div>
+                <div class="campaign-stats">Owner • super</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sample Item Card 5 -->
+        <div class="campaign-card">
+            <div class="campaign-pattern pattern-red">
+                <div class="campaign-badge badge-red">VID</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Video Item</div>
+                <div class="campaign-stats">Creator • admin</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Create New Item Card -->
+        <div class="campaign-card create-card">
+            <div class="create-card-content">
+                <div class="create-icon">+</div>
+                <div class="create-text">Create New Item</div>
+            </div>
         </div>
     </div>
-{% endif %}
-
-<div class="create-card" id="createCategoryCard">
-    <div class="create-icon">📁</div>
-    <div class="create-text">Create New Category</div>
-</div>
-
-<div class="create-card" id="createEntryCard">
-    <div class="create-icon">📄</div>
-    <div class="create-text">Create New Entry</div>
 </div>
 {% endblock %}
 
-{% block modals %}
-<!-- Create Category Modal -->
-<div class="create-category-modal" id="createCategoryModal">
-    <div class="create-category-content">
-        <div class="create-category-header">
-            <span class="create-category-title">Create New Category</span>
-            <button class="create-category-close" id="createCategoryClose">×</button>
-        </div>
-        <form class="create-category-form" id="createCategoryForm">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="categoryName" class="form-label">Category Name</label>
-                <input type="text" id="categoryName" name="category_name" class="form-input" placeholder="Enter category name..." required>
-            </div>
-            
-            <div class="form-group">
-                <label for="categoryDescription" class="form-label">Description (Optional)</label>
-                <textarea id="categoryDescription" name="category_description" class="form-input" placeholder="Enter category description..." rows="3"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="parentCategory" class="form-label">Parent Category (Optional)</label>
-                <select id="parentCategory" name="parent_id" class="form-input">
-                    <option value="">No parent (Root category)</option>
-                    {% if categories %}
-                        {% for category in categories %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    {% endif %}
-                </select>
-            </div>
-            
-            <div class="form-actions">
-                <button type="button" class="btn-secondary" id="cancelCreateCategory">Cancel</button>
-                <button type="submit" class="btn-primary">Create Category</button>
-            </div>
-        </form>
-    </div>
-</div>
+{% block extra_head %}
+<style>
+/* Category-specific styles */
+.category-content {
+    width: 100%;
+}
 
-<!-- Overlay for create category modal -->
-<div class="create-category-overlay" id="createCategoryOverlay"></div>
-{% endblock %}
+/* Campaign Grid - from reference materials */
+.campaigns-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
 
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize animated background for category page
-    initializeAnimatedBackground();
-    
-    // Create category modal functionality
-    const createCategoryModal = document.getElementById('createCategoryModal');
-    const createCategoryOverlay = document.getElementById('createCategoryOverlay');
-    const createCategoryForm = document.getElementById('createCategoryForm');
-    const createCategoryClose = document.getElementById('createCategoryClose');
-    const cancelCreateCategory = document.getElementById('cancelCreateCategory');
-    const createCategoryCard = document.getElementById('createCategoryCard');
-    const createEntryCard = document.getElementById('createEntryCard');
-    
-    // Show modal when create category card is clicked
-    createCategoryCard.addEventListener('click', function() {
-        createCategoryModal.style.display = 'block';
-        createCategoryOverlay.style.display = 'block';
-    });
-    
-    // Handle create entry card click (placeholder for now)
-    createEntryCard.addEventListener('click', function() {
-        console.log('Create Entry functionality coming soon!');
-        // TODO: Implement create entry modal and functionality
-    });
-    
-    // Hide modal functions
-    function hideCreateCategoryModal() {
-        createCategoryModal.style.display = 'none';
-        createCategoryOverlay.style.display = 'none';
-        createCategoryForm.reset();
+/* Campaign Card - from reference materials */
+.campaign-card {
+    background: #202020;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, all 0.3s ease;
+    cursor: pointer;
+    flex: 1 1 320px;
+    max-width: 400px;
+}
+
+.campaign-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Campaign Pattern - from reference materials */
+.campaign-pattern {
+    height: 120px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pattern-red {
+    background: linear-gradient(45deg, #dc2626 25%, transparent 25%), 
+                linear-gradient(-45deg, #dc2626 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #dc2626 75%), 
+                linear-gradient(-45deg, transparent 75%, #dc2626 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.pattern-blue {
+    background: linear-gradient(45deg, #3b82f6 25%, transparent 25%), 
+                linear-gradient(-45deg, #3b82f6 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #3b82f6 75%), 
+                linear-gradient(-45deg, transparent 75%, #3b82f6 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* Campaign Badge - from reference materials */
+.campaign-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.badge-red {
+    background: #dc2626;
+}
+
+.badge-blue {
+    background: #3b82f6;
+}
+
+/* Campaign Info - from reference materials */
+.campaign-info {
+    padding: 15px;
+}
+
+.campaign-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin-bottom: 5px;
+}
+
+.campaign-stats {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    margin-bottom: 10px;
+}
+
+.campaign-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.campaign-menu {
+    background: none;
+    border: none;
+    color: #a0a0a0;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2rem;
+}
+
+.campaign-menu:hover {
+    color: #e8e6e3;
+}
+
+/* Create Card Special Styling */
+.create-card {
+    border: 2px dashed #606060;
+    background: #202020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    flex: 0 1 280px;
+    max-width: 320px;
+}
+
+.create-card:hover {
+    border-color: #8b7355;
+    background: #282828;
+}
+
+.create-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.create-icon {
+    font-size: 3rem;
+    font-weight: 300;
+    color: #a0a0a0;
+    line-height: 1;
+}
+
+.create-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #e8e6e3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .campaigns-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 20px;
     }
     
-    createCategoryClose.addEventListener('click', hideCreateCategoryModal);
-    cancelCreateCategory.addEventListener('click', hideCreateCategoryModal);
-    createCategoryOverlay.addEventListener('click', hideCreateCategoryModal);
-    
-    // Handle form submission
-    createCategoryForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const submitButton = createCategoryForm.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        
-        // Disable submit button and show loading state
-        submitButton.disabled = true;
-        submitButton.textContent = 'Creating...';
-        
-        const formData = new FormData(createCategoryForm);
-        
-        fetch('{% url "core:create_category" world.slug %}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': formData.get('csrfmiddlewaretoken')
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                // Show success message
-                alert(data.message);
-                // Reload the page to show the new category
-                window.location.reload();
-            } else {
-                // Show error message
-                alert('Error: ' + data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while creating the category. Please try again.');
-        })
-        .finally(() => {
-            // Re-enable submit button and restore original text
-            submitButton.disabled = false;
-            submitButton.textContent = originalText;
-        });
-    });
-});
-</script>
+    .category-title {
+        font-size: 1.8rem;
+    }
+}
+</style>
 {% endblock %}

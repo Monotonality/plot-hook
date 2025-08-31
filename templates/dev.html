@@ -1,68 +1,285 @@
 {% extends 'base.html' %}
 
-{% block title %}Development - Plot Hook{% endblock %}
+{% block title %}Dev - Plot Hook{% endblock %}
+
+{% block main_title %}Development{% endblock %}
+
+{% block page_title %}Development Pages{% endblock %}
 
 {% block sidebar_content %}
-<!-- Simple dev navigation -->
-<div class="nav-section">
-    <a href="{% url 'core:dashboard' %}" class="nav-item">
-        <span class="nav-item-icon">🏠</span>
-        <span class="nav-item-text">Dashboard</span>
-    </a>
-    <a href="{% url 'core:landing' %}" class="nav-item">
-        <span class="nav-item-icon">🌐</span>
-        <span class="nav-item-text">Landing Page</span>
-    </a>
+<!-- Dev-specific sidebar content -->
+<div class="sidebar-section">
+    <h3 class="sidebar-section-title">Development Tools</h3>
+    <ul class="sidebar-nav-list">
+        <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">Template Gallery</a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">Component Library</a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">Style Guide</a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">Test Data</a>
+        </li>
+    </ul>
+</div>
+
+<div class="sidebar-section">
+    <h3 class="sidebar-section-title">Quick Actions</h3>
+    <div class="sidebar-actions">
+        <button class="sidebar-action-btn" id="clearCacheBtn">Clear Cache</button>
+        <button class="sidebar-action-btn disabled-btn">Reset Data</button>
+        <button class="sidebar-action-btn disabled-btn">Export Config</button>
+    </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="dev-container">
-    <h1 class="dev-title">Development Testing Page</h1>
-    <p class="dev-description">Quick access to different page versions for testing and development.</p>
+<div class="dev-content">
+    <div class="dev-header">
+        <h1 class="dev-title">Development Pages</h1>
+        <p class="dev-description">Quick access to different templates and pages for development and testing purposes.</p>
+    </div>
     
-    <div class="dev-links-grid">
-        <div class="dev-link-card">
-            <h3>Main Pages</h3>
-            <ul class="dev-link-list">
-                <li><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
-                <li><a href="{% url 'core:landing' %}">Landing Page</a></li>
-                <li><a href="{% url 'accounts:profile_settings' %}">Profile Settings</a></li>
-            </ul>
+    <div class="dev-grid">
+        <!-- Base Template -->
+        <div class="dev-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Base Template</h3>
+                <span class="dev-card-type">Foundation</span>
+            </div>
+            <p class="dev-card-description">The main base template with sidebar, header, and particle background.</p>
+            <div class="dev-card-actions">
+                <a href="/dev/base/" class="dev-card-link">View Base</a>
+            </div>
         </div>
         
-        <div class="dev-link-card">
-            <h3>Template Testing</h3>
-            <ul class="dev-link-list">
-                <li><a href="/category/">Category Template</a></li>
-            </ul>
+        <!-- Item Template -->
+        <div class="dev-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Item Template</h3>
+                <span class="dev-card-type">Detail View</span>
+            </div>
+            <p class="dev-card-description">Detailed item view with properties, content, and activity timeline.</p>
+            <div class="dev-card-actions">
+                <a href="/dev/item/" class="dev-card-link">View Item</a>
+            </div>
         </div>
         
-        <div class="dev-link-card">
-            <h3>Authentication</h3>
-            <ul class="dev-link-list">
-                <li><a href="{% url 'accounts:login' %}">Login</a></li>
-                <li><a href="{% url 'accounts:signup' %}">Sign Up</a></li>
-                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
-            </ul>
+        <!-- Category Template -->
+        <div class="dev-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Category Template</h3>
+                <span class="dev-card-type">Collection View</span>
+            </div>
+            <p class="dev-card-description">Category overview with statistics and entry grid layout.</p>
+            <div class="dev-card-actions">
+                <a href="/dev/category/" class="dev-card-link">View Category</a>
+            </div>
         </div>
         
-        <div class="dev-link-card">
-            <h3>Development Info</h3>
-            <div class="dev-info">
-                <p><strong>Current Branch:</strong> profile-settings-branch</p>
-                <p><strong>Base Commit:</strong> fed0ca0</p>
-                <p><strong>Status:</strong> Development Mode</p>
+        <!-- Dashboard Template -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Dashboard</h3>
+                <span class="dev-card-type">Overview</span>
+            </div>
+            <p class="dev-card-description">Main dashboard with overview cards and navigation.</p>
+            <div class="dev-card-actions">
+                <a href="/dashboard/" class="dev-card-link disabled-link">View Dashboard</a>
+            </div>
+        </div>
+        
+        <!-- Landing Page -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Landing Page</h3>
+                <span class="dev-card-type">Public</span>
+            </div>
+            <p class="dev-card-description">Public landing page for new users and visitors.</p>
+            <div class="dev-card-actions">
+                <a href="/landing/" class="dev-card-link disabled-link">View Landing</a>
+            </div>
+        </div>
+        
+        <!-- Login Page -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Login Page</h3>
+                <span class="dev-card-type">Authentication</span>
+            </div>
+            <p class="dev-card-description">User authentication and login interface.</p>
+            <div class="dev-card-actions">
+                <a href="/accounts/login/" class="dev-card-link disabled-link">View Login</a>
+            </div>
+        </div>
+        
+        <!-- Signup Page -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Signup Page</h3>
+                <span class="dev-card-type">Authentication</span>
+            </div>
+            <p class="dev-card-description">User registration and account creation.</p>
+            <div class="dev-card-actions">
+                <a href="/accounts/signup/" class="dev-card-link disabled-link">View Signup</a>
+            </div>
+        </div>
+        
+        <!-- Profile Settings -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Profile Settings</h3>
+                <span class="dev-card-type">User</span>
+            </div>
+            <p class="dev-card-description">User profile management and settings.</p>
+            <div class="dev-card-actions">
+                <a href="/accounts/profile/" class="dev-card-link disabled-link">View Profile</a>
+            </div>
+        </div>
+        
+        <!-- Admin Panel -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Admin Panel</h3>
+                <span class="dev-card-type">Administration</span>
+            </div>
+            <p class="dev-card-description">Django admin interface for data management.</p>
+            <div class="dev-card-actions">
+                <a href="/admin/" class="dev-card-link disabled-link">View Admin</a>
+            </div>
+        </div>
+        
+        <!-- API Endpoints -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">API Endpoints</h3>
+                <span class="dev-card-type">Backend</span>
+            </div>
+            <p class="dev-card-description">REST API endpoints for data operations.</p>
+            <div class="dev-card-actions">
+                <a href="/api/" class="dev-card-link disabled-link">View API</a>
+            </div>
+        </div>
+        
+        <!-- Error Pages -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Error Pages</h3>
+                <span class="dev-card-type">System</span>
+            </div>
+            <p class="dev-card-description">404, 500, and other error page templates.</p>
+            <div class="dev-card-actions">
+                <a href="/404/" class="dev-card-link disabled-link">View 404</a>
+                <a href="/500/" class="dev-card-link disabled-link">View 500</a>
+            </div>
+        </div>
+        
+        <!-- Component Library -->
+        <div class="dev-card disabled-card">
+            <div class="dev-card-header">
+                <h3 class="dev-card-title">Component Library</h3>
+                <span class="dev-card-type">UI</span>
+            </div>
+            <p class="dev-card-description">Reusable UI components and patterns.</p>
+            <div class="dev-card-actions">
+                <a href="/components/" class="dev-card-link disabled-link">View Components</a>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const clearCacheBtn = document.getElementById('clearCacheBtn');
+    
+    if (clearCacheBtn) {
+        clearCacheBtn.addEventListener('click', function() {
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            
+            // Clear any cached data in the application
+            if (window.caches) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                });
+            }
+            
+            // Show success message
+            showNotification('Cache cleared successfully!', 'success');
+            
+            // Optional: Reload the page to ensure fresh state
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        });
+    }
+    
+    function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        
+        // Style the notification
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#10b981' : '#3b82f6'};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        `;
+        
+        // Add to page
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+});
+</script>
+{% endblock %}
+
+{% block extra_head %}
 <style>
-.dev-container {
-    max-width: 1200px;
+/* Dev-specific styles */
+.dev-content {
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
+}
+
+.dev-header {
+    margin-bottom: 40px;
+    text-align: center;
 }
 
 .dev-title {
@@ -70,80 +287,274 @@
     font-weight: 700;
     color: #e8e6e3;
     margin-bottom: 10px;
-    text-align: center;
 }
 
 .dev-description {
     font-size: 1.1rem;
     color: #a0a0a0;
-    text-align: center;
-    margin-bottom: 40px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.dev-links-grid {
+.dev-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 25px;
 }
 
-.dev-link-card {
+.dev-card {
     background: #202020;
     border: 1px solid #404040;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 25px;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.dev-link-card:hover {
+.dev-card:hover {
     border-color: #8b7355;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(139, 115, 85, 0.15);
 }
 
-.dev-link-card h3 {
+.dev-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.dev-card-title {
     font-size: 1.3rem;
     font-weight: 600;
     color: #e8e6e3;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #404040;
-    padding-bottom: 10px;
+    margin: 0;
 }
 
-.dev-link-list {
+.dev-card-type {
+    background: #404040;
+    color: #e8e6e3;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dev-card-description {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.dev-card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.dev-card-link {
+    background: #8b7355;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.dev-card-link:hover {
+    background: #9b8365;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 115, 85, 0.2);
+}
+
+/* Disabled card styles */
+.dev-card.disabled-card {
+    opacity: 0.7;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.dev-card.disabled-card:hover {
+    border-color: #404040;
+    transform: none;
+    box-shadow: none;
+}
+
+.dev-card.disabled-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(220, 38, 38, 0.05);
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.dev-card.disabled-card .dev-card-header,
+.dev-card.disabled-card .dev-card-description,
+.dev-card.disabled-card .dev-card-actions {
+    position: relative;
+    z-index: 2;
+}
+
+/* Disabled link styles */
+.dev-card-link.disabled-link {
+    background: #4a2a2a;
+    color: #a0a0a0;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.dev-card-link.disabled-link:hover {
+    background: #4a2a2a;
+    transform: none;
+    box-shadow: none;
+}
+
+.dev-card-link.disabled-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(220, 38, 38, 0.1);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+/* Sidebar styles */
+.sidebar-section {
+    margin-bottom: 30px;
+}
+
+.sidebar-section-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #a0a0a0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+    padding: 0 20px;
+}
+
+.sidebar-nav-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.dev-link-list li {
-    margin-bottom: 8px;
+.sidebar-nav-item {
+    margin-bottom: 5px;
 }
 
-.dev-link-list a {
-    color: #8b7355;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+.sidebar-nav-link {
     display: block;
-    padding: 8px 0;
-}
-
-.dev-link-list a:hover {
+    padding: 10px 20px;
     color: #e8e6e3;
-    text-decoration: underline;
-}
-
-.dev-info {
-    color: #a0a0a0;
+    text-decoration: none;
     font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    margin: 0 10px;
 }
 
-.dev-info p {
+.sidebar-nav-link:hover {
+    background: rgba(139, 115, 85, 0.1);
+    color: #8b7355;
+}
+
+.sidebar-actions {
+    padding: 0 20px;
+}
+
+.sidebar-action-btn {
+    display: block;
+    width: 100%;
+    background: #404040;
+    border: none;
+    border-radius: 4px;
+    color: #e8e6e3;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
     margin-bottom: 8px;
 }
 
-.dev-info strong {
-    color: #e8e6e3;
+.sidebar-action-btn:hover {
+    background: #505050;
+}
+
+.sidebar-action-btn.disabled-btn {
+    background: #4a2a2a;
+    color: #a0a0a0;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.sidebar-action-btn.disabled-btn:hover {
+    background: #4a2a2a;
+}
+
+.sidebar-action-btn.disabled-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(220, 38, 38, 0.1);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dev-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .dev-card {
+        padding: 20px;
+    }
+    
+    .dev-title {
+        font-size: 2rem;
+    }
+    
+    .dev-card-actions {
+        flex-direction: column;
+    }
+    
+    .dev-card-link {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .dev-header {
+        margin-bottom: 30px;
+    }
+    
+    .dev-title {
+        font-size: 1.8rem;
+    }
+    
+    .dev-description {
+        font-size: 1rem;
+    }
 }
 </style>
 {% endblock %}

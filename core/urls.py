@@ -1,28 +1,30 @@
+"""
+URL configuration for core project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
 from django.urls import path
 from . import views
 
-app_name = 'core'
-
 urlpatterns = [
-    # Existing URLs
-    path('', views.landing, name='landing'),
-    path('dashboard/', views.dashboard, name='dashboard'),
-    path('search/', views.search, name='search'),
-    
-    # Development URLs
-    path('dev/', views.dev_page, name='dev_page'),
-    path('category/', views.category_template, name='category_template'),
-    
-    # API URLs
-    path('api/worlds/', views.api_worlds, name='api_worlds'),
-    path('api/join-world/', views.join_world, name='join_world'),
-    path('api/create-world/', views.create_world, name='create_world'),
-    path('api/worlds/<int:world_id>/delete/', views.delete_world, name='delete_world'),
-    path('api/worlds/<int:world_id>/leave/', views.leave_world, name='leave_world'),
-    path('api/worlds/<slug:world_slug>/categories/create/', views.create_category, name='create_category'),
-    
-    # World Book URLs (more specific patterns first)
-    path('worlds/', views.world_list, name='world_list'),
-    path('w/<slug:world_slug>/<slug:category_slug>/', views.category_detail, name='category_detail'),
-    path('w/<slug:world_slug>/', views.world_categories, name='world_categories'),
+    path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('dev/', views.dev, name='dev'),
+    path('dev/base/', views.home, name='dev_base'),
+    path('dev/item/', views.item, name='dev_item'),
+    path('dev/category/', views.category, name='dev_category'),
+    path('item/', views.item, name='item'),
+    path('category/', views.category, name='category'),
 ]

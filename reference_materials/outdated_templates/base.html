@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Plot Hook - D&D World-Building Tool{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="{% url 'accounts:profile' %}" class="sidebar-logo">
+                <img src="{% static 'images/hook.png' %}" alt="Plot Hook Logo" class="sidebar-logo-icon" style="width: 24px; height: 24px; object-fit: contain;">
+                <span>Plot Hook</span>
+            </a>
+            
+            <div class="user-info">
+                <div class="user-name">{% block page_title %}Dashboard{% endblock %}</div>
+            </div>
+            
+            <div class="search-section">
+                <div class="search-container">
+                    <button class="add-button">+</button>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-nav">
+            {% block sidebar_content %}{% endblock %}
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-header">
+            <div class="main-title">{% block main_title %}Dashboard{% endblock %}</div>
+            <div class="user-display">
+                <div class="user-dropdown">
+                    <div class="user-avatar" id="userDropdownTrigger">{{ user.username|first|upper }}</div>
+                    <span class="user-username">{{ user.username }}</span>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <div class="user-dropdown-actions">
+                            <form method="post" action="{% url 'accounts:logout' %}" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="user-dropdown-action sign-out-btn" style="width: 100%; border: none; cursor: pointer;">
+                                    Sign Out
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            {% block content %}{% endblock %}
+            
+            <!-- Campaigns Grid -->
+            <div class="campaigns-grid">
+                {% block campaigns_grid %}{% endblock %}
+            </div>
+            
+            <!-- Modals and Overlays -->
+            {% block modals %}{% endblock %}
+        </div>
+    </div>
+    
+    <script src="{% static 'js/script.js' %}?v=1.1"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
