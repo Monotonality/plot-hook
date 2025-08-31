@@ -256,17 +256,25 @@ function initializeCampaignCards() {
     campaignCards.forEach(card => {
         // Handle card click (navigate to world)
         card.addEventListener('click', function(e) {
+            console.log('Card clicked!');
             // Don't navigate if clicking on menu button
             if (e.target.closest('.campaign-menu')) {
+                console.log('Menu button clicked, not navigating');
                 return;
             }
             
             const menuButton = this.querySelector('.campaign-menu');
             if (menuButton) {
-                const worldId = menuButton.getAttribute('data-world-id');
-                if (worldId) {
-                    window.location.href = `/worlds/${worldId}/`;
+                const worldSlug = menuButton.getAttribute('data-world-slug');
+                console.log('World slug:', worldSlug);
+                if (worldSlug) {
+                    console.log('Navigating to:', `/w/${worldSlug}/`);
+                    window.location.href = `/w/${worldSlug}/`;
+                } else {
+                    console.log('No world slug found!');
                 }
+            } else {
+                console.log('No menu button found!');
             }
         });
         
@@ -634,6 +642,7 @@ function initializeConfirmationModal() {
 // World Menu Functions
 function showWorldMenu(menuButton) {
     const worldId = menuButton.getAttribute('data-world-id');
+    const worldSlug = menuButton.getAttribute('data-world-slug');
     const worldName = menuButton.getAttribute('data-world-name');
     const userRole = menuButton.getAttribute('data-user-role');
     
@@ -644,6 +653,7 @@ function showWorldMenu(menuButton) {
     // Set world info
     title.textContent = worldName;
     dropdown.setAttribute('data-world-id', worldId);
+    dropdown.setAttribute('data-world-slug', worldSlug);
     dropdown.setAttribute('data-user-role', userRole);
     
     // Show menu and overlay
@@ -673,9 +683,9 @@ function initializeWorldMenu() {
     
     // Handle view action
     viewButton.addEventListener('click', function() {
-        const worldId = dropdown.getAttribute('data-world-id');
-        if (worldId) {
-            window.location.href = `/worlds/${worldId}/`;
+        const worldSlug = dropdown.getAttribute('data-world-slug');
+        if (worldSlug) {
+            window.location.href = `/w/${worldSlug}/`;
         }
         hideWorldMenu();
     });
@@ -920,8 +930,13 @@ function createWorld() {
             // Hide modal
             hideCreateWorldModal();
             
-            // Reload page to show the new world
-            window.location.reload();
+            // Navigate to the new world
+            if (data.world && data.world.slug) {
+                window.location.href = `/w/${data.world.slug}/`;
+            } else {
+                // Fallback to reload if slug is not available
+                window.location.reload();
+            }
         } else {
             console.error('Error creating world:', data.error);
         }

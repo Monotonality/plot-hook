@@ -1154,3 +1154,107 @@ body {
 .btn-danger:hover {
     background: #b91c1c;
 }
+
+/* Create Category Modal Styles */
+.create-category-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #202020;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 2001;
+    min-width: 400px;
+    max-width: 500px;
+    display: none;
+}
+
+.create-category-content {
+    padding: 0;
+}
+
+.create-category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #404040;
+}
+
+.create-category-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e8e6e3;
+}
+
+.create-category-close {
+    background: none;
+    border: none;
+    color: #a0a0a0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.create-category-close:hover {
+    background: #404040;
+    color: #e8e6e3;
+}
+
+.create-category-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    display: none;
+}
+
+/* Additional styles for create category form */
+.create-category-form {
+    padding: 25px;
+}
+
+.create-category-form .form-input {
+    width: 100%;
+    height: 40px;
+    background: #404040;
+    border: 1px solid #505050;
+    border-radius: 4px;
+    color: #e8e6e3;
+    padding: 0 12px;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.create-category-form .form-input:focus {
+    outline: none;
+    border-color: #8b7355;
+}
+
+.create-category-form .form-input::placeholder {
+    color: #808080;
+}
+
+.create-category-form textarea.form-input {
+    height: auto;
+    min-height: 80px;
+    resize: vertical;
+    padding: 12px;
+}
+
+.create-category-form select.form-input {
+    cursor: pointer;
+}

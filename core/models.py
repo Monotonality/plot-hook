@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.text import slugify
 import uuid
 
 
@@ -8,6 +9,7 @@ class World(models.Model):
     
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=255, help_text="Name of the world/campaign")
+    slug = models.SlugField(max_length=255, blank=True, help_text="URL-friendly name")
     description = models.TextField(blank=True, help_text="Brief description of the world/universe")
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -41,6 +43,8 @@ class World(models.Model):
     def save(self, *args, **kwargs):
         if not self.join_code:
             self.join_code = str(uuid.uuid4())[:8].upper()
+        if not self.slug:
+            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
 
@@ -74,6 +78,7 @@ class Category(models.Model):
     
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=255, help_text="Category name")
+    slug = models.SlugField(max_length=255, blank=True, help_text="URL-friendly name")
     description = models.TextField(blank=True, help_text="Brief description of the category")
     world = models.ForeignKey(World, on_delete=models.CASCADE, related_name='categories', help_text="World this category belongs to")
     parent = models.ForeignKey(
@@ -92,7 +97,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
-        unique_together = ['world', 'parent', 'name']
+        unique_together = [['world', 'parent', 'name'], ['world', 'parent', 'slug']]
         ordering = ['sort_order', 'name']
     
     def __str__(self):
@@ -116,3 +121,8 @@ class Category(models.Model):
             descendants.append(subcategory)
             descendants.extend(subcategory.get_descendants())
         return descendants
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)

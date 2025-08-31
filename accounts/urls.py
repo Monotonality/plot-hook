@@ -22,6 +22,5 @@ urlpatterns = [
     # AJAX endpoints
     path('toggle-theme/', views.toggle_theme, name='toggle_theme'),
     
-    # Redirects
-    path('dashboard/', views.dashboard_redirect, name='dashboard_redirect'),
+    # Redirects (removed to prevent redirect loops)
 ]

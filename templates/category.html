@@ -38,16 +38,65 @@
             <div class="campaign-badge badge-blue">📁</div>
         </div>
         <div class="campaign-info">
-            <div class="campaign-title">No Categories Yet</div>
-            <div class="campaign-stats">Create your first category to organize your world content!</div>
+            <div class="campaign-title">No Categories or Entries Yet</div>
+            <div class="campaign-stats">Create your first category or entry to organize your world content!</div>
         </div>
     </div>
 {% endif %}
 
-<div class="create-card">
-    <div class="create-icon">+</div>
+<div class="create-card" id="createCategoryCard">
+    <div class="create-icon">📁</div>
     <div class="create-text">Create New Category</div>
 </div>
+
+<div class="create-card" id="createEntryCard">
+    <div class="create-icon">📄</div>
+    <div class="create-text">Create New Entry</div>
+</div>
+{% endblock %}
+
+{% block modals %}
+<!-- Create Category Modal -->
+<div class="create-category-modal" id="createCategoryModal">
+    <div class="create-category-content">
+        <div class="create-category-header">
+            <span class="create-category-title">Create New Category</span>
+            <button class="create-category-close" id="createCategoryClose">×</button>
+        </div>
+        <form class="create-category-form" id="createCategoryForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="categoryName" class="form-label">Category Name</label>
+                <input type="text" id="categoryName" name="category_name" class="form-input" placeholder="Enter category name..." required>
+            </div>
+            
+            <div class="form-group">
+                <label for="categoryDescription" class="form-label">Description (Optional)</label>
+                <textarea id="categoryDescription" name="category_description" class="form-input" placeholder="Enter category description..." rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="parentCategory" class="form-label">Parent Category (Optional)</label>
+                <select id="parentCategory" name="parent_id" class="form-input">
+                    <option value="">No parent (Root category)</option>
+                    {% if categories %}
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" id="cancelCreateCategory">Cancel</button>
+                <button type="submit" class="btn-primary">Create Category</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Overlay for create category modal -->
+<div class="create-category-overlay" id="createCategoryOverlay"></div>
 {% endblock %}
 
 {% block extra_js %}
@@ -55,6 +104,86 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize animated background for category page
     initializeAnimatedBackground();
+    
+    // Create category modal functionality
+    const createCategoryModal = document.getElementById('createCategoryModal');
+    const createCategoryOverlay = document.getElementById('createCategoryOverlay');
+    const createCategoryForm = document.getElementById('createCategoryForm');
+    const createCategoryClose = document.getElementById('createCategoryClose');
+    const cancelCreateCategory = document.getElementById('cancelCreateCategory');
+    const createCategoryCard = document.getElementById('createCategoryCard');
+    const createEntryCard = document.getElementById('createEntryCard');
+    
+    // Show modal when create category card is clicked
+    createCategoryCard.addEventListener('click', function() {
+        createCategoryModal.style.display = 'block';
+        createCategoryOverlay.style.display = 'block';
+    });
+    
+    // Handle create entry card click (placeholder for now)
+    createEntryCard.addEventListener('click', function() {
+        console.log('Create Entry functionality coming soon!');
+        // TODO: Implement create entry modal and functionality
+    });
+    
+    // Hide modal functions
+    function hideCreateCategoryModal() {
+        createCategoryModal.style.display = 'none';
+        createCategoryOverlay.style.display = 'none';
+        createCategoryForm.reset();
+    }
+    
+    createCategoryClose.addEventListener('click', hideCreateCategoryModal);
+    cancelCreateCategory.addEventListener('click', hideCreateCategoryModal);
+    createCategoryOverlay.addEventListener('click', hideCreateCategoryModal);
+    
+    // Handle form submission
+    createCategoryForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const submitButton = createCategoryForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        
+        // Disable submit button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Creating...';
+        
+        const formData = new FormData(createCategoryForm);
+        
+        fetch('{% url "core:create_category" world.slug %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                alert(data.message);
+                // Reload the page to show the new category
+                window.location.reload();
+            } else {
+                // Show error message
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while creating the category. Please try again.');
+        })
+        .finally(() => {
+            // Re-enable submit button and restore original text
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+        });
+    });
 });
 </script>
 {% endblock %}

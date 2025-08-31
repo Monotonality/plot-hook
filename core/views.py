@@ -79,20 +79,20 @@ def world_detail(request, world_id):
 
 
 @login_required
-def category_detail(request, world_id, category_id):
+def category_detail(request, world_slug, category_slug):
     """Show category details and its contents"""
-    world = get_object_or_404(World, id=world_id)
-    category = get_object_or_404(Category, id=category_id, world=world)
+    world = get_object_or_404(World, slug=world_slug)
+    category = get_object_or_404(Category, slug=category_slug, world=world)
     
     # Check if user has access to this world
     if not world.world_users.filter(user=request.user).exists() and world.owner != request.user:
         messages.error(request, "You don't have access to this world.")
-        return redirect('world_list')
+        return redirect('core:dashboard')
     
     # Check if category is hidden and user is not author
     if category.is_hidden and not world.world_users.filter(user=request.user, role__in=['creator', 'co_creator']).exists():
         messages.error(request, "This category is hidden from you.")
-        return redirect('world_detail', world_id=world_id)
+        return redirect('core:world_categories', world_slug=world_slug)
     
     # Get subcategories and entries (we'll add entries later)
     subcategories = category.subcategories.filter(is_hidden=False)
@@ -305,6 +305,7 @@ def create_world(request):
                 'world': {
                     'id': world.id,
                     'name': world.name,
+                    'slug': world.slug,
                     'join_code': world.join_code,
                     'theme_color': theme_color,
                 }
@@ -314,6 +315,70 @@ def create_world(request):
             return JsonResponse({
                 'success': False,
                 'error': 'An error occurred while creating the world.'
+            }, status=500)
+    
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+@login_required
+def create_category(request, world_slug):
+    """API endpoint to create a new category"""
+    if request.method == 'POST':
+        category_name = request.POST.get('category_name', '').strip()
+        category_description = request.POST.get('category_description', '').strip()
+        parent_id = request.POST.get('parent_id', '').strip()
+        
+        if not category_name:
+            return JsonResponse({
+                'success': False,
+                'error': 'Please enter a category name.'
+            }, status=400)
+        
+        try:
+            world = get_object_or_404(World, slug=world_slug)
+            
+            # Check if user has access to this world
+            if not world.world_users.filter(user=request.user).exists() and world.owner != request.user:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'You do not have access to this world.'
+                }, status=403)
+            
+            # Set parent category (default to None for root categories)
+            parent_category = None
+            if parent_id:
+                try:
+                    parent_category = Category.objects.get(id=parent_id, world=world)
+                except Category.DoesNotExist:
+                    return JsonResponse({
+                        'success': False,
+                        'error': 'Parent category not found.'
+                    }, status=400)
+            
+            # Create the category
+            category = Category.objects.create(
+                name=category_name,
+                description=category_description,
+                world=world,
+                parent=parent_category,
+                is_hidden=False
+            )
+            
+            return JsonResponse({
+                'success': True,
+                'message': f'Category "{category_name}" has been created successfully!',
+                'category': {
+                    'id': category.id,
+                    'name': category.name,
+                    'description': category.description,
+                    'parent_id': parent_category.id if parent_category else None,
+                }
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': 'An error occurred while creating the category.'
             }, status=500)
     
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -335,10 +400,10 @@ def category_template(request):
     return render(request, 'category.html', context)
 
 
-def world_categories(request, world_id):
+def world_categories(request, world_slug):
     """Show world categories page"""
-    print(f"DEBUG: world_categories view called with world_id={world_id}")  # Debug line
-    world = get_object_or_404(World, id=world_id)
+    print(f"DEBUG: world_categories view called with world_slug={world_slug}")  # Debug line
+    world = get_object_or_404(World, slug=world_slug)
     
     # Check if user has access to this world
     if not world.world_users.filter(user=request.user).exists() and world.owner != request.user:

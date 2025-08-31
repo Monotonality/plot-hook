@@ -105,7 +105,7 @@
 {% block campaigns_grid %}
     {% if owned_worlds %}
         {% for world in owned_worlds %}
-            <div class="campaign-card" onclick="window.location.href='{% url 'core:world_categories' world.id %}'" style="cursor: pointer;">
+            <div class="campaign-card" style="cursor: pointer;">
                 <div class="campaign-pattern world-{{ world.id }}-pattern">
                     <div class="campaign-badge world-{{ world.id }}-badge">{{ world.name|slice:":3"|upper }}</div>
                 </div>
@@ -113,7 +113,7 @@
                     <div class="campaign-title">{{ world.name }}</div>
                     <div class="campaign-stats">Creator • {{ world.owner.username }}</div>
                     <div class="campaign-actions">
-                        <button class="campaign-menu" data-world-id="{{ world.id }}" data-world-name="{{ world.name }}" data-user-role="owner" onclick="event.stopPropagation();">⋮</button>
+                        <button class="campaign-menu" data-world-id="{{ world.id }}" data-world-slug="{{ world.slug }}" data-world-name="{{ world.name }}" data-user-role="owner" onclick="event.stopPropagation();">⋮</button>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
     
     {% if member_worlds %}
         {% for world in member_worlds %}
-            <div class="campaign-card" onclick="window.location.href='{% url 'core:world_categories' world.id %}'" style="cursor: pointer;">
+            <div class="campaign-card" style="cursor: pointer;">
                 <div class="campaign-pattern world-{{ world.id }}-pattern">
                     <div class="campaign-badge world-{{ world.id }}-badge">{{ world.name|slice:":3"|upper }}</div>
                 </div>
@@ -130,7 +130,7 @@
                     <div class="campaign-title">{{ world.name }}</div>
                     <div class="campaign-stats">Player • {{ world.owner.username }}</div>
                     <div class="campaign-actions">
-                        <button class="campaign-menu" data-world-id="{{ world.id }}" data-world-name="{{ world.name }}" data-user-role="player" onclick="event.stopPropagation();">⋮</button>
+                        <button class="campaign-menu" data-world-id="{{ world.id }}" data-world-slug="{{ world.slug }}" data-world-name="{{ world.name }}" data-user-role="player" onclick="event.stopPropagation();">⋮</button>
                     </div>
                 </div>
             </div>
