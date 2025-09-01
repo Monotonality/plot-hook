@@ -26,7 +26,9 @@ urlpatterns = [
     path('dev/item/', views.item, name='dev_item'),
     path('dev/category/', views.category, name='dev_category'),
     path('dev/entry/', views.entry, name='dev_entry'),
+    path('dev/test-card/', views.test_card, name='dev_test_card'),
     path('item/', views.item, name='item'),
     path('category/', views.category, name='category'),
     path('entry/', views.entry, name='entry'),
+    path('test-card/', views.test_card, name='test_card'),
 ]

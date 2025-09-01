@@ -14,3 +14,6 @@ def category(request):
 
 def entry(request):
     return render(request, 'entry.html')
+
+def test_card(request):
+    return render(request, 'test_card.html')

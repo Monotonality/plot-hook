@@ -1,0 +1,712 @@
+{% extends 'base.html' %}
+
+{% block title %}Test Cards - Plot Hook{% endblock %}
+
+{% block main_title %}Test Cards{% endblock %}
+
+{% block page_title %}Test Cards{% endblock %}
+
+{% block subheader %}
+<div class="subheader">
+    <div class="breadcrumb-container">
+        <nav class="breadcrumb">
+            <span class="breadcrumb-item current">Test Cards</span>
+        </nav>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="category-container">
+    <div class="category-header">
+        <div class="category-title-section">
+            <h1 class="category-title">Test Cards Collection</h1>
+            <p class="category-description">Various card designs and variations for testing purposes</p>
+        </div>
+
+    </div>
+    
+    <div class="campaigns-grid">
+        <!-- Standard Red Pattern Card -->
+        <div class="campaign-card">
+            <div class="campaign-pattern pattern-red">
+                <div class="campaign-badge badge-red">RED</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Standard Red Card</div>
+                <div class="campaign-stats">Creator • admin</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map Background Card -->
+        <div class="campaign-card">
+            <div class="campaign-pattern pattern-map">
+                <div class="campaign-badge badge-gray">MAP</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Map Background</div>
+                <div class="campaign-stats">Explorer • admin</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fractal Pattern Card -->
+        <div class="campaign-card">
+            <div class="campaign-pattern pattern-fractal">
+                <div class="campaign-badge badge-orange">FRA</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Fractal Pattern</div>
+                <div class="campaign-stats">Developer • user</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+
+        
+        <!-- Large Pattern Card -->
+        <div class="campaign-card large-pattern-card">
+            <div class="campaign-pattern pattern-red">
+                <div class="campaign-badge badge-red">LAR</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Large Pattern</div>
+                <div class="campaign-stats">Designer • admin</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Small Pattern Card -->
+        <div class="campaign-card small-pattern-card">
+            <div class="campaign-pattern pattern-checkered">
+                <div class="campaign-badge badge-blue">SML</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Small Pattern</div>
+                <div class="campaign-stats">Editor • user</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Extra Large Pattern Card -->
+        <div class="campaign-card xlarge-pattern-card">
+            <div class="campaign-pattern pattern-green">
+                <div class="campaign-badge badge-green">XLG</div>
+            </div>
+            <div class="campaign-info">
+                <div class="campaign-title">Extra Large Pattern</div>
+                <div class="campaign-stats">Creator • super</div>
+                <div class="campaign-actions">
+                    <button class="campaign-menu">⋮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Create New Card -->
+        <div class="campaign-card create-card">
+            <div class="create-card-content">
+                <div class="create-icon">+</div>
+                <div class="create-text">Create New Test Card</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toggle Button for Additional Patterns -->
+    <div class="section-toggle">
+        <button class="toggle-btn" onclick="toggleAdditionalPatterns()">
+            <span class="toggle-text">Show Additional Patterns</span>
+            <span class="toggle-icon">▼</span>
+        </button>
+    </div>
+    
+    <!-- Additional Patterns Section -->
+    <div class="additional-patterns-section" id="additionalPatterns" style="display: none;">
+        <div class="section-header">
+            <h2 class="section-title">Additional Mathematical Patterns</h2>
+            <p class="section-description">Advanced geometric and mathematical pattern variations</p>
+        </div>
+        
+        <div class="campaigns-grid">
+            <!-- Spiral Pattern Card -->
+            <div class="campaign-card">
+                <div class="campaign-pattern pattern-spiral">
+                    <div class="campaign-badge badge-green">SPI</div>
+                </div>
+                <div class="campaign-info">
+                    <div class="campaign-title">Spiral Pattern</div>
+                    <div class="campaign-stats">Designer • admin</div>
+                    <div class="campaign-actions">
+                        <button class="campaign-menu">⋮</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Wave Pattern Card -->
+            <div class="campaign-card">
+                <div class="campaign-pattern pattern-wave">
+                    <div class="campaign-badge badge-purple">WAV</div>
+                </div>
+                <div class="campaign-info">
+                    <div class="campaign-title">Wave Pattern</div>
+                    <div class="campaign-stats">Creator • super</div>
+                    <div class="campaign-actions">
+                        <button class="campaign-menu">⋮</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Diamond Pattern Card -->
+            <div class="campaign-card">
+                <div class="campaign-pattern pattern-diamond">
+                    <div class="campaign-badge badge-teal">DIA</div>
+                </div>
+                <div class="campaign-info">
+                    <div class="campaign-title">Diamond Pattern</div>
+                    <div class="campaign-stats">Analyst • admin</div>
+                    <div class="campaign-actions">
+                        <button class="campaign-menu">⋮</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hexagon Pattern Card -->
+            <div class="campaign-card">
+                <div class="campaign-pattern pattern-hexagon">
+                    <div class="campaign-badge badge-pink">HEX</div>
+                </div>
+                <div class="campaign-info">
+                    <div class="campaign-title">Hexagon Pattern</div>
+                    <div class="campaign-stats">Researcher • super</div>
+                    <div class="campaign-actions">
+                        <button class="campaign-menu">⋮</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Star Pattern Card -->
+            <div class="campaign-card">
+                <div class="campaign-pattern pattern-star">
+                    <div class="campaign-badge badge-yellow">STA</div>
+                </div>
+                <div class="campaign-info">
+                    <div class="campaign-title">Star Pattern</div>
+                    <div class="campaign-stats">Scientist • user</div>
+                    <div class="campaign-actions">
+                        <button class="campaign-menu">⋮</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.category-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.category-title-section {
+    flex: 1;
+}
+
+.category-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #e8e6e3;
+    margin-bottom: 10px;
+}
+
+.category-description {
+    font-size: 1.1rem;
+    color: #a0a0a0;
+    line-height: 1.6;
+}
+
+.category-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.add-btn {
+    background: #8b7355;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-btn:hover {
+    background: #9b8365;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 115, 85, 0.3);
+}
+
+.campaigns-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.campaign-card {
+    background: #202020;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, all 0.3s ease;
+    cursor: pointer;
+    flex: 1 1 320px;
+    max-width: 400px;
+}
+
+.campaign-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.campaign-pattern {
+    height: 120px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Large Pattern Card - More pattern, less info */
+.large-pattern-card .campaign-pattern {
+    height: 140px;
+}
+
+.large-pattern-card .campaign-info {
+    padding: 8px 15px;
+}
+
+/* Small Pattern Card - Less pattern, more info */
+.small-pattern-card .campaign-pattern {
+    height: 100px;
+}
+
+.small-pattern-card .campaign-info {
+    padding: 18px 15px;
+}
+
+/* Extra Large Pattern Card - Much more pattern, minimal info */
+.xlarge-pattern-card .campaign-pattern {
+    height: 160px;
+}
+
+.xlarge-pattern-card .campaign-info {
+    padding: 6px 15px;
+}
+
+.xlarge-pattern-card .campaign-title {
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+}
+
+    .xlarge-pattern-card .campaign-stats {
+        font-size: 0.7rem;
+        margin-bottom: 6px;
+    }
+    
+    /* Toggle Button Styles */
+    .section-toggle {
+        display: flex;
+        justify-content: center;
+        margin: 40px 0 20px 0;
+    }
+    
+    .toggle-btn {
+        background: #8b7355;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .toggle-btn:hover {
+        background: #9b8365;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(139, 115, 85, 0.3);
+    }
+    
+    .toggle-icon {
+        transition: transform 0.3s ease;
+    }
+    
+    .toggle-btn.active .toggle-icon {
+        transform: rotate(180deg);
+    }
+    
+    /* Additional Patterns Section */
+    .additional-patterns-section {
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 1px solid #404040;
+    }
+    
+    .section-header {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #e8e6e3;
+        margin-bottom: 10px;
+    }
+    
+    .section-description {
+        font-size: 1rem;
+        color: #a0a0a0;
+        line-height: 1.6;
+    }
+
+.pattern-red {
+    background: linear-gradient(45deg, #dc2626 25%, transparent 25%), 
+                linear-gradient(-45deg, #dc2626 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #dc2626 75%), 
+                linear-gradient(-45deg, transparent 75%, #dc2626 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.pattern-green {
+    background: linear-gradient(45deg, #10b981 25%, transparent 25%), 
+                linear-gradient(-45deg, #10b981 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #10b981 75%), 
+                linear-gradient(-45deg, transparent 75%, #10b981 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.pattern-checkered {
+    background: linear-gradient(45deg, #3b82f6 25%, transparent 25%), 
+                linear-gradient(-45deg, #3b82f6 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #3b82f6 75%), 
+                linear-gradient(-45deg, transparent 75%, #3b82f6 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.pattern-blue {
+    background: 
+        radial-gradient(circle at 25% 25%, #3b82f6 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, #3b82f6 2px, transparent 2px),
+        radial-gradient(circle at 50% 50%, transparent 8px, #3b82f6 8px, transparent 9px);
+    background-size: 20px 20px;
+}
+
+.pattern-spiral {
+    background: 
+        conic-gradient(from 0deg at 50% 50%, #10b981 0deg, transparent 60deg, #10b981 120deg, transparent 180deg, #10b981 240deg, transparent 300deg, #10b981 360deg);
+    background-size: 30px 30px;
+}
+
+.pattern-wave {
+    background: 
+        linear-gradient(45deg, transparent 30%, #8b5cf6 30%, #8b5cf6 35%, transparent 35%),
+        linear-gradient(-45deg, transparent 30%, #8b5cf6 30%, #8b5cf6 35%, transparent 35%),
+        linear-gradient(90deg, transparent 40%, #8b5cf6 40%, #8b5cf6 45%, transparent 45%);
+    background-size: 25px 25px;
+}
+
+.pattern-fractal {
+    background: 
+        radial-gradient(circle at 0% 0%, #f97316 0px, transparent 3px),
+        radial-gradient(circle at 100% 0%, #f97316 0px, transparent 3px),
+        radial-gradient(circle at 0% 100%, #f97316 0px, transparent 3px),
+        radial-gradient(circle at 100% 100%, #f97316 0px, transparent 3px),
+        radial-gradient(circle at 50% 50%, transparent 8px, #f97316 8px, transparent 9px);
+    background-size: 20px 20px;
+}
+
+.pattern-diamond {
+    background: 
+        linear-gradient(45deg, transparent 40%, #14b8a6 40%, #14b8a6 45%, transparent 45%),
+        linear-gradient(-45deg, transparent 40%, #14b8a6 40%, #14b8a6 45%, transparent 45%);
+    background-size: 24px 24px;
+}
+
+.pattern-hexagon {
+    background: 
+        radial-gradient(circle at 50% 0%, #ec4899 0px, transparent 4px),
+        radial-gradient(circle at 100% 25%, #ec4899 0px, transparent 4px),
+        radial-gradient(circle at 100% 75%, #ec4899 0px, transparent 4px),
+        radial-gradient(circle at 50% 100%, #ec4899 0px, transparent 4px),
+        radial-gradient(circle at 0% 25%, #ec4899 0px, transparent 4px),
+        radial-gradient(circle at 0% 75%, #ec4899 0px, transparent 4px);
+    background-size: 24px 24px;
+}
+
+.pattern-star {
+    background: 
+        conic-gradient(from 0deg at 50% 50%, #eab308 0deg, transparent 36deg, #eab308 72deg, transparent 108deg, #eab308 144deg, transparent 180deg, #eab308 216deg, transparent 252deg, #eab308 288deg, transparent 324deg, #eab308 360deg);
+    background-size: 28px 28px;
+}
+
+.pattern-map {
+    background: 
+        radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0.6) 100%),
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url('/static/MAP.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+.campaign-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.badge-red {
+    background: #dc2626;
+}
+
+.badge-blue {
+    background: #3b82f6;
+}
+
+.badge-green {
+    background: #10b981;
+}
+
+.badge-purple {
+    background: #8b5cf6;
+}
+
+.badge-orange {
+    background: #f97316;
+}
+
+.badge-teal {
+    background: #14b8a6;
+}
+
+.badge-pink {
+    background: #ec4899;
+}
+
+.badge-yellow {
+    background: #eab308;
+}
+
+.badge-gray {
+    background: #6b7280;
+}
+
+.campaign-info {
+    padding: 15px;
+}
+
+.campaign-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin-bottom: 5px;
+}
+
+.campaign-stats {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    margin-bottom: 10px;
+}
+
+.campaign-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.campaign-menu {
+    background: none;
+    border: none;
+    color: #a0a0a0;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2rem;
+}
+
+.campaign-menu:hover {
+    color: #e8e6e3;
+}
+
+.create-card {
+    border: 2px dashed #606060;
+    background: #202020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    flex: 0 1 280px;
+    max-width: 320px;
+}
+
+.create-card:hover {
+    border-color: #8b7355;
+    background: #282828;
+}
+
+.create-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.create-icon {
+    font-size: 3rem;
+    font-weight: 300;
+    color: #a0a0a0;
+    line-height: 1;
+}
+
+.create-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #e8e6e3;
+}
+
+/* Hide main page scrollbar but keep scrolling */
+body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Reveal scrollbar on hover near right edge */
+body:hover::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+}
+
+body:hover::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 4px;
+}
+
+body:hover::-webkit-scrollbar-thumb {
+    background: #404040;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+body:hover::-webkit-scrollbar-thumb:hover {
+    background: #8b7355;
+}
+
+.main-content {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.main-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.content-section {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.content-section::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .category-container {
+        padding: 20px;
+    }
+    
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .category-title {
+        font-size: 2rem;
+    }
+    
+    .campaigns-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+</style>
+
+<script>
+function toggleAdditionalPatterns() {
+    const section = document.getElementById('additionalPatterns');
+    const button = document.querySelector('.toggle-btn');
+    const toggleText = document.querySelector('.toggle-text');
+    const toggleIcon = document.querySelector('.toggle-icon');
+    
+    if (section.style.display === 'none') {
+        section.style.display = 'block';
+        button.classList.add('active');
+        toggleText.textContent = 'Hide Additional Patterns';
+    } else {
+        section.style.display = 'none';
+        button.classList.remove('active');
+        toggleText.textContent = 'Show Additional Patterns';
+    }
+}
+</script>
+{% endblock %}
