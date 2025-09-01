@@ -1,0 +1,450 @@
+{% extends 'item.html' %}
+
+{% block title %}Entry - Plot Hook{% endblock %}
+
+{% block page_title %}Entry Title{% endblock %}
+
+{% block content %}
+<div class="entry-layout">
+    <!-- Left side: Scrollable content area -->
+    <div class="entry-content-area">
+        <div class="content-scroll-container">
+            <div class="content-text">
+                <h1>Entry Title</h1>
+                <p>This is the main content area where the entry text will be displayed. It can contain paragraphs, headings, lists, and other formatted content.</p>
+                
+                <h2>Section Heading</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                
+                <h3>Subsection</h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                
+                <ul>
+                    <li>First item in a list</li>
+                    <li>Second item with more detail</li>
+                    <li>Third item that might be longer</li>
+                </ul>
+                
+                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                
+                <h2>Another Section</h2>
+                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                
+                <blockquote>
+                    <p>This is a blockquote that highlights important information or quotes from the content.</p>
+                </blockquote>
+                
+                <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Right side: Cards column -->
+    <div class="entry-sidebar">
+        <div class="sidebar-card">
+            <div class="card-header">
+                <h3 class="card-title">Related Entries</h3>
+                <span class="card-count">3</span>
+            </div>
+            <div class="card-content">
+                <div class="entry-link">
+                    <a href="#" class="link-title">Character Profile: John Doe</a>
+                    <span class="link-category">Characters</span>
+                </div>
+                <div class="entry-link">
+                    <a href="#" class="link-title">Location: The Old Tavern</a>
+                    <span class="link-category">Locations</span>
+                </div>
+                <div class="entry-link">
+                    <a href="#" class="link-title">Event: The Great Storm</a>
+                    <span class="link-category">Events</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-card">
+            <div class="card-header">
+                <h3 class="card-title">Quick Actions</h3>
+            </div>
+            <div class="card-content">
+                <button class="action-btn primary">Edit Entry</button>
+                <button class="action-btn secondary">View History</button>
+                <button class="action-btn danger">Delete Entry</button>
+            </div>
+        </div>
+        
+        <div class="sidebar-card">
+            <div class="card-header">
+                <h3 class="card-title">Entry Details</h3>
+            </div>
+            <div class="card-content">
+                <div class="detail-item">
+                    <span class="detail-label">Created:</span>
+                    <span class="detail-value">August 31, 2025</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Modified:</span>
+                    <span class="detail-value">August 31, 2025</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Author:</span>
+                    <span class="detail-value">Admin User</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Category:</span>
+                    <span class="detail-value">World Building</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-card">
+            <div class="card-header">
+                <h3 class="card-title">Tags</h3>
+            </div>
+            <div class="card-content">
+                <div class="tags-container">
+                    <span class="tag">Fantasy</span>
+                    <span class="tag">World Building</span>
+                    <span class="tag">Characters</span>
+                    <span class="tag">Plot</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.entry-layout {
+    display: flex;
+    gap: 30px;
+    height: calc(100vh - 200px);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Left side: Content area */
+.entry-content-area {
+    flex: 1;
+    background: #202020;
+    border: 1px solid #404040;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+}
+
+.content-text {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
+    color: #e8e6e3;
+}
+
+.content-text h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #e8e6e3;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #8b7355;
+    padding-bottom: 15px;
+}
+
+.content-text h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-left: 4px solid #8b7355;
+    padding-left: 15px;
+}
+
+.content-text h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.content-text p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.content-text ul {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.content-text li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.content-text blockquote {
+    background: #2a2a2a;
+    border-left: 4px solid #8b7355;
+    padding: 20px;
+    margin: 30px 0;
+    font-style: italic;
+    color: #a0a0a0;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Right side: Sidebar cards */
+.entry-sidebar {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar-card {
+    background: #202020;
+    border: 1px solid #404040;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar-card:hover {
+    border-color: #8b7355;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 115, 85, 0.1);
+}
+
+.card-header {
+    background: #2a2a2a;
+    padding: 15px 20px;
+    border-bottom: 1px solid #404040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e8e6e3;
+    margin: 0;
+}
+
+.card-count {
+    background: #8b7355;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+/* Entry links */
+.entry-link {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #404040;
+}
+
+.entry-link:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.link-title {
+    display: block;
+    color: #e8e6e3;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.link-title:hover {
+    color: #8b7355;
+}
+
+.link-category {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    background: #404040;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* Action buttons */
+.action-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.action-btn:last-child {
+    margin-bottom: 0;
+}
+
+.action-btn.primary {
+    background: #8b7355;
+    color: white;
+}
+
+.action-btn.primary:hover {
+    background: #9b8365;
+}
+
+.action-btn.secondary {
+    background: #404040;
+    color: #e8e6e3;
+}
+
+.action-btn.secondary:hover {
+    background: #505050;
+}
+
+.action-btn.danger {
+    background: #dc3545;
+    color: white;
+}
+
+.action-btn.danger:hover {
+    background: #c82333;
+}
+
+/* Detail items */
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #404040;
+}
+
+.detail-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.detail-label {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    font-weight: 500;
+}
+
+.detail-value {
+    font-size: 0.9rem;
+    color: #e8e6e3;
+    font-weight: 400;
+}
+
+/* Tags */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    background: #404040;
+    color: #e8e6e3;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid #505050;
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    background: #8b7355;
+    border-color: #8b7355;
+}
+
+/* Scrollbar styling */
+.content-scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-scroll-container::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+.content-scroll-container::-webkit-scrollbar-thumb {
+    background: #404040;
+    border-radius: 4px;
+}
+
+.content-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #8b7355;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .entry-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .entry-sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .sidebar-card {
+        flex: 1;
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .entry-layout {
+        padding: 15px;
+        gap: 20px;
+    }
+    
+    .content-scroll-container {
+        padding: 20px;
+    }
+    
+    .content-text h1 {
+        font-size: 2rem;
+    }
+    
+    .content-text h2 {
+        font-size: 1.5rem;
+    }
+    
+    .entry-sidebar {
+        flex-direction: column;
+    }
+    
+    .sidebar-card {
+        min-width: auto;
+    }
+}
+</style>
+{% endblock %}

@@ -11,3 +11,6 @@ def item(request):
 
 def category(request):
     return render(request, 'category.html')
+
+def entry(request):
+    return render(request, 'entry.html')
