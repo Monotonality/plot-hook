@@ -203,6 +203,54 @@
 
 {% block extra_head %}
 <style>
+/* Hide main page scrollbar but keep scrolling */
+body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Reveal scrollbar on hover near right edge */
+body:hover::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+}
+
+body:hover::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 4px;
+}
+
+body:hover::-webkit-scrollbar-thumb {
+    background: #404040;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+body:hover::-webkit-scrollbar-thumb:hover {
+    background: #8b7355;
+}
+
+.main-content {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.main-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.content-section {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.content-section::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
 .entry-layout {
     display: flex;
     gap: 30px;
@@ -210,6 +258,7 @@
     margin: 0 auto;
     padding: 5px 20px;
     min-height: calc(100vh - 200px);
+    overflow: hidden;
 }
 
 .entry-content-area {
