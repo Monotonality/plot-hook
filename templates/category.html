@@ -29,9 +29,16 @@
                 <div class="campaign-badge badge-red">CAT</div>
             </div>
             <div class="campaign-info">
-                <div class="campaign-title">Sample Item</div>
-                <div class="campaign-stats">Creator • super</div>
+                <div class="campaign-title"><span class="title-text">Sample Item</span></div>
+                <div class="campaign-meta">
+                    <div class="campaign-stats">Creator • super</div>
+                    <div class="items-count">5 Items</div>
+                </div>
                 <div class="campaign-actions">
+                    <div class="tags-container">
+                        <span class="tag">Tag 1</span>
+                        <span class="tag">Tag 2</span>
+                    </div>
                     <button class="campaign-menu">⋮</button>
                 </div>
             </div>
@@ -43,9 +50,16 @@
                 <div class="campaign-badge badge-blue">ITM</div>
             </div>
             <div class="campaign-info">
-                <div class="campaign-title">Another Item</div>
-                <div class="campaign-stats">Editor • admin</div>
+                <div class="campaign-title"><span class="title-text">Another Item</span></div>
+                <div class="campaign-meta">
+                    <div class="campaign-stats">Editor • admin</div>
+                    <div class="items-count">12 Items</div>
+                </div>
                 <div class="campaign-actions">
+                    <div class="tags-container">
+                        <span class="tag">Tag 1</span>
+                        <span class="tag">Tag 3</span>
+                    </div>
                     <button class="campaign-menu">⋮</button>
                 </div>
             </div>
@@ -57,9 +71,15 @@
                 <div class="campaign-badge badge-red">DOC</div>
             </div>
             <div class="campaign-info">
-                <div class="campaign-title">Document Item</div>
-                <div class="campaign-stats">Viewer • user</div>
+                <div class="campaign-title"><span class="title-text">Document Item</span></div>
+                <div class="campaign-meta">
+                    <div class="campaign-stats">Viewer • user</div>
+                    <div class="items-count">8 Items</div>
+                </div>
                 <div class="campaign-actions">
+                    <div class="tags-container">
+                        <span class="tag">Tag 2</span>
+                    </div>
                     <button class="campaign-menu">⋮</button>
                 </div>
             </div>
@@ -71,9 +91,17 @@
                 <div class="campaign-badge badge-blue">IMG</div>
             </div>
             <div class="campaign-info">
-                <div class="campaign-title">Image Item</div>
-                <div class="campaign-stats">Owner • super</div>
+                <div class="campaign-title"><span class="title-text">Image Item</span></div>
+                <div class="campaign-meta">
+                    <div class="campaign-stats">Owner • super</div>
+                    <div class="items-count">15 Items</div>
+                </div>
                 <div class="campaign-actions">
+                    <div class="tags-container">
+                        <span class="tag">Tag 1</span>
+                        <span class="tag">Tag 2</span>
+                        <span class="tag">Tag 3</span>
+                    </div>
                     <button class="campaign-menu">⋮</button>
                 </div>
             </div>
@@ -85,9 +113,16 @@
                 <div class="campaign-badge badge-red">VID</div>
             </div>
             <div class="campaign-info">
-                <div class="campaign-title">Video Item</div>
-                <div class="campaign-stats">Creator • admin</div>
+                <div class="campaign-title"><span class="title-text">Video Item</span></div>
+                <div class="campaign-meta">
+                    <div class="campaign-stats">Creator • admin</div>
+                    <div class="items-count">3 Items</div>
+                </div>
                 <div class="campaign-actions">
+                    <div class="tags-container">
+                        <span class="tag">Tag 1</span>
+                        <span class="tag">Tag 3</span>
+                    </div>
                     <button class="campaign-menu">⋮</button>
                 </div>
             </div>
@@ -188,7 +223,27 @@
 
 /* Campaign Info - from reference materials */
 .campaign-info {
-    padding: 15px;
+    padding: 12px 15px 8px 15px;
+}
+
+.campaign-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.campaign-meta .campaign-stats {
+    margin: 0;
+    line-height: 1.1;
+}
+
+.items-count {
+    color: #a0a0a0;
+    font-size: 0.8rem;
+    line-height: 1.1;
+    white-space: nowrap;
 }
 
 .campaign-title {
@@ -196,6 +251,19 @@
     font-weight: 600;
     color: #e8e6e3;
     margin-bottom: 5px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* fallback */
+    max-width: 100%;
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+            mask-image: linear-gradient(to right, black 80%, transparent 100%);
+}
+
+.campaign-title .title-text {
+    display: inline-block;
+    padding-right: 20px; /* space before fade */
+    will-change: transform;
 }
 
 .campaign-stats {
@@ -206,7 +274,10 @@
 
 .campaign-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;
 }
 
 .campaign-menu {
@@ -220,6 +291,29 @@
 
 .campaign-menu:hover {
     color: #e8e6e3;
+}
+
+/* Tags (match entry.html look) */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.tag {
+    background: #2e2e2e;
+    color: #cfcfcf;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    border: 1px solid #3a3a3a;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.tag:hover {
+    background: #3a3a3a;
+    border-color: #4a4a4a;
 }
 
 /* Create Card Special Styling */
@@ -274,4 +368,62 @@
     }
 }
 </style>
+
+<script>
+// Title hover scroll for overflowing text
+function setupTitleHoverScroll() {
+    const cards = document.querySelectorAll('.campaign-card');
+    cards.forEach((card) => {
+        const container = card.querySelector('.campaign-title');
+        const span = container && container.querySelector('.title-text');
+        if (!container || !span) return;
+
+        let rafId = null;
+        let startTime = null;
+        const durationMs = 16000; // slower scroll
+        let distance = 0;
+
+        const reset = () => {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = null;
+            startTime = null;
+            span.style.transform = 'translateX(0)';
+        };
+
+        const animate = (ts) => {
+            if (startTime === null) startTime = ts;
+            const elapsed = ts - startTime;
+            const t = Math.min(elapsed / durationMs, 1);
+            span.style.transform = `translateX(${-distance * t}px)`;
+            if (t < 1) {
+                rafId = requestAnimationFrame(animate);
+            } else {
+                // scroll back
+                startTime = null;
+                const back = (ts2) => {
+                    if (startTime === null) startTime = ts2;
+                    const e2 = ts2 - startTime;
+                    const t2 = Math.min(e2 / durationMs, 1);
+                    span.style.transform = `translateX(${-distance * (1 - t2)}px)`;
+                    if (t2 < 1) rafId = requestAnimationFrame(back);
+                };
+                rafId = requestAnimationFrame(back);
+            }
+        };
+
+        card.addEventListener('mouseenter', () => {
+            const overflow = span.scrollWidth - container.clientWidth;
+            if (overflow > 4) {
+                distance = overflow;
+                reset();
+                rafId = requestAnimationFrame(animate);
+            }
+        });
+
+        card.addEventListener('mouseleave', reset);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', setupTitleHoverScroll);
+</script>
 {% endblock %}
