@@ -1,0 +1,283 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+// Dev page specific styles
+.dev-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dev-header {
+  margin-bottom: $spacing-3xl;
+  text-align: center;
+}
+
+.dev-title {
+  font-size: $font-size-6xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: 10px;
+}
+
+.dev-description {
+  font-size: $font-size-xl;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.dev-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+}
+
+.dev-card {
+  background: $color-background-main;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-xl;
+  padding: 25px;
+  transition: all $transition-normal;
+  cursor: pointer;
+  
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(139, 115, 85, 0.15);
+  }
+}
+
+.dev-card-header {
+  @include flex-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-lg;
+}
+
+.dev-card-title {
+  font-size: 1.3rem;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin: 0;
+}
+
+.dev-card-type {
+  background: $color-border;
+  color: $color-text-primary;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dev-card-description {
+  color: $color-text-secondary;
+  font-size: $font-size-md;
+  line-height: 1.5;
+  margin-bottom: $spacing-xl;
+}
+
+.dev-card-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dev-card-link {
+  @include button-primary;
+  text-decoration: none;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  font-size: $font-size-md;
+  display: inline-block;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 115, 85, 0.2);
+  }
+}
+
+// Disabled card styles
+.dev-card.disabled-card {
+  opacity: 0.7;
+  cursor: not-allowed;
+  position: relative;
+  
+  &:hover {
+    border-color: $color-border;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(220, 38, 38, 0.05);
+    border-radius: $border-radius-xl;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .dev-card-header,
+  .dev-card-description,
+  .dev-card-actions {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Disabled link styles
+.dev-card-link.disabled-link {
+  background: #4a2a2a;
+  color: $color-text-secondary;
+  cursor: not-allowed;
+  position: relative;
+  
+  &:hover {
+    background: #4a2a2a;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(220, 38, 38, 0.1);
+    border-radius: $border-radius-md;
+    pointer-events: none;
+  }
+}
+
+// Sidebar styles
+.sidebar-section {
+  margin-bottom: $spacing-2xl;
+}
+
+.sidebar-section-title {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: $spacing-lg;
+  padding: 0 $spacing-xl;
+}
+
+.sidebar-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav-item {
+  margin-bottom: 5px;
+}
+
+.sidebar-nav-link {
+  display: block;
+  padding: 10px $spacing-xl;
+  color: $color-text-primary;
+  text-decoration: none;
+  font-size: $font-size-md;
+  transition: all $transition-normal;
+  border-radius: $border-radius-sm;
+  margin: 0 10px;
+  
+  &:hover {
+    background: rgba(139, 115, 85, 0.1);
+    color: $color-primary;
+  }
+}
+
+.sidebar-actions {
+  padding: 0 $spacing-xl;
+}
+
+.sidebar-action-btn {
+  display: block;
+  width: 100%;
+  background: $color-border;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-text-primary;
+  padding: 10px $spacing-lg;
+  font-size: $font-size-md;
+  cursor: pointer;
+  transition: background $transition-normal;
+  margin-bottom: $spacing-sm;
+  
+  &:hover {
+    background: #505050;
+  }
+  
+  &.disabled-btn {
+    background: #4a2a2a;
+    color: $color-text-secondary;
+    cursor: not-allowed;
+    position: relative;
+    
+    &:hover {
+      background: #4a2a2a;
+    }
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(220, 38, 38, 0.1);
+      border-radius: $border-radius-sm;
+      pointer-events: none;
+    }
+  }
+}
+
+// Responsive adjustments
+@include mobile {
+  .dev-grid {
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+  }
+  
+  .dev-card {
+    padding: $spacing-xl;
+  }
+  
+  .dev-title {
+    font-size: $font-size-5xl;
+  }
+  
+  .dev-card-actions {
+    @include flex-column;
+  }
+  
+  .dev-card-link {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .dev-header {
+    margin-bottom: $spacing-2xl;
+  }
+  
+  .dev-title {
+    font-size: $font-size-4xl;
+  }
+  
+  .dev-description {
+    font-size: $font-size-lg;
+  }
+}

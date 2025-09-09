@@ -1,0 +1,16 @@
+{
+  "name": "plot-hook",
+  "version": "1.0.0",
+  "description": "Django application with modular Sass architecture",
+  "scripts": {
+    "build-css": "sass styles/main.scss static/css/main.css --style=compressed --source-map",
+    "watch-css": "sass styles/main.scss static/css/main.css --watch --style=expanded --source-map",
+    "dev": "sass styles/main.scss static/css/main.css --watch --style=expanded --source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.69.0"
+  },
+  "keywords": ["django", "sass", "css", "frontend"],
+  "author": "",
+  "license": "MIT"
+}

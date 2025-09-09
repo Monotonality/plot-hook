@@ -1,0 +1,200 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+// Card Components
+.campaign-card {
+  @include card-base;
+  flex: 1 1 320px;
+  max-width: 400px;
+}
+
+.campaign-pattern {
+  height: 120px;
+  position: relative;
+  @include flex-center;
+}
+
+.campaign-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: white;
+  box-shadow: $shadow-sm;
+}
+
+.campaign-info {
+  padding: $spacing-lg;
+}
+
+.campaign-meta {
+  @include flex-between;
+  gap: 10px;
+  flex-wrap: nowrap;
+  
+  .campaign-stats {
+    margin: 0;
+    line-height: $line-height-tight;
+  }
+}
+
+.items-count {
+  color: $color-text-secondary;
+  font-size: $font-size-base;
+  line-height: $line-height-tight;
+  white-space: nowrap;
+}
+
+.campaign-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 5px;
+  display: block;
+  @include text-fade-right;
+  max-width: 100%;
+  
+  .title-text {
+    display: inline-block;
+    padding-right: $spacing-xl;
+    will-change: transform;
+  }
+}
+
+.campaign-stats {
+  font-size: $font-size-base;
+  color: $color-text-secondary;
+  margin-bottom: 10px;
+}
+
+.campaign-actions {
+  @include flex-between;
+  gap: 10px;
+}
+
+// Card Tags
+.campaign-actions .tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: 6px;
+}
+
+.campaign-actions .tag {
+  background: $color-background-tertiary;
+  color: $color-text-primary;
+  padding: 2px $spacing-sm;
+  border-radius: $border-radius-xl;
+  font-size: $font-size-sm;
+  border: 1px solid $color-border-light;
+  transition: background $transition-fast, border-color $transition-fast, color $transition-fast;
+  
+  &:hover {
+    background: $color-border;
+    border-color: #4a4a4a;
+  }
+}
+
+// Card Variations
+.large-pattern-card {
+  .campaign-pattern {
+    height: 140px;
+  }
+  
+  .campaign-info {
+    padding: $spacing-sm $spacing-lg;
+  }
+}
+
+.small-pattern-card {
+  .campaign-pattern {
+    height: 100px;
+  }
+  
+  .campaign-info {
+    padding: 18px $spacing-lg;
+  }
+}
+
+.xlarge-pattern-card {
+  .campaign-pattern {
+    height: 160px;
+  }
+  
+  .campaign-info {
+    padding: 6px $spacing-lg;
+  }
+  
+  .campaign-title {
+    font-size: $font-size-md;
+    margin-bottom: 3px;
+  }
+  
+  .campaign-stats {
+    font-size: $font-size-xs;
+    margin-bottom: 6px;
+  }
+}
+
+// Create Card
+.create-card {
+  border: 2px dashed $color-text-disabled;
+  background: $color-background-main;
+  @include flex-center;
+  min-height: 140px;
+  flex: 0 1 280px;
+  max-width: 320px;
+  
+  &:hover {
+    border-color: $color-primary;
+    background: $color-background-secondary;
+  }
+}
+
+.create-card-content {
+  @include flex-column;
+  @include flex-center;
+  text-align: center;
+  gap: $spacing-lg;
+}
+
+.create-icon {
+  font-size: 3rem;
+  font-weight: $font-weight-light;
+  color: $color-text-secondary;
+  line-height: 1;
+}
+
+.create-text {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
+// Badge Colors
+.badge-red { background: $color-badge-red; }
+.badge-blue { background: $color-badge-blue; }
+.badge-green { background: $color-badge-green; }
+.badge-purple { background: $color-badge-purple; }
+.badge-orange { background: $color-badge-orange; }
+.badge-teal { background: $color-badge-teal; }
+.badge-pink { background: $color-badge-pink; }
+.badge-yellow { background: $color-badge-yellow; }
+.badge-gray { background: $color-badge-gray; }
+
+// Pattern Backgrounds
+.pattern-red { @include pattern-checkered($color-pattern-red); }
+.pattern-green { @include pattern-checkered($color-pattern-green); }
+.pattern-checkered { @include pattern-checkered($color-pattern-blue); }
+.pattern-blue { @include pattern-dots($color-pattern-blue); }
+.pattern-spiral { @include pattern-spiral($color-pattern-green); }
+.pattern-wave { @include pattern-wave($color-pattern-purple); }
+.pattern-fractal { @include pattern-fractal($color-pattern-orange); }
+.pattern-diamond { @include pattern-diamond($color-pattern-teal); }
+.pattern-hexagon { @include pattern-hexagon($color-pattern-pink); }
+.pattern-star { @include pattern-star($color-pattern-yellow); }
+.pattern-map { @include pattern-map; }

@@ -1,0 +1,26 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+// CSS Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Base body styles
+body {
+  font-family: $font-family-primary;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background: $color-background-main;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  overflow: hidden;
+  @include hide-scrollbar;
+  
+  &:hover {
+    @include show-scrollbar-on-hover;
+  }
+}

@@ -1,0 +1,24 @@
+// Main Sass file - imports all partials in correct order
+
+// 1. Utils (variables and mixins first)
+@use 'utils/variables' as *;
+@use 'utils/mixins' as *;
+
+// 2. Base styles
+@use 'base/reset';
+@use 'base/typography';
+
+// 3. Layout components
+@use 'layouts/sidebar';
+@use 'layouts/header';
+@use 'layouts/grid';
+
+// 4. Components
+@use 'components/button';
+@use 'components/card';
+
+// 5. Page-specific styles
+@use 'pages/category';
+@use 'pages/dev';
+// @use 'pages/home';
+// @use 'pages/about';

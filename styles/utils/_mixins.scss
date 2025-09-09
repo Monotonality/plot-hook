@@ -1,0 +1,220 @@
+@use 'variables' as *;
+
+// Flexbox mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Button mixins
+@mixin button-base {
+  border: none;
+  border-radius: $border-radius-lg;
+  cursor: pointer;
+  font-weight: $font-weight-medium;
+  transition: all $transition-normal;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $color-primary;
+  color: white;
+  
+  &:hover {
+    background: $color-primary-hover;
+    transform: translateY(-2px);
+    box-shadow: $shadow-primary;
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: $color-border;
+  color: $color-text-primary;
+  
+  &:hover {
+    background: #505050;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background: $color-danger;
+  color: white;
+  
+  &:hover {
+    background: $color-danger-hover;
+  }
+}
+
+// Card mixins
+@mixin card-base {
+  background: $color-background-main;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  transition: transform $transition-normal, box-shadow $transition-normal;
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Scrollbar mixins
+@mixin hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+@mixin show-scrollbar-on-hover {
+  &:hover::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+  }
+  
+  &:hover::-webkit-scrollbar-track {
+    background: $color-background-tertiary;
+    border-radius: $border-radius-sm;
+  }
+  
+  &:hover::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: $border-radius-sm;
+    transition: background $transition-normal;
+  }
+  
+  &:hover::-webkit-scrollbar-thumb:hover {
+    background: $color-primary;
+  }
+}
+
+// Text truncation
+@mixin text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin text-fade-right {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  mask-image: linear-gradient(to right, black 80%, transparent 100%);
+}
+
+// Responsive mixins
+@mixin mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+// Pattern backgrounds
+@mixin pattern-checkered($color) {
+  background: 
+    linear-gradient(45deg, $color 25%, transparent 25%), 
+    linear-gradient(-45deg, $color 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, $color 75%), 
+    linear-gradient(-45deg, transparent 75%, $color 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+@mixin pattern-dots($color) {
+  background: 
+    radial-gradient(circle at 25% 25%, $color 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, $color 2px, transparent 2px),
+    radial-gradient(circle at 50% 50%, transparent 8px, $color 8px, transparent 9px);
+  background-size: 20px 20px;
+}
+
+@mixin pattern-spiral($color) {
+  background: 
+    conic-gradient(from 0deg at 50% 50%, $color 0deg, transparent 60deg, $color 120deg, transparent 180deg, $color 240deg, transparent 300deg, $color 360deg);
+  background-size: 30px 30px;
+}
+
+@mixin pattern-wave($color) {
+  background: 
+    linear-gradient(45deg, transparent 30%, $color 30%, $color 35%, transparent 35%),
+    linear-gradient(-45deg, transparent 30%, $color 30%, $color 35%, transparent 35%),
+    linear-gradient(90deg, transparent 40%, $color 40%, $color 45%, transparent 45%);
+  background-size: 25px 25px;
+}
+
+@mixin pattern-fractal($color) {
+  background: 
+    radial-gradient(circle at 0% 0%, $color 0px, transparent 3px),
+    radial-gradient(circle at 100% 0%, $color 0px, transparent 3px),
+    radial-gradient(circle at 0% 100%, $color 0px, transparent 3px),
+    radial-gradient(circle at 100% 100%, $color 0px, transparent 3px),
+    radial-gradient(circle at 50% 50%, transparent 8px, $color 8px, transparent 9px);
+  background-size: 20px 20px;
+}
+
+@mixin pattern-diamond($color) {
+  background: 
+    linear-gradient(45deg, transparent 40%, $color 40%, $color 45%, transparent 45%),
+    linear-gradient(-45deg, transparent 40%, $color 40%, $color 45%, transparent 45%);
+  background-size: 24px 24px;
+}
+
+@mixin pattern-hexagon($color) {
+  background: 
+    radial-gradient(circle at 50% 0%, $color 0px, transparent 4px),
+    radial-gradient(circle at 100% 25%, $color 0px, transparent 4px),
+    radial-gradient(circle at 100% 75%, $color 0px, transparent 4px),
+    radial-gradient(circle at 50% 100%, $color 0px, transparent 4px),
+    radial-gradient(circle at 0% 25%, $color 0px, transparent 4px),
+    radial-gradient(circle at 0% 75%, $color 0px, transparent 4px);
+  background-size: 24px 24px;
+}
+
+@mixin pattern-star($color) {
+  background: 
+    conic-gradient(from 0deg at 50% 50%, $color 0deg, transparent 36deg, $color 72deg, transparent 108deg, $color 144deg, transparent 180deg, $color 216deg, transparent 252deg, $color 288deg, transparent 324deg, $color 360deg);
+  background-size: 28px 28px;
+}
+
+@mixin pattern-map {
+  background: 
+    radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0.6) 100%),
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('/static/MAP.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

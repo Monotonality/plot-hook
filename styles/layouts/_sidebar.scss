@@ -1,0 +1,76 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+// Sidebar Styles
+.sidebar {
+  width: $sidebar-width;
+  background: $color-background-main;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  border-right: 1px solid $color-border;
+  z-index: $z-sidebar;
+  transition: transform $transition-normal;
+  
+  &.collapsed {
+    transform: translateX(-100%);
+  }
+  
+  @include mobile {
+    width: $sidebar-width-mobile;
+    height: auto;
+    position: relative;
+  }
+}
+
+.sidebar-header {
+  padding: $spacing-xl;
+  border-bottom: 1px solid $color-border;
+}
+
+.sidebar-logo-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.user-info {
+  margin-bottom: $spacing-xl;
+}
+
+.search-section {
+  margin-bottom: $spacing-xl;
+}
+
+.search-container {
+  @include flex-center;
+  gap: $spacing-sm;
+  margin-bottom: 10px;
+}
+
+.search-input {
+  flex: 1;
+  height: 40px;
+  background: $color-border;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-text-primary;
+  padding: 0 $spacing-lg;
+  font-size: $font-size-md;
+  transition: border-color $transition-normal;
+  
+  &:focus {
+    outline: none;
+    border: 1px solid $color-primary;
+  }
+  
+  &::placeholder {
+    color: $color-text-secondary;
+  }
+}
+
+.sidebar-nav {
+  padding: 0;
+}

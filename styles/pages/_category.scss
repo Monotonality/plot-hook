@@ -1,0 +1,20 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+// Category page specific styles
+.category-content {
+  width: 100%;
+}
+
+// Category-specific responsive adjustments
+@include mobile {
+  .campaigns-grid {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+    padding: $spacing-xl;
+  }
+  
+  .category-title {
+    font-size: $font-size-4xl;
+  }
+}

@@ -1,0 +1,152 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+// Main Content and Header Styles
+.main-content {
+  flex: 1;
+  margin-left: $sidebar-width;
+  background: $color-background-secondary;
+  height: 100vh;
+  @include flex-column;
+  overflow: hidden;
+  position: relative;
+  transition: margin-left $transition-normal, width $transition-normal;
+  
+  &.sidebar-collapsed {
+    margin-left: 0;
+  }
+  
+  @include mobile {
+    margin-left: 0;
+  }
+}
+
+.main-header {
+  padding: $spacing-xl $spacing-2xl;
+  border-bottom: 1px solid $color-border;
+  @include flex-between;
+  background: $color-background-secondary;
+  flex-shrink: 0;
+  position: relative;
+  z-index: $z-header;
+  
+  @include mobile {
+    padding: $spacing-lg $spacing-xl;
+  }
+}
+
+.subheader {
+  padding: $spacing-md $spacing-2xl;
+  background: $color-background-main;
+  border-bottom: 1px solid $color-border;
+  flex-shrink: 0;
+  position: relative;
+  z-index: $z-header;
+}
+
+.breadcrumb-container {
+  width: 100%;
+}
+
+.header-left {
+  @include flex-center;
+  gap: $spacing-xl;
+}
+
+.user-display {
+  @include flex-center;
+  gap: $spacing-sm;
+  color: $color-text-primary;
+  font-size: $font-size-md;
+}
+
+.user-dropdown {
+  position: relative;
+  @include flex-center;
+  gap: $spacing-sm;
+}
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  background: $color-primary;
+  border-radius: 50%;
+  @include flex-center;
+  font-size: $font-size-md;
+  color: white;
+  cursor: pointer;
+  transition: background $transition-normal;
+  
+  &:hover {
+    background: $color-primary-hover;
+  }
+}
+
+.user-username {
+  font-weight: $font-weight-medium;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: $color-background-main;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  min-width: 150px;
+  z-index: $z-dropdown;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all $transition-normal;
+  
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+.user-dropdown-actions {
+  padding: $spacing-sm 0;
+}
+
+.user-dropdown-action {
+  display: block;
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  background: none;
+  border: none;
+  color: $color-text-primary;
+  text-align: left;
+  cursor: pointer;
+  font-size: $font-size-md;
+  transition: background $transition-normal;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  &.sign-out-btn {
+    color: $color-danger;
+    
+    &:hover {
+      background: rgba(220, 38, 38, 0.1);
+    }
+  }
+}
+
+.content-section {
+  padding: $spacing-2xl;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  z-index: $z-content;
+  @include hide-scrollbar;
+  @include show-scrollbar-on-hover;
+  
+  @include mobile {
+    padding: $spacing-xl;
+  }
+}

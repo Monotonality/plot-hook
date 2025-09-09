@@ -1,0 +1,99 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+// Grid Layouts
+.campaigns-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xl;
+  padding: $spacing-2xl;
+  width: 100%;
+  transition: all $transition-normal;
+}
+
+.category-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-2xl;
+}
+
+.category-header {
+  @include flex-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-2xl;
+  gap: $spacing-xl;
+  
+  @include mobile {
+    @include flex-column;
+    align-items: flex-start;
+    gap: $spacing-lg;
+  }
+}
+
+.category-title-section {
+  flex: 1;
+}
+
+.category-title {
+  font-size: $font-size-6xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: 10px;
+  
+  @include mobile {
+    font-size: $font-size-5xl;
+  }
+}
+
+.category-description {
+  font-size: $font-size-xl;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+.category-actions {
+  @include flex-center;
+  gap: $spacing-lg;
+}
+
+.category-content {
+  width: 100%;
+}
+
+// Section Toggle
+.section-toggle {
+  @include flex-center;
+  margin: $spacing-3xl 0 $spacing-xl 0;
+}
+
+.additional-patterns-section {
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-2xl;
+  border-top: 1px solid $color-border;
+}
+
+.section-header {
+  margin-bottom: $spacing-2xl;
+  text-align: center;
+}
+
+.section-title {
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  font-size: $font-size-lg;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+// Responsive Grid
+@include mobile {
+  .campaigns-grid {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+}
