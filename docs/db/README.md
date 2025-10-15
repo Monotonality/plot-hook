@@ -24,3 +24,9 @@
 - NODE to CATEGORY (1:1): Each NODE has one CATEGORY (description).
 - NODE to LINK (1:N): A NODE can be a source or destination of LINKs.
 - LINK represents many-to-many relationships between NODEs.
+
+## Specialization Constraint
+- Every NODE must be exactly one of: ENTRY or CATEGORY (total, disjoint).
+- Driven by NODE.NODE_TYPE âˆˆ {ENTRY, CATEGORY}.
+- Enforcement guidance: ensure one-and-only-one child row exists in ENTRY or CATEGORY for each NODE.
+

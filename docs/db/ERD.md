@@ -86,3 +86,6 @@ erDiagram
     NODE ||--o{ LINK : from
     NODE ||--o{ LINK : to
 ```
+
+> Constraint: NODE is a total, disjoint specialization into ENTRY or CATEGORY based on NODE_TYPE (ENTRY/CATEGORY).
+
