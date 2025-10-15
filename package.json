@@ -1,0 +1,43 @@
+﻿{
+    "name":  "plot-hook",
+    "version":  "1.0.0",
+    "description":  "",
+    "main":  "index.js",
+    "directories":  {
+                        "doc":  "docs"
+                    },
+    "scripts":  {
+                    "lint":  "echo \u0027no linter yet\u0027",
+                    "build":  "tsc",
+                    "dev":  "ts-node-dev --respawn --transpile-only src/index.ts",
+                    "start":  "node dist/index.js"
+                },
+    "repository":  {
+                       "type":  "git",
+                       "url":  "git+https://github.com/Monotonality/plot-hook.git"
+                   },
+    "keywords":  [
+
+                 ],
+    "author":  "",
+    "license":  "ISC",
+    "type":  "commonjs",
+    "bugs":  {
+                 "url":  "https://github.com/Monotonality/plot-hook/issues"
+             },
+    "homepage":  "https://github.com/Monotonality/plot-hook#readme",
+    "dependencies":  {
+                         "@supabase/supabase-js":  "^2.75.0",
+                         "cors":  "^2.8.5",
+                         "dotenv":  "^17.2.3",
+                         "express":  "^5.1.0",
+                         "helmet":  "^8.1.0",
+                         "morgan":  "^1.10.1"
+                     },
+    "devDependencies":  {
+                            "@types/express":  "^5.0.3",
+                            "@types/node":  "^24.7.2",
+                            "ts-node-dev":  "^2.0.0",
+                            "typescript":  "^5.9.3"
+                        }
+}
